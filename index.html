@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Acefields Attorneys, Solicitors and Notary Public | Ibadan, Nigeria</title>
-<meta name="description" content="Acefields Attorneys, Solicitors and Notary Public — Barristers, Solicitors, Notary Public and Company Secretarial Practitioners in Ibadan, Oyo State, led by Principal Barnabas O. Atungwu, Esq.">
+<title>Acefields Attorneys, Solicitors and Notary Public | Ibadan · Abuja · Lagos · Jos</title>
+<meta name="description" content="Acefields Attorneys, Solicitors and Notary Public — Legal Practitioners, Notary Public and Company Secretarial Practitioners. Head Office in Ibadan with correspondence offices in Abuja, Lagos, and Jos. Principal: Barnabas O. Atungwu, Esq.">
 <style>
   :root {
     --navy-deep: #0A1322;
@@ -112,7 +112,7 @@
   }
   .nav-menu {
     display: flex;
-    gap: 26px;
+    gap: 24px;
     list-style: none;
   }
   .nav-menu a {
@@ -413,6 +413,11 @@
     letter-spacing: 0.1em;
     color: var(--navy);
     text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 0;
   }
   .c-action:hover { color: var(--gold); }
 
@@ -511,35 +516,154 @@
     margin-bottom: 14px;
   }
 
-  /* Notary & Diaspora Feature */
+  /* Legal Insights & Publications (Blog) */
+  .insights-band {
+    background: var(--sand);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .blog-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .blog-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+  }
+  .blog-meta {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .blog-card h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--navy-deep);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .blog-card p {
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  /* Article Reader Modal */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(10, 19, 34, 0.78);
+    backdrop-filter: blur(5px);
+    padding: 28px 16px;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: var(--cream);
+    max-width: 720px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--gold);
+    padding: 40px 36px;
+    position: relative;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: var(--sand);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .modal-box h3 {
+    font-family: var(--serif);
+    font-size: 27px;
+    font-weight: 400;
+    color: var(--navy-deep);
+    line-height: 1.25;
+    margin: 8px 0 18px;
+  }
+  .modal-body p {
+    font-size: 15px;
+    color: var(--slate);
+    line-height: 1.75;
+    margin-bottom: 14px;
+  }
+
+  /* Notary & Nationwide Offices */
   .dark-band {
     background: var(--navy-deep);
     color: var(--cream);
   }
-  .bullets {
-    list-style: none;
+  .offices-grid {
     display: grid;
-    gap: 14px;
-    margin: 24px 0 32px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 38px;
   }
-  .bullets li {
-    display: flex;
-    gap: 12px;
-    font-size: 15px;
-    color: rgba(251,249,245,0.86);
-  }
-  .bullets li strong { color: var(--gold-bright); }
-  .seal-card {
-    background: rgba(251,249,245,0.04);
-    border: 1px solid rgba(223,190,123,0.3);
+  .office-card {
+    background: rgba(251,249,245,0.045);
+    border: 1px solid rgba(223,190,123,0.28);
     border-radius: 8px;
-    padding: 36px;
+    padding: 24px 20px;
+  }
+  .office-card.hq {
+    background: rgba(223,190,123,0.11);
+    border-color: var(--gold-bright);
+  }
+  .office-badge {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gold-bright);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .office-card h4 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .office-card p {
+    font-size: 13.5px;
+    color: rgba(251,249,245,0.8);
+    line-height: 1.62;
   }
 
   /* Contact & Intake */
   .contact-split {
     display: grid;
-    grid-template-columns: 0.92fr 1.08fr;
+    grid-template-columns: 0.95fr 1.05fr;
     gap: 48px;
   }
   .addr-card {
@@ -548,7 +672,7 @@
     border-radius: 8px;
     padding: 36px;
   }
-  .info-block { margin-bottom: 24px; }
+  .info-block { margin-bottom: 22px; }
   .info-block small {
     display: block;
     font-size: 11px;
@@ -559,10 +683,11 @@
     margin-bottom: 5px;
   }
   .info-block p, .info-block a {
-    font-size: 15px;
+    font-size: 14.5px;
     color: var(--navy-deep);
     text-decoration: none;
     font-weight: 500;
+    line-height: 1.6;
   }
   .intake-card {
     background: #FFFFFF;
@@ -611,17 +736,17 @@
   }
 
   @media (max-width: 1080px) {
-    .cards-4 { grid-template-columns: repeat(2, 1fr); }
+    .cards-4, .offices-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 920px) {
-    .hero-grid, .two-col, .contact-split, .principal-card { grid-template-columns: 1fr; }
+    .hero-grid, .two-col, .contact-split, .principal-card, .blog-grid { grid-template-columns: 1fr; }
     .nav-menu { display: none; }
     .hero { padding: 56px 20px; }
     section { padding: 60px 20px; }
     .principal-card { padding: 28px 22px; }
   }
   @media (max-width: 600px) {
-    .cards-4 { grid-template-columns: 1fr; }
+    .cards-4, .offices-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -629,8 +754,8 @@
 
 <div class="ribbon">
   <div class="ribbon-inner">
-    <div>IBADAN, OYO STATE <span class="sep">•</span> NOTARY PUBLIC <span class="sep">•</span> COMPANY SECRETARIAL PRACTITIONERS</div>
-    <div>CHAMBERS DESK: <a href="tel:+2348038765986">+234 803 876 5986</a> <span class="sep">•</span> <a href="tel:+2348179911155">+234 817 991 1155</a></div>
+    <div>IBADAN (HEAD OFFICE) <span class="sep">•</span> ABUJA <span class="sep">•</span> LAGOS <span class="sep">•</span> JOS</div>
+    <div>CHAMBERS LINES: <a href="tel:+2349112111021">0911 211 1021</a> <span class="sep">•</span> <a href="tel:+2348179911155">0817 991 1155</a></div>
   </div>
 </div>
 
@@ -646,9 +771,10 @@
     <ul class="nav-menu">
       <li><a href="#firm">The Firm</a></li>
       <li><a href="#practice">Practice Areas</a></li>
-      <li><a href="#leadership">Principal Counsel</a></li>
-      <li><a href="#notary">Notary Desk</a></li>
-      <li><a href="#contact">Consultations</a></li>
+      <li><a href="#leadership">Principal</a></li>
+      <li><a href="#insights">Blog &amp; Insights</a></li>
+      <li><a href="#offices">Offices</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-btn">Schedule Consultation →</a>
   </nav>
@@ -657,7 +783,7 @@
 <section class="hero">
   <div class="hero-grid">
     <div>
-      <span class="kicker">Ibadan · Serving Nigeria &amp; The Diaspora</span>
+      <span class="kicker">Ibadan HQ · Abuja · Lagos · Jos · Diaspora Desk</span>
       <h1>Strategic counsel.<br><em>Trusted</em> Notarial authority.</h1>
       <div class="cap-strip">
         <span class="cap-badge">Attorneys &amp; Solicitors</span>
@@ -665,11 +791,11 @@
         <span class="cap-badge">Company Secretarial Practitioners</span>
       </div>
       <p class="hero-sub">
-        <strong>Acefields Attorneys, Solicitors and Notary Public</strong> is a full-service Nigerian law firm headquartered in Ibadan, Oyo State — delivering meticulous representation across corporate &amp; company secretarial practice, electricity law, property due diligence, notarisation, family law &amp; divorce, healthcare law, and dispute resolution.
+        <strong>Acefields Attorneys, Solicitors and Notary Public</strong> is a multi-jurisdictional Nigerian law firm headquartered in Ibadan with correspondence offices in Abuja, Lagos, and Jos — delivering meticulous representation across corporate &amp; company secretarial practice, electricity law, property due diligence, notarisation, family law &amp; divorce, healthcare law, and dispute resolution.
       </p>
       <div class="cta-row">
-        <a href="https://wa.me/2348038765986?text=Good%20day%20Acefields%20Attorneys%2C%20Solicitors%20and%20Notary%20Public%2C%20I%20would%20like%20to%20schedule%20a%20legal%20consultation." class="btn-primary">Consult via WhatsApp ↗</a>
-        <a href="#leadership" class="btn-secondary">Principal Counsel</a>
+        <a href="https://wa.me/2349112111021?text=Good%20day%20Acefields%20Attorneys%2C%20Solicitors%20and%20Notary%20Public%2C%20I%20would%20like%20to%20schedule%20a%20legal%20consultation." class="btn-primary">Consult Chambers Desk ↗</a>
+        <a href="tel:+2349112111021" class="btn-secondary">Call 0911 211 1021</a>
       </div>
       <div class="stats-row">
         <div class="stat">
@@ -677,12 +803,12 @@
           <span>Specialized Practice Desks</span>
         </div>
         <div class="stat">
-          <strong>Notary</strong>
-          <span>Notary Public for Nigeria</span>
+          <strong>04 Cities</strong>
+          <span>Ibadan · Abuja · Lagos · Jos</span>
         </div>
         <div class="stat">
-          <strong>Ibadan</strong>
-          <span>Serving Clients Nationwide</span>
+          <strong>Notary</strong>
+          <span>Notary Public for Nigeria</span>
         </div>
       </div>
     </div>
@@ -690,7 +816,7 @@
     <div class="desk-panel">
       <span class="desk-tag">Immediate Intake</span>
       <h3>Select a Chambers Desk</h3>
-      <p>Connect directly with Counsel in Ibadan for corporate, regulatory, family, property, or notarial briefs.</p>
+      <p>Connect directly with Chambers for corporate, regulatory, family, property, or notarial briefs.</p>
       <div class="desk-list">
         <div class="desk-item" onclick="selectDesk('Notary Public & Document Authentication')">
           <span>01 · Notary Public Desk</span><b>→</b>
@@ -711,7 +837,7 @@
           <span>06 · Litigation &amp; ADR</span><b>→</b>
         </div>
       </div>
-      <small style="color:rgba(251,249,245,0.6);font-size:12px;">Monday – Friday · In-Chambers &amp; Virtual Diaspora Consultations</small>
+      <small style="color:rgba(251,249,245,0.6);font-size:12px;">Law Forte Complex, 43 Abeokuta Road, Odo Ona, Ibadan · Nationwide &amp; Diaspora</small>
     </div>
   </div>
 </section>
@@ -721,13 +847,13 @@
     <div>
       <span class="label">About Chambers</span>
       <h2 style="font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);font-weight:400;line-height:1.2;margin-bottom:18px;color:var(--navy-deep);">
-        A one-stop legal hub built on precision, confidentiality, and integrity.
+        A nationwide legal hub built on precision, confidentiality, and integrity.
       </h2>
       <p style="color:var(--slate);margin-bottom:16px;">
-        Registered in 2025 under its expanded practice mandate as <strong>Acefields Attorneys, Solicitors and Notary Public</strong>, the firm operates as Legal Practitioners, Notary Public, and Company Secretarial Practitioners serving businesses, power &amp; infrastructure stakeholders, property investors, healthcare institutions, families, and private clients across Nigeria and the Diaspora.
+        Registered in 2025 under its expanded practice mandate as <strong>Acefields Attorneys, Solicitors and Notary Public</strong>, the firm operates from its Head Office at Law Forte Complex, Ibadan, with strategic correspondence offices in <strong>Abuja, Lagos (Lekki Phase 1), and Jos</strong>.
       </p>
       <p style="color:var(--slate);">
-        Whether advising on Nigeria’s evolving Electricity Law framework, serving as retained Company Secretaries, handling sensitive Family Law and Divorce matters, perfecting property titles, executing Notarial instruments, or advocating before Superior Courts of Record, our counsel is proactive, transparent, and results-driven.
+        Operating as Legal Practitioners, Notary Public, and Company Secretarial Practitioners, we advise corporate boards, power &amp; electricity sector operators, property investors, healthcare institutions, families, and Nigerians in the Diaspora with proactive, transparent, and results-driven counsel.
       </p>
     </div>
     <div class="credo">
@@ -788,7 +914,7 @@
         <div>
           <span class="c-num">05 / PROPERTY &amp; LAND</span>
           <h3>Real Estate &amp; Title Perfection</h3>
-          <p>Thorough Oyo State &amp; South-West land registry due diligence, perfection of title, deeds of assignment, commercial &amp; residential leases, and property transaction documentation.</p>
+          <p>Thorough land registry due diligence across Oyo, Lagos, Abuja &amp; Plateau, perfection of title, deeds of assignment, commercial &amp; residential leases, and property documentation.</p>
         </div>
         <a href="#contact" onclick="selectDesk('Real Estate, Title Verification & Perfection')" class="c-action">Verify a Property →</a>
       </div>
@@ -849,37 +975,85 @@
           <strong>Barnabas O. Atungwu, Esq.</strong> is the Principal of <em>Acefields Attorneys, Solicitors and Notary Public</em>, leading the firm’s civil and commercial litigation, company secretarial &amp; corporate governance, electricity law, real estate perfection, family &amp; matrimonial practice, healthcare regulatory, and Notarial desks.
         </p>
         <p>
-          Serving as a <strong>Notary Public of the Federal Republic of Nigeria</strong> and <strong>Company Secretarial Practitioner</strong>, he advises corporate boards, entrepreneurs, institutions, families, and Nigerians in the Diaspora with meticulous due diligence, authoritative document authentication, and resolute courtroom advocacy.
+          Serving as a <strong>Notary Public of the Federal Republic of Nigeria</strong> and <strong>Company Secretarial Practitioner</strong>, he advises corporate boards, power &amp; commercial stakeholders, institutions, families, and Nigerians in the Diaspora with meticulous due diligence, authoritative document authentication, and resolute courtroom advocacy.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="notary" class="dark-band">
-  <div class="wrap two-col">
-    <div>
-      <span class="kicker">Notary Public &amp; Diaspora Property Desk</span>
-      <h2 style="font-family:var(--serif);font-size:clamp(28px,3.5vw,40px);font-weight:400;line-height:1.2;margin-bottom:16px;">
-        Seamless document notarisation &amp; property protection — whether you are in Ibadan or abroad.
-      </h2>
-      <ul class="bullets">
-        <li><span>✦</span><span><strong>Notary Public Seal:</strong> Fast, authoritative notarisation accepted by embassies, foreign universities, corporate registries, and financial institutions worldwide.</span></li>
-        <li><span>✦</span><span><strong>Company Secretarial &amp; Regulatory Filings:</strong> End-to-end board compliance, annual returns, CAC post-incorporation changes, and statutory governance.</span></li>
-        <li><span>✦</span><span><strong>Diaspora Land &amp; Family Representation:</strong> Independent property registry verification, probate resealing, and family law representation across Nigeria.</span></li>
-      </ul>
-      <a href="#contact" class="btn-primary">Initiate Consultation or Notary Request →</a>
+<section id="insights" class="insights-band">
+  <div class="wrap">
+    <div class="sec-intro">
+      <span class="label">Legal Blog &amp; Publications</span>
+      <h2>Insights, statutory updates &amp; Chambers commentary.</h2>
+      <p>Practical legal briefings authored by Acefields Attorneys, Solicitors and Notary Public.</p>
     </div>
-    <div class="seal-card">
-      <span class="desk-tag">Client Engagement Protocol</span>
-      <h3 style="font-family:var(--serif);font-size:24px;font-weight:400;margin-bottom:14px;">Streamlined 3-Step Intake</h3>
-      <p style="font-size:14px;color:rgba(251,249,245,0.78);margin-bottom:18px;">
-        <strong>01 · Submit Enquiry:</strong> Select your required legal, company secretarial, or notarial desk below — details arrive instantly on our Chambers WhatsApp desk.<br><br>
-        <strong>02 · Document Checklist &amp; Slot:</strong> Counsel reviews your request and confirms required documents plus your in-person or virtual appointment slot.<br><br>
-        <strong>03 · Execution &amp; Delivery:</strong> Prompt legal representation, statutory filings, notarised instruments, or due-diligence reports delivered on schedule.
-      </p>
-      <div style="padding-top:16px;border-top:1px solid var(--border-light);font-size:13px;color:var(--gold-bright);">
-        3 Triple K Complex, Gbelekale Area, Odo-Ona (7Up Road Axis) · Ibadan, Oyo State
+
+    <div class="blog-grid">
+      <article class="blog-card">
+        <div>
+          <span class="blog-meta">Electricity Law · Regulatory Briefing</span>
+          <h3>Navigating State Electricity Markets Under Nigeria’s Electricity Act</h3>
+          <p>Key licensing, embedded generation, mini-grid, and Power Purchase Agreement (PPA) considerations for investors, industrial off-takers, and distribution stakeholders across Oyo, Lagos, and the FCT.</p>
+        </div>
+        <button class="c-action" onclick="openArticle(0)">Read Full Publication →</button>
+      </article>
+
+      <article class="blog-card">
+        <div>
+          <span class="blog-meta">Company Secretarial · CAMA Compliance</span>
+          <h3>Essential Post-Incorporation Filings Every Nigerian Board Must Maintain</h3>
+          <p>Why annual returns, Persons with Significant Control (PSC) disclosures, statutory registers, and formal board resolutions protect corporate directors from regulatory penalties and transactional delays.</p>
+        </div>
+        <button class="c-action" onclick="openArticle(1)">Read Full Publication →</button>
+      </article>
+
+      <article class="blog-card">
+        <div>
+          <span class="blog-meta">Notary Public &amp; Property Law</span>
+          <h3>Document Notarisation &amp; Land Title Due Diligence for Diaspora Clients</h3>
+          <p>A practical checklist for authenticating powers of attorney, embassy declarations, and verifying root of title before committing funds to Nigerian real estate transactions.</p>
+        </div>
+        <button class="c-action" onclick="openArticle(2)">Read Full Publication →</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="offices" class="dark-band">
+  <div class="wrap">
+    <div class="sec-intro" style="margin-bottom:20px;">
+      <span class="kicker">Nationwide Reach &amp; Correspondence Network</span>
+      <h2 style="font-family:var(--serif);font-size:clamp(28px,3.5vw,42px);font-weight:400;line-height:1.18;color:var(--cream);margin-bottom:12px;">
+        Headquartered in Ibadan, connected across Nigeria’s key commercial &amp; administrative capitals.
+      </h2>
+      <p style="color:rgba(251,249,245,0.78);">Seamless filing, representation, notarisation, and correspondence coordination across four strategic jurisdictions.</p>
+    </div>
+
+    <div class="offices-grid">
+      <div class="office-card hq">
+        <span class="office-badge">Head Office · Oyo State</span>
+        <h4>Ibadan Chambers</h4>
+        <p>Law Forte Complex, 43, Abeokuta Road, Beside SAO Fuel Station, Odo Ona, Ibadan, Oyo State.</p>
+      </div>
+
+      <div class="office-card">
+        <span class="office-badge">Correspondence · FCT</span>
+        <h4>Abuja</h4>
+        <p>c/o 4, Mubi Close,<br>Garki, Abuja, Federal Capital Territory.</p>
+      </div>
+
+      <div class="office-card">
+        <span class="office-badge">Correspondence · Lagos State</span>
+        <h4>Lagos</h4>
+        <p>c/o No. 27, Oriwu Street, Lekki Phase 1 (By Petrocam / ELF Bus Stop, Lekki Right), Lagos.</p>
+      </div>
+
+      <div class="office-card">
+        <span class="office-badge">Correspondence · Plateau State</span>
+        <h4>Jos</h4>
+        <p>c/o Plot 675, J-Roth House, Davou Mangei Street, Hwolshe, Plateau State.</p>
       </div>
     </div>
   </div>
@@ -889,21 +1063,25 @@
   <div class="wrap contact-split">
     <div class="addr-card">
       <span class="label">Chambers Contact</span>
-      <h2 style="font-family:var(--serif);font-size:30px;font-weight:400;margin-bottom:24px;color:var(--navy-deep);">Ibadan Chambers</h2>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:400;margin-bottom:24px;color:var(--navy-deep);">Get in Touch</h2>
 
       <div class="info-block">
-        <small>Principal</small>
-        <p>Barnabas O. Atungwu, Esq.<br><span style="font-size:13.5px;color:var(--slate);font-weight:400;">Legal Practitioner, Notary Public &amp; Company Secretary</span></p>
+        <small>Head Office Address (Ibadan)</small>
+        <p>Law Forte Complex, 43, Abeokuta Road,<br>Beside SAO Fuel Station, Odo Ona,<br>Ibadan, Oyo State, Nigeria.</p>
       </div>
 
       <div class="info-block">
-        <small>Office Address</small>
-        <p>3 Triple K Complex, Gbelekale Area,<br>Odo-Ona Kekere (7Up Road Axis),<br>Ibadan, Oyo State, Nigeria.</p>
+        <small>Correspondence Addresses</small>
+        <p>
+          <strong>Abuja:</strong> c/o 4, Mubi Close, Garki, Abuja<br>
+          <strong>Lagos:</strong> c/o No. 27, Oriwu Street, Lekki Phase 1 (By Petrocam / ELF Bus Stop, Lekki Right), Lagos<br>
+          <strong>Jos:</strong> c/o Plot 675, J-Roth House, Davou Mangei Street, Hwolshe, Plateau State
+        </p>
       </div>
 
-      <div class="info-block">
-        <small>Direct Chambers &amp; WhatsApp Lines</small>
-        <p><a href="tel:+2348038765986">+234 803 876 5986</a><br><a href="tel:+2348179911155">+234 817 991 1155</a></p>
+      <div class="info-block" style="margin-bottom:0;">
+        <small>Official Chambers Telephone Lines</small>
+        <p><a href="tel:+2349112111021">0911 211 1021 (+234 911 211 1021)</a><br><a href="tel:+2348179911155">0817 991 1155 (+234 817 991 1155)</a></p>
       </div>
     </div>
 
@@ -917,7 +1095,17 @@
         </div>
         <div class="field">
           <label>Phone / WhatsApp Number</label>
-          <input id="aPhone" class="ctrl" required placeholder="e.g. +234 803 000 0000">
+          <input id="aPhone" class="ctrl" required placeholder="e.g. 0803 000 0000">
+        </div>
+        <div class="field">
+          <label>Preferred Office / Jurisdiction</label>
+          <select id="aCity" class="ctrl">
+            <option>Ibadan (Head Office — Law Forte Complex, Odo Ona)</option>
+            <option>Abuja (Garki Correspondence)</option>
+            <option>Lagos (Lekki Phase 1 Correspondence)</option>
+            <option>Jos (Hwolshe Correspondence)</option>
+            <option>Virtual / Diaspora Consultation</option>
+          </select>
         </div>
         <div class="field">
           <label>Practice Desk Required</label>
@@ -936,7 +1124,7 @@
           <textarea id="aMsg" rows="3" class="ctrl" required placeholder="Briefly state your enquiry or preferred appointment day..."></textarea>
         </div>
         <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
-          Send Straight to Chambers WhatsApp ↗
+          Send Straight to Chambers Desk ↗
         </button>
         <p class="note">Confidentiality notice: Please reserve sensitive evidentiary attachments until Counsel confirms conflict clearance.</p>
       </form>
@@ -944,14 +1132,63 @@
   </div>
 </section>
 
+<!-- Blog Article Reader Modal -->
+<div class="modal-backdrop" id="articleModal" onclick="if(event.target===this)closeArticle()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeArticle()">✕ Close</button>
+    <span class="blog-meta" id="mMeta"></span>
+    <h3 id="mTitle"></h3>
+    <div class="modal-body" id="mBody"></div>
+    <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <small style="color:var(--muted);">Authored by <strong>Acefields Attorneys, Solicitors and Notary Public</strong></small>
+      <a href="#contact" onclick="closeArticle()" class="nav-btn">Consult Chambers on This Topic →</a>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="foot-wrap">
     <div>© 2026 <strong>Acefields Attorneys, Solicitors and Notary Public</strong> · Company Secretarial Practitioners.</div>
-    <div>Principal: Barnabas O. Atungwu, Esq. · Ibadan, Oyo State · +234 803 876 5986</div>
+    <div>Ibadan HQ · Abuja · Lagos · Jos · Office Lines: 0911 211 1021 | 0817 991 1155</div>
   </div>
 </footer>
 
 <script>
+const ARTICLES = [
+  {
+    meta: "Electricity Law · Regulatory Briefing",
+    title: "Navigating State Electricity Markets Under Nigeria’s Electricity Act",
+    body: `<p>The enactment of Nigeria’s Electricity Act and the progressive transfer of regulatory oversight to State Electricity Regulatory Commissions have created historic opportunities — alongside new compliance obligations — for independent power producers, mini-grid developers, industrial off-takers, and distribution licensees.</p>
+    <p>Entities developing captive, embedded, or mini-grid power solutions must align project structures with applicable federal (NERC) or state electricity frameworks, grid-interconnection codes, tariff methodologies, and bankable Power Purchase Agreements (PPAs).</p>
+    <p>Our Electricity Law desk advises project sponsors, manufacturers, estates, and investors from feasibility and licensing through PPA negotiation, land acquisition, and regulatory dispute resolution.</p>`
+  },
+  {
+    meta: "Company Secretarial · CAMA Compliance",
+    title: "Essential Post-Incorporation Filings Every Nigerian Board Must Maintain",
+    body: `<p>Under the Companies and Allied Matters Act (CAMA) 2020, corporate compliance extends well beyond obtaining a Certificate of Incorporation. Active status on the Corporate Affairs Commission (CAC) portal requires timely filing of Annual Returns, prompt disclosure of Persons with Significant Control (PSC), and accurate maintenance of statutory registers.</p>
+    <p>Banks, regulators,embassies, and institutional counterparties routinely verify ”Active” CAC status before approving facilities, licences, or commercial tenders.</p>
+    <p>As Company Secretarial Practitioners, Acefields Attorneys provides retained board support, AGM administration, share capital restructuring, and comprehensive statutory compliance audits.</p>`
+  },
+  {
+    meta: "Notary Public & Property Law",
+    title: "Document Notarisation & Land Title Due Diligence for Diaspora Clients",
+    body: `<p>For Nigerians residing abroad and international organisations transacting in Nigeria, two legal safeguards remain indispensable: proper Notarial authentication of cross-border instruments and independent land registry verification prior to property acquisition.</p>
+    <p>A duly executed Notarial Seal authenticates powers of attorney, statutory declarations, academic credentials, and commercial instruments for recognition by foreign embassies and Nigerian registries alike.</p>
+    <p>Through our Ibadan Head Office and correspondence presence in Abuja, Lagos, and Jos, Chambers conducts end-to-end registry searches, charting, deed preparation, perfection of title, and statutory notarisation.</p>`
+  }
+];
+
+function openArticle(idx) {
+  const a = ARTICLES[idx];
+  document.getElementById('mMeta').textContent = a.meta;
+  document.getElementById('mTitle').textContent = a.title;
+  document.getElementById('mBody').innerHTML = a.body;
+  document.getElementById('articleModal').classList.add('open');
+}
+function closeArticle() {
+  document.getElementById('articleModal').classList.remove('open');
+}
+
 function selectDesk(deskTitle) {
   const sel = document.getElementById('aDesk');
   const key = deskTitle.split(' ')[0];
@@ -969,10 +1206,11 @@ function submitAcefieldsWhatsApp(e) {
   e.preventDefault();
   const name = document.getElementById('aName').value.trim();
   const phone = document.getElementById('aPhone').value.trim();
+  const city = document.getElementById('aCity').value;
   const desk = document.getElementById('aDesk').value;
   const msg = document.getElementById('aMsg').value.trim();
-  const text = `Good day *Acefields Attorneys, Solicitors and Notary Public*,\n\nI would like to schedule an appointment via your Chambers Portal:\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Desk:* ${desk}\n• *Summary:* ${msg}`;
-  window.open(`https://wa.me/2348038765986?text=${encodeURIComponent(text)}`, '_blank');
+  const text = `Good day *Acefields Attorneys, Solicitors and Notary Public*,\n\nI would like to schedule an appointment via your Chambers Portal:\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Office:* ${city}\n• *Desk:* ${desk}\n• *Summary:* ${msg}`;
+  window.open(`https://wa.me/2349112111021?text=${encodeURIComponent(text)}`, '_blank');
 }
 </script>
 </body>
