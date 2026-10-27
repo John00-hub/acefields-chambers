@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acefields Attorneys &amp; Solicitors | Legal Practitioners &amp; Notary Public — Ibadan</title>
+<meta name="description" content="Acefields Attorneys & Solicitors (RC 2426385) is a premier full-service law firm and Certified Notary Public in Ibadan, Oyo State — Corporate & Commercial Law, Real Estate & Title Verification, Notarial Authentication, Healthcare Law, Litigation & Probate.">
+<style>
+  :root {
+    --navy-deep: #0A1322;
+    --navy: #101E36;
+    --navy-mid: #182B49;
+    --cream: #FBF9F5;
+    --sand: #F3EFE6;
+    --gold: #C29B52;
+    --gold-bright: #DFBE7B;
+    --ink: #0F172A;
+    --slate: #475569;
+    --muted: #64748B;
+    --border: rgba(15, 23, 42, 0.11);
+    --border-light: rgba(251, 249, 245, 0.13);
+    --serif: 'Georgia', 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top Ribbon */
+  .ribbon {
+    background: var(--navy-deep);
+    color: rgba(251,249,245,0.82);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    padding: 9px 24px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .ribbon-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ribbon a { color: var(--gold-bright); text-decoration: none; font-weight: 600; }
+  .sep { color: var(--gold); margin: 0 8px; }
+
+  /* Navigation */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(251, 249, 245, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .monogram {
+    width: 44px;
+    height: 44px;
+    background: var(--navy);
+    border: 1.5px solid var(--gold);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    color: var(--gold-bright);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .brand-copy strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 17.5px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--navy-deep);
+  }
+  .brand-copy small {
+    display: block;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .nav-menu {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-menu a {
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-menu a:hover { color: var(--gold); }
+  .nav-btn {
+    background: var(--navy);
+    color: var(--cream);
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { background: var(--gold); color: var(--navy-deep); }
+
+  /* Hero */
+  .hero {
+    background: radial-gradient(circle at 85% 20%, rgba(194,155,82,0.18), transparent 46%),
+                linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-mid) 100%);
+    color: var(--cream);
+    padding: 88px 24px 82px;
+  }
+  .hero-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.22fr 0.78fr;
+    gap: 54px;
+    align-items: center;
+  }
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.17em;
+    color: var(--gold-bright);
+    font-weight: 600;
+    margin-bottom: 22px;
+  }
+  .kicker::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--gold-bright);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.9vw, 58px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-bright);
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(251,249,245,0.83);
+    max-width: 590px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 44px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color: var(--navy-deep);
+    text-decoration: none;
+    padding: 15px 26px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-secondary {
+    background: rgba(251,249,245,0.06);
+    color: var(--cream);
+    text-decoration: none;
+    padding: 15px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid rgba(251,249,245,0.24);
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border-light);
+    max-width: 560px;
+  }
+  .stat strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 26px;
+    color: var(--gold-bright);
+    font-weight: 400;
+  }
+  .stat span {
+    font-size: 12px;
+    color: rgba(251,249,245,0.68);
+  }
+
+  /* Quick Desk Panel */
+  .desk-panel {
+    background: rgba(10, 19, 34, 0.76);
+    border: 1px solid rgba(223, 190, 123, 0.34);
+    border-radius: 8px;
+    padding: 32px;
+    backdrop-filter: blur(8px);
+  }
+  .desk-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--gold-bright);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .desk-panel h3 {
+    font-family: var(--serif);
+    font-size: 23px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .desk-panel p {
+    font-size: 13.5px;
+    color: rgba(251,249,245,0.75);
+    margin-bottom: 20px;
+  }
+  .desk-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 20px;
+  }
+  .desk-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 14px;
+    background: rgba(251,249,245,0.05);
+    border: 1px solid rgba(251,249,245,0.1);
+    border-radius: 5px;
+    font-size: 13px;
+    color: var(--cream);
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .desk-item:hover { border-color: var(--gold-bright); }
+  .desk-item b { color: var(--gold-bright); }
+
+  /* Sections */
+  section { padding: 84px 24px; }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .sec-intro { max-width: 680px; margin-bottom: 52px; }
+  .label {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .sec-intro h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.6vw, 42px);
+    font-weight: 400;
+    line-height: 1.18;
+    margin-bottom: 14px;
+    color: var(--navy-deep);
+  }
+  .sec-intro p { color: var(--slate); font-size: 16px; }
+
+  /* Firm Overview */
+  .sand-band {
+    background: var(--sand);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 54px;
+    align-items: center;
+  }
+  .credo {
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 30px 32px;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 12px 32px rgba(10,19,34,0.05);
+  }
+  .credo blockquote {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--navy-deep);
+    margin-bottom: 14px;
+  }
+  .credo cite {
+    font-style: normal;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  /* Practice Cards */
+  .cards-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+    box-shadow: 0 16px 36px rgba(10,19,34,0.06);
+  }
+  .c-num {
+    font-family: var(--serif);
+    font-size: 13.5px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: block;
+    letter-spacing: 0.08em;
+  }
+  .card h3 {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--navy-deep);
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--slate);
+    margin-bottom: 22px;
+    line-height: 1.66;
+  }
+  .c-action {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .c-action:hover { color: var(--gold); }
+
+  /* Notary & Diaspora Feature */
+  .dark-band {
+    background: var(--navy-deep);
+    color: var(--cream);
+  }
+  .bullets {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    margin: 24px 0 32px;
+  }
+  .bullets li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: rgba(251,249,245,0.86);
+  }
+  .bullets li strong { color: var(--gold-bright); }
+  .seal-card {
+    background: rgba(251,249,245,0.04);
+    border: 1px solid rgba(223,190,123,0.3);
+    border-radius: 8px;
+    padding: 36px;
+  }
+
+  /* Contact & Intake */
+  .contact-split {
+    display: grid;
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 48px;
+  }
+  .addr-card {
+    background: var(--sand);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 36px;
+  }
+  .info-block { margin-bottom: 24px; }
+  .info-block small {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .info-block p, .info-block a {
+    font-size: 15px;
+    color: var(--navy-deep);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .intake-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 38px;
+    box-shadow: 0 12px 34px rgba(10,19,34,0.05);
+  }
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--slate);
+    margin-bottom: 6px;
+  }
+  .ctrl {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid rgba(15,23,42,0.18);
+    border-radius: 4px;
+    font-size: 14.5px;
+    font-family: var(--sans);
+    background: var(--cream);
+  }
+  .ctrl:focus { outline: none; border-color: var(--gold); background: #FFF; }
+  .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+  footer {
+    background: var(--navy-deep);
+    color: rgba(251,249,245,0.66);
+    padding: 44px 24px;
+    font-size: 13px;
+    border-top: 1px solid var(--border-light);
+  }
+  .foot-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  @media (max-width: 920px) {
+    .hero-grid, .two-col, .cards-3, .contact-split { grid-template-columns: 1fr; }
+    .nav-menu { display: none; }
+    .hero { padding: 56px 20px; }
+    section { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <div class="ribbon-inner">
+    <div>IBADAN, OYO STATE <span class="sep">•</span> CERTIFIED NOTARY PUBLIC OF NIGERIA <span class="sep">•</span> RC 2426385</div>
+    <div>CHAMBERS DESK: <a href="tel:+2348038765986">+234 803 876 5986</a> <span class="sep">•</span> <a href="tel:+2348179911155">+234 817 991 1155</a></div>
+  </div>
+</div>
+
+<header>
+  <nav class="nav">
+    <a href="#" class="brand">
+      <div class="monogram">AA</div>
+      <div class="brand-copy">
+        <strong>Acefields Attorneys &amp; Solicitors</strong>
+        <small>Legal Practitioners · Notary Public · RC 2426385</small>
+      </div>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#firm">The Firm</a></li>
+      <li><a href="#practice">Practice Areas</a></li>
+      <li><a href="#notary">Notary &amp; Property Desk</a></li>
+      <li><a href="#contact">Consultations</a></li>
+    </ul>
+    <a href="#contact" class="nav-btn">Schedule Consultation →</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="kicker">Ibadan · Serving Nigeria &amp; The Diaspora</span>
+      <h1>Strategic counsel.<br><em>Trusted</em> Notarial authority.</h1>
+      <p class="hero-sub">
+        <strong>Acefields Attorneys &amp; Solicitors</strong> is a premier full-service law firm and Certified Notary Public practice in Ibadan, Oyo State — delivering meticulous representation across corporate governance, property due diligence, notarisation, healthcare law, and dispute resolution.
+      </p>
+      <div class="cta-row">
+        <a href="https://wa.me/2348038765986?text=Good%20day%20Acefields%20Attorneys%20%26%20Solicitors%2C%20I%20would%20like%20to%20schedule%20a%20legal%20consultation." class="btn-primary">Consult via WhatsApp ↗</a>
+        <a href="tel:+2348038765986" class="btn-secondary">Call Chambers: 0803 876 5986</a>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <strong>Notary</strong>
+          <span>Federal Republic of Nigeria</span>
+        </div>
+        <div class="stat">
+          <strong>06</strong>
+          <span>Specialized Practice Desks</span>
+        </div>
+        <div class="stat">
+          <strong>RC 2426385</strong>
+          <span>Registered Legal Practice</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="desk-panel">
+      <span class="desk-tag">Immediate Intake</span>
+      <h3>Select a Chambers Desk</h3>
+      <p>Connect directly with Counsel in Ibadan for local, corporate, or cross-border Diaspora briefs.</p>
+      <div class="desk-list">
+        <div class="desk-item" onclick="selectDesk('Certified Notary Public & Document Authentication')">
+          <span>01 · Certified Notary Public Desk</span><b>→</b>
+        </div>
+        <div class="desk-item" onclick="selectDesk('Real Estate, Title Verification & Perfection')">
+          <span>02 · Property &amp; Title Verification</span><b>→</b>
+        </div>
+        <div class="desk-item" onclick="selectDesk('Corporate Governance, CAC & Legal Audits')">
+          <span>03 · Corporate &amp; Compliance Audits</span><b>→</b>
+        </div>
+        <div class="desk-item" onclick="selectDesk('Civil / Commercial Litigation & ADR')">
+          <span>04 · Litigation &amp; ADR</span><b>→</b>
+        </div>
+        <div class="desk-item" onclick="selectDesk('Medical & Healthcare Regulatory Law')">
+          <span>05 · Medical &amp; Healthcare Law</span><b>→</b>
+        </div>
+      </div>
+      <small style="color:rgba(251,249,245,0.6);font-size:12px;">Monday – Friday · In-Chambers &amp; Virtual Diaspora Consultations</small>
+    </div>
+  </div>
+</section>
+
+<section id="firm" class="sand-band">
+  <div class="wrap two-col">
+    <div>
+      <span class="label">About Chambers</span>
+      <h2 style="font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);font-weight:400;line-height:1.2;margin-bottom:18px;color:var(--navy-deep);">
+        A one-stop legal hub built on precision, confidentiality, and integrity.
+      </h2>
+      <p style="color:var(--slate);margin-bottom:16px;">
+        Operating from Ibadan, Oyo State, <strong>Acefields Attorneys &amp; Solicitors (RC 2426385)</strong> serves corporate institutions, property investors, healthcare providers, NGOs, faith-based organizations, and private individuals across Nigeria and abroad.
+      </p>
+      <p style="color:var(--slate);">
+        Whether Handling complex commercial litigation, conducting independent land registry due diligence in Oyo and Lagos States, executing statutory Notarial authentications for international use, or structuring corporate governance, our counsel is proactive, transparent, and results-driven.
+      </p>
+    </div>
+    <div class="credo">
+      <blockquote>
+        “Every document authenticated, every title verified, and every brief argued carries our personal pledge of diligence and ethical excellence.”
+      </blockquote>
+      <cite>Acefields Attorneys &amp; Solicitors · Ibadan, Oyo State</cite>
+    </div>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="wrap">
+    <div class="sec-intro">
+      <span class="label">Core Practice Areas</span>
+      <h2>Integrated legal representation for everyday and high-stakes matters.</h2>
+      <p>Tailored advisory, transactional precision, and courtroom advocacy across six core sectors.</p>
+    </div>
+
+    <div class="cards-3">
+      <div class="card">
+        <div>
+          <span class="c-num">01 / NOTARIAL AUTHORITY</span>
+          <h3>Certified Notary Public</h3>
+          <p>Official certification, witnessing, and authentication of documents for local and international use — statutory declarations, affidavits, oaths, immigration, academic, and cross-border trade filings.</p>
+        </div>
+        <a href="#contact" onclick="selectDesk('Certified Notary Public & Document Authentication')" class="c-action">Book Notarisation →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <span class="c-num">02 / PROPERTY &amp; LAND</span>
+          <h3>Real Estate &amp; Title Perfection</h3>
+          <p>Thorough Oyo State &amp; South-West land registry due diligence, perfection of title, deeds of assignment, commercial &amp; residential leases, and landlord-tenant dispute resolution.</p>
+        </div>
+        <a href="#contact" onclick="selectDesk('Real Estate, Title Verification & Perfection')" class="c-action">Verify a Property →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <span class="c-num">03 / BUSINESS &amp; GOVERNANCE</span>
+          <h3>Corporate &amp; Commercial Law</h3>
+          <p>Company formation &amp; structuring, commercial contract drafting and negotiation, corporate legal audits, employment &amp; labour advisory, and ongoing regulatory compliance.</p>
+        </div>
+        <a href="#contact" onclick="selectDesk('Corporate Governance, CAC & Legal Audits')" class="c-action">Engage Corporate Desk →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <span class="c-num">04 / ADVOCACY &amp; ADR</span>
+          <h3>Litigation &amp; Dispute Resolution</h3>
+          <p>Decisive representation in civil, commercial, property, human rights, and election-related proceedings across trial and appellate courts, alongside structured mediation and arbitration.</p>
+        </div>
+        <a href="#contact" onclick="selectDesk('Civil / Commercial Litigation & ADR')" class="c-action">Consult Litigation Team →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <span class="c-num">05 / SECTOR SPECIALISM</span>
+          <h3>Medical &amp; Healthcare Law</h3>
+          <p>Dedicated regulatory compliance, clinical governance audits, institutional risk management, and legal advisory for private hospitals, clinics, laboratories, and healthcare professionals.</p>
+        </div>
+        <a href="#contact" onclick="selectDesk('Medical & Healthcare Regulatory Law')" class="c-action">Healthcare Advisory →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <span class="c-num">06 / PRIVATE CLIENT</span>
+          <h3>Family, Wills &amp; Probate</h3>
+          <p>Sensitive, watertight handling of wills drafting, estate planning, letters of administration, probate resealing for Diaspora families, guardianship, and matrimonial matters.</p>
+        </div>
+        <a href="#contact" onclick="selectDesk('Family, Wills & Probate Law')" class="c-action">Schedule Private Brief →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="notary" class="dark-band">
+  <div class="wrap two-col">
+    <div>
+      <span class="kicker">Notary Public &amp; Diaspora Property Desk</span>
+      <h2 style="font-family:var(--serif);font-size:clamp(28px,3.5vw,40px);font-weight:400;line-height:1.2;margin-bottom:16px;">
+        Seamless document authentication &amp; property protection — whether you are in Ibadan or abroad.
+      </h2>
+      <ul class="bullets">
+        <li><span>✦</span><span><strong>Recognized Notary Public Seal:</strong> Fast, authoritative notarisation accepted by foreign embassies, universities, registries, and financial institutions worldwide.</span></li>
+        <li><span>✦</span><span><strong>Diaspora Land Due Diligence:</strong> Independent physical &amp; registry verification in Ibadan and across South-West Nigeria before you commit purchase funds.</span></li>
+        <li><span>✦</span><span><strong>Prepared Consultations:</strong> Clients receive clear document checklists ahead of every in-office or virtual session so matters move swiftly.</span></li>
+      </ul>
+      <a href="#contact" class="btn-primary">Initiate Verification or Notary Request →</a>
+    </div>
+    <div class="seal-card">
+      <span class="desk-tag">Client Engagement Protocol</span>
+      <h3 style="font-family:var(--serif);font-size:24px;font-weight:400;margin-bottom:14px;">Streamlined 3-Step Intake</h3>
+      <p style="font-size:14px;color:rgba(251,249,245,0.78);margin-bottom:18px;">
+        <strong>01 · Submit Enquiry:</strong> Select your required legal or notarial desk below — details arrive instantly on our Chambers WhatsApp desk.<br><br>
+        <strong>02 · Document Checklist &amp; Slot:</strong> Counsel reviews your request and confirms required documents plus your in-person or video appointment time.<br><br>
+        <strong>03 · Execution &amp; Delivery:</strong> Prompt legal action, notarised instruments, or written due-diligence report delivered on schedule.
+      </p>
+      <div style="padding-top:16px;border-top:1px solid var(--border-light);font-size:13px;color:var(--gold-bright);">
+        3 Triple K Complex, Gbelekale Area, Odo-Ona · Ibadan, Oyo State
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact-split">
+    <div class="addr-card">
+      <span class="label">Chambers Contact</span>
+      <h2 style="font-family:var(--serif);font-size:30px;font-weight:400;margin-bottom:24px;color:var(--navy-deep);">Ibadan Chambers</h2>
+
+      <div class="info-block">
+        <small>Office Address</small>
+        <p>3 Triple K Complex, Gbelekale Area,<br>Odo-Ona Kekere (7Up Road Axis),<br>Ibadan, Oyo State, Nigeria.</p>
+      </div>
+
+      <div class="info-block">
+        <small>Direct Chambers &amp; WhatsApp Lines</small>
+        <p><a href="tel:+2348038765986">+234 803 876 5986</a><br><a href="tel:+2348179911155">+234 817 991 1155</a></p>
+      </div>
+
+      <div class="info-block">
+        <small>Practice Registration</small>
+        <p>RC 2426385 · Certified Notary Public of the Federal Republic of Nigeria</p>
+      </div>
+    </div>
+
+    <div class="intake-card">
+      <span class="label">Direct Consultation Desk</span>
+      <h3 style="font-family:var(--serif);font-size:26px;font-weight:400;margin-bottom:20px;color:var(--navy-deep);">Book a Consultation or Notarisation</h3>
+      <form onsubmit="submitAcefieldsWhatsApp(event)">
+        <div class="field">
+          <label>Full Name / Company Name</label>
+          <input id="aName" class="ctrl" required placeholder="e.g. Dr. Adewale Ogunleye / Crestview Hospital Ltd">
+        </div>
+        <div class="field">
+          <label>Phone / WhatsApp Number</label>
+          <input id="aPhone" class="ctrl" required placeholder="e.g. +234 803 000 0000">
+        </div>
+        <div class="field">
+          <label>Legal or Notarial Desk</label>
+          <select id="aDesk" class="ctrl">
+            <option>Certified Notary Public &amp; Document Authentication</option>
+            <option>Real Estate, Title Verification &amp; Perfection</option>
+            <option>Corporate Governance, CAC &amp; Legal Audits</option>
+            <option>Civil / Commercial Litigation &amp; ADR</option>
+            <option>Medical &amp; Healthcare Regulatory Law</option>
+            <option>Family, Wills &amp; Probate Law</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Brief Summary of Instruction</label>
+          <textarea id="aMsg" rows="3" class="ctrl" required placeholder="Briefly state your enquiry or preferred appointment day..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+          Send Straight to Chambers WhatsApp ↗
+        </button>
+        <p class="note">Confidentiality notice: Please reserve sensitive evidentiary attachments until Counsel confirms conflict clearance.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-wrap">
+    <div>© 2026 <strong>Acefields Attorneys &amp; Solicitors (RC 2426385)</strong> · Legal Practitioners &amp; Notary Public.</div>
+    <div>Ibadan, Oyo State, Nigeria · +234 803 876 5986</div>
+  </div>
+</footer>
+
+<script>
+function selectDesk(deskTitle) {
+  const sel = document.getElementById('aDesk');
+  for (let i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].text.includes(deskTitle.split(' ')[0])) {
+      sel.selectedIndex = i;
+      break;
+    }
+  }
+  document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => document.getElementById('aName').focus(), 450);
+}
+
+function submitAcefieldsWhatsApp(e) {
+  e.preventDefault();
+  const name = document.getElementById('aName').value.trim();
+  const phone = document.getElementById('aPhone').value.trim();
+  const desk = document.getElementById('aDesk').value;
+  const msg = document.getElementById('aMsg').value.trim();
+  const text = `Good day *Acefields Attorneys & Solicitors*,\n\nI would like to schedule an appointment via your Chambers Portal:\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Desk:* ${desk}\n• *Summary:* ${msg}`;
+  window.open(`https://wa.me/2348038765986?text=${encodeURIComponent(text)}`, '_blank');
+}
+</script>
+</body>
+</html>
