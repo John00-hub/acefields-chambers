@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Acefields Attorneys &amp; Solicitors | Legal Practitioners &amp; Notary Public — Ibadan</title>
-<meta name="description" content="Acefields Attorneys & Solicitors (RC 2426385) is a premier full-service law firm and Certified Notary Public in Ibadan, Oyo State — Corporate & Commercial Law, Real Estate & Title Verification, Notarial Authentication, Healthcare Law, Litigation & Probate.">
+<title>Acefields Attorneys, Solicitors and Notary Public | Ibadan, Nigeria</title>
+<meta name="description" content="Acefields Attorneys, Solicitors and Notary Public is a full-service Nigerian law firm and Certified Notary Public office in Ibadan, Oyo State, led by Principal Partner Barnabas O. Atungwu, Esq.">
 <style>
   :root {
     --navy-deep: #0A1322;
@@ -89,7 +89,7 @@
     justify-content: center;
     font-family: var(--serif);
     color: var(--gold-bright);
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 0.04em;
     flex-shrink: 0;
@@ -97,9 +97,9 @@
   .brand-copy strong {
     display: block;
     font-family: var(--serif);
-    font-size: 17.5px;
+    font-size: 16.5px;
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.18;
     color: var(--navy-deep);
   }
   .brand-copy small {
@@ -112,7 +112,7 @@
   }
   .nav-menu {
     display: flex;
-    gap: 28px;
+    gap: 26px;
     list-style: none;
   }
   .nav-menu a {
@@ -184,7 +184,7 @@
   .hero-sub {
     font-size: 17px;
     color: rgba(251,249,245,0.83);
-    max-width: 590px;
+    max-width: 600px;
     line-height: 1.7;
     margin-bottom: 36px;
   }
@@ -398,6 +398,101 @@
   }
   .c-action:hover { color: var(--gold); }
 
+  /* Principal Partner Section */
+  .leadership-band {
+    background: #FFFFFF;
+    border-top: 1px solid var(--border);
+  }
+  .principal-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 44px;
+    background: var(--cream);
+    border: 1px solid rgba(194, 155, 82, 0.38);
+    border-radius: 10px;
+    padding: 42px;
+    align-items: center;
+    box-shadow: 0 18px 44px rgba(10, 19, 34, 0.05);
+  }
+  .principal-monogram-box {
+    background: linear-gradient(155deg, var(--navy-deep), var(--navy-mid));
+    border: 1.5px solid var(--gold);
+    border-radius: 8px;
+    padding: 44px 24px;
+    text-align: center;
+    color: var(--cream);
+  }
+  .principal-initials {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold-bright);
+    background: rgba(223, 190, 123, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--gold-bright);
+    letter-spacing: 0.04em;
+  }
+  .principal-monogram-box strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .principal-monogram-box span {
+    display: inline-block;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold-bright);
+    padding: 5px 12px;
+    border: 1px solid rgba(223, 190, 123, 0.35);
+    border-radius: 99px;
+    margin-top: 6px;
+  }
+  .principal-bio h3 {
+    font-family: var(--serif);
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 400;
+    color: var(--navy-deep);
+    margin-bottom: 6px;
+  }
+  .principal-role {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .credential-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .c-pill {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--sand);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: 4px;
+  }
+  .principal-bio p {
+    color: var(--slate);
+    font-size: 15px;
+    line-height: 1.72;
+    margin-bottom: 14px;
+  }
+
   /* Notary & Diaspora Feature */
   .dark-band {
     background: var(--navy-deep);
@@ -498,10 +593,11 @@
   }
 
   @media (max-width: 920px) {
-    .hero-grid, .two-col, .cards-3, .contact-split { grid-template-columns: 1fr; }
+    .hero-grid, .two-col, .cards-3, .contact-split, .principal-card { grid-template-columns: 1fr; }
     .nav-menu { display: none; }
     .hero { padding: 56px 20px; }
     section { padding: 60px 20px; }
+    .principal-card { padding: 28px 22px; }
   }
 </style>
 </head>
@@ -509,7 +605,7 @@
 
 <div class="ribbon">
   <div class="ribbon-inner">
-    <div>IBADAN, OYO STATE <span class="sep">•</span> CERTIFIED NOTARY PUBLIC OF NIGERIA <span class="sep">•</span> RC 2426385</div>
+    <div>IBADAN, OYO STATE <span class="sep">•</span> CERTIFIED NOTARY PUBLIC OF NIGERIA</div>
     <div>CHAMBERS DESK: <a href="tel:+2348038765986">+234 803 876 5986</a> <span class="sep">•</span> <a href="tel:+2348179911155">+234 817 991 1155</a></div>
   </div>
 </div>
@@ -519,14 +615,15 @@
     <a href="#" class="brand">
       <div class="monogram">AA</div>
       <div class="brand-copy">
-        <strong>Acefields Attorneys &amp; Solicitors</strong>
-        <small>Legal Practitioners · Notary Public · RC 2426385</small>
+        <strong>Acefields Attorneys, Solicitors &amp; Notary Public</strong>
+        <small>Barristers · Solicitors · Certified Notary Public</small>
       </div>
     </a>
     <ul class="nav-menu">
       <li><a href="#firm">The Firm</a></li>
       <li><a href="#practice">Practice Areas</a></li>
-      <li><a href="#notary">Notary &amp; Property Desk</a></li>
+      <li><a href="#leadership">Principal Counsel</a></li>
+      <li><a href="#notary">Notary Desk</a></li>
       <li><a href="#contact">Consultations</a></li>
     </ul>
     <a href="#contact" class="nav-btn">Schedule Consultation →</a>
@@ -539,11 +636,11 @@
       <span class="kicker">Ibadan · Serving Nigeria &amp; The Diaspora</span>
       <h1>Strategic counsel.<br><em>Trusted</em> Notarial authority.</h1>
       <p class="hero-sub">
-        <strong>Acefields Attorneys &amp; Solicitors</strong> is a premier full-service law firm and Certified Notary Public practice in Ibadan, Oyo State — delivering meticulous representation across corporate governance, property due diligence, notarisation, healthcare law, and dispute resolution.
+        <strong>Acefields Attorneys, Solicitors and Notary Public</strong> is a premier full-service Nigerian law firm headquartered in Ibadan, Oyo State — delivering meticulous representation across corporate governance, property due diligence, statutory notarisation, healthcare law, and dispute resolution.
       </p>
       <div class="cta-row">
-        <a href="https://wa.me/2348038765986?text=Good%20day%20Acefields%20Attorneys%20%26%20Solicitors%2C%20I%20would%20like%20to%20schedule%20a%20legal%20consultation." class="btn-primary">Consult via WhatsApp ↗</a>
-        <a href="tel:+2348038765986" class="btn-secondary">Call Chambers: 0803 876 5986</a>
+        <a href="https://wa.me/2348038765986?text=Good%20day%20Acefields%20Attorneys%2C%20Solicitors%20and%20Notary%20Public%2C%20I%20would%20like%20to%20schedule%20a%20legal%20consultation." class="btn-primary">Consult via WhatsApp ↗</a>
+        <a href="#leadership" class="btn-secondary">Principal Counsel</a>
       </div>
       <div class="stats-row">
         <div class="stat">
@@ -555,8 +652,8 @@
           <span>Specialized Practice Desks</span>
         </div>
         <div class="stat">
-          <strong>RC 2426385</strong>
-          <span>Registered Legal Practice</span>
+          <strong>Ibadan</strong>
+          <span>Serving Clients Nationwide</span>
         </div>
       </div>
     </div>
@@ -595,17 +692,17 @@
         A one-stop legal hub built on precision, confidentiality, and integrity.
       </h2>
       <p style="color:var(--slate);margin-bottom:16px;">
-        Operating from Ibadan, Oyo State, <strong>Acefields Attorneys &amp; Solicitors (RC 2426385)</strong> serves corporate institutions, property investors, healthcare providers, NGOs, faith-based organizations, and private individuals across Nigeria and abroad.
+        Registered in 2025 under its expanded practice mandate as <strong>Acefields Attorneys, Solicitors and Notary Public</strong>, the firm serves corporate institutions, entrepreneurs, property investors, healthcare providers, NGOs, faith-based organizations, and private individuals across Nigeria and abroad.
       </p>
       <p style="color:var(--slate);">
-        Whether Handling complex commercial litigation, conducting independent land registry due diligence in Oyo and Lagos States, executing statutory Notarial authentications for international use, or structuring corporate governance, our counsel is proactive, transparent, and results-driven.
+        Whether handling complex commercial litigation, conducting independent land registry due diligence in Oyo and Lagos States, executing statutory Notarial authentications for international use, or structuring corporate governance, our counsel is proactive, transparent, and results-driven.
       </p>
     </div>
     <div class="credo">
       <blockquote>
         “Every document authenticated, every title verified, and every brief argued carries our personal pledge of diligence and ethical excellence.”
       </blockquote>
-      <cite>Acefields Attorneys &amp; Solicitors · Ibadan, Oyo State</cite>
+      <cite>Barnabas O. Atungwu, Esq. · Principal</cite>
     </div>
   </div>
 </section>
@@ -650,7 +747,7 @@
         <div>
           <span class="c-num">04 / ADVOCACY &amp; ADR</span>
           <h3>Litigation &amp; Dispute Resolution</h3>
-          <p>Decisive representation in civil, commercial, property, human rights, and election-related proceedings across trial and appellate courts, alongside structured mediation and arbitration.</p>
+          <p>Decisive representation in civil, commercial, property, human rights, and employment proceedings across trial and appellate courts, alongside structured mediation and arbitration.</p>
         </div>
         <a href="#contact" onclick="selectDesk('Civil / Commercial Litigation & ADR')" class="c-action">Consult Litigation Team →</a>
       </div>
@@ -671,6 +768,39 @@
           <p>Sensitive, watertight handling of wills drafting, estate planning, letters of administration, probate resealing for Diaspora families, guardianship, and matrimonial matters.</p>
         </div>
         <a href="#contact" onclick="selectDesk('Family, Wills & Probate Law')" class="c-action">Schedule Private Brief →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="leadership" class="leadership-band">
+  <div class="wrap">
+    <div class="sec-intro">
+      <span class="label">Leadership</span>
+      <h2>Seasoned advocacy. Personal accountability.</h2>
+      <p>Every instruction at Chambers benefits from direct partner-level oversight and strategic clarity.</p>
+    </div>
+
+    <div class="principal-card">
+      <div class="principal-monogram-box">
+        <div class="principal-initials">BA</div>
+        <strong>Barnabas O. Atungwu, Esq.</strong>
+        <span>Notary Public · Nigeria</span>
+      </div>
+      <div class="principal-bio">
+        <h3>Barnabas O. Atungwu, Esq.</h3>
+        <span class="principal-role">Principal · Acefields Attorneys, Solicitors and Notary Public</span>
+        <div class="credential-pills">
+          <span class="c-pill">Barrister &amp; Solicitor of the Supreme Court of Nigeria</span>
+          <span class="c-pill">Notary Public of the Federal Republic of Nigeria</span>
+          <span class="c-pill">Dispute Resolution &amp; Corporate Advisory</span>
+        </div>
+        <p>
+          <strong>Barnabas O. Atungwu, Esq.</strong> serves as Principal of <em>Acefields Attorneys, Solicitors and Notary Public</em>, where he leads the firm’s civil and commercial litigation, real estate &amp; property perfection, corporate compliance, healthcare regulatory, and Notarial practice desks.
+        </p>
+        <p>
+          Appointed a <strong>Notary Public of the Federal Republic of Nigeria</strong>, he is trusted by businesses, institutions, families, and Nigerians in the Diaspora for meticulous due diligence, authoritative document authentication, and resolute courtroom representation across trial and appellate courts.
+        </p>
       </div>
     </div>
   </div>
@@ -699,7 +829,7 @@
         <strong>03 · Execution &amp; Delivery:</strong> Prompt legal action, notarised instruments, or written due-diligence report delivered on schedule.
       </p>
       <div style="padding-top:16px;border-top:1px solid var(--border-light);font-size:13px;color:var(--gold-bright);">
-        3 Triple K Complex, Gbelekale Area, Odo-Ona · Ibadan, Oyo State
+        3 Triple K Complex, Gbelekale Area, Odo-Ona (7Up Road Axis) · Ibadan, Oyo State
       </div>
     </div>
   </div>
@@ -712,6 +842,11 @@
       <h2 style="font-family:var(--serif);font-size:30px;font-weight:400;margin-bottom:24px;color:var(--navy-deep);">Ibadan Chambers</h2>
 
       <div class="info-block">
+        <small>Principal</small>
+        <p>Barnabas O. Atungwu, Esq.<br><span style="font-size:13.5px;color:var(--slate);font-weight:400;">Barrister, Solicitor &amp; Notary Public</span></p>
+      </div>
+
+      <div class="info-block">
         <small>Office Address</small>
         <p>3 Triple K Complex, Gbelekale Area,<br>Odo-Ona Kekere (7Up Road Axis),<br>Ibadan, Oyo State, Nigeria.</p>
       </div>
@@ -719,11 +854,6 @@
       <div class="info-block">
         <small>Direct Chambers &amp; WhatsApp Lines</small>
         <p><a href="tel:+2348038765986">+234 803 876 5986</a><br><a href="tel:+2348179911155">+234 817 991 1155</a></p>
-      </div>
-
-      <div class="info-block">
-        <small>Practice Registration</small>
-        <p>RC 2426385 · Certified Notary Public of the Federal Republic of Nigeria</p>
       </div>
     </div>
 
@@ -765,8 +895,8 @@
 
 <footer>
   <div class="foot-wrap">
-    <div>© 2026 <strong>Acefields Attorneys &amp; Solicitors (RC 2426385)</strong> · Legal Practitioners &amp; Notary Public.</div>
-    <div>Ibadan, Oyo State, Nigeria · +234 803 876 5986</div>
+    <div>© 2026 <strong>Acefields Attorneys, Solicitors and Notary Public</strong>. All rights reserved.</div>
+    <div>Principal: Barnabas O. Atungwu, Esq. · Ibadan, Oyo State · +234 803 876 5986</div>
   </div>
 </footer>
 
@@ -789,7 +919,7 @@ function submitAcefieldsWhatsApp(e) {
   const phone = document.getElementById('aPhone').value.trim();
   const desk = document.getElementById('aDesk').value;
   const msg = document.getElementById('aMsg').value.trim();
-  const text = `Good day *Acefields Attorneys & Solicitors*,\n\nI would like to schedule an appointment via your Chambers Portal:\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Desk:* ${desk}\n• *Summary:* ${msg}`;
+  const text = `Good day *Acefields Attorneys, Solicitors and Notary Public*,\n\nI would like to schedule an appointment via your Chambers Portal:\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Desk:* ${desk}\n• *Summary:* ${msg}`;
   window.open(`https://wa.me/2348038765986?text=${encodeURIComponent(text)}`, '_blank');
 }
 </script>
