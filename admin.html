@@ -59,10 +59,10 @@
 
   <div id="cmsApp" style="display:none;">
     <div class="tabs">
-      <button class="t-btn active" onclick="showTab('galTab', this)">📸 Event Photo Gallery</button>
-      <button class="t-btn" onclick="showTab('newsTab', this)">📰 Legal News &amp; Blog</button>
-      <button class="t-btn" onclick="showTab('teamTab', this)">⚖️ Team Profiles</button>
-      <button class="t-btn" onclick="showTab('revTab', this)">⭐ Testimonials</button>
+      <button class="t-btn active" onclick="showTab('galTab', this)"> Event Photo Gallery</button>
+      <button class="t-btn" onclick="showTab('newsTab', this)"> Legal News &amp; Blog</button>
+      <button class="t-btn" onclick="showTab('teamTab', this)"> Team Profiles</button>
+      <button class="t-btn" onclick="showTab('revTab', this)"> Testimonials</button>
     </div>
 
     <div id="galTab" class="panel active">
@@ -166,9 +166,9 @@ function addPhoto() {
   const caption = document.getElementById('gCap').value.trim();
   if (!title) return alert('Enter event title');
   readImg(document.getElementById('gFile'), dataUrl => {
-    const arr = getArr('ace_gallery_v6');
+    const arr = getArr('ace_gallery_v7');
     arr.unshift({ cat, title, caption, img: dataUrl });
-    setArr('ace_gallery_v6', arr);
+    setArr('ace_gallery_v7', arr);
     alert('Photo published to Chambers Event Gallery!');
   });
 }
@@ -179,9 +179,9 @@ function addArticle() {
   const raw = document.getElementById('nBody').value.trim();
   if (!title) return alert('Enter headline');
   const body = raw.split('\n').filter(Boolean).map(p => `<p>${p}</p>`).join('');
-  const arr = getArr('ace_articles_v6');
+  const arr = getArr('ace_articles_v7');
   arr.unshift({ meta, title, summary, body });
-  setArr('ace_articles_v6', arr);
+  setArr('ace_articles_v7', arr);
   alert('Article published!');
 }
 function addMember() {
@@ -191,9 +191,9 @@ function addMember() {
   if (!name) return alert('Enter name');
   const initials = name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
   readImg(document.getElementById('tFile'), photo => {
-    const arr = getArr('ace_team_v6');
+    const arr = getArr('ace_team_v7');
     arr.push({ initials, name, role, bio, photo });
-    setArr('ace_team_v6', arr);
+    setArr('ace_team_v7', arr);
     alert('Team member added!');
   });
 }
@@ -202,9 +202,9 @@ function addReview() {
   const author = document.getElementById('rAuthor').value.trim();
   const role = document.getElementById('rRole').value.trim();
   if (!quote) return alert('Enter testimonial quote');
-  const arr = getArr('ace_reviews_v6');
+  const arr = getArr('ace_reviews_v7');
   arr.unshift({ quote, author, role });
-  setArr('ace_reviews_v6', arr);
+  setArr('ace_reviews_v7', arr);
   alert('Testimonial added!');
 }
 function delItem(k, idx) {
@@ -214,10 +214,10 @@ function delItem(k, idx) {
 }
 function refreshLists() {
   const map = [
-    ['ace_gallery_v6', 'galList', x => x.title],
-    ['ace_articles_v6', 'newsList', x => x.title],
-    ['ace_team_v6', 'teamList', x => x.name],
-    ['ace_reviews_v6', 'revList', x => x.author + ': ' + x.quote.slice(0,50) + '...']
+    ['ace_gallery_v7', 'galList', x => x.title],
+    ['ace_articles_v7', 'newsList', x => x.title],
+    ['ace_team_v7', 'teamList', x => x.name],
+    ['ace_reviews_v7', 'revList', x => x.author + ': ' + x.quote.slice(0,50) + '...']
   ];
   map.forEach(([k, elId, fn]) => {
     const arr = getArr(k);
