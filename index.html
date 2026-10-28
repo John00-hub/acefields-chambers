@@ -321,7 +321,7 @@
         }
         .principal-seal-card { background: var(--obsidian); border: 1px solid var(--hairline); padding: 42px 24px; text-align: center; position: relative; }
         .principal-seal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--crimson), var(--champagne)); }
-        .principal-seal-card img { width: 92px; height: 92px; object-fit: contain; margin: 0 auto 20px; }
+        .principal-seal-card img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; margin: 0 auto 20px; }
         .principal-seal-card h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 500; color: var(--ivory); margin-bottom: 6px; }
         .principal-seal-card span { display: inline-block; font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--champagne); border: 1px solid var(--hairline-strong); padding: 5px 12px; margin-top: 6px; }
         .principal-details h3 { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 500; color: var(--ivory); margin-bottom: 6px; }
@@ -487,7 +487,17 @@
         }
         .wa-float:hover { transform: translateY(-4px) scale(1.04); background: var(--champagne-light); }
         .wa-float svg { width: 24px; height: 24px; }
-    </style>
+    [hidden]{display:none!important} @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+    
+/* Raised, tactile controls */
+.btn-primary,.nav-cta,.form-submit,.mobile-menu-cta { background:linear-gradient(155deg,#f1d8a8 0%,#d0ac6e 48%,#ad8247 100%); border:1px solid #e6cb98; box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 4px 0 #74522d,0 10px 22px rgba(0,0,0,.3); transition:transform .2s ease,box-shadow .2s ease,filter .2s ease; }
+.btn-primary:hover,.nav-cta:hover,.form-submit:hover,.mobile-menu-cta:hover { background:linear-gradient(155deg,#f4e0ba,#d9b77c 55%,#b58a50);color:#09090b;transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 6px 0 #74522d,0 14px 25px rgba(0,0,0,.35); }
+.btn-primary:active,.nav-cta:active,.form-submit:active,.mobile-menu-cta:active {transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 0 #74522d,0 3px 8px rgba(0,0,0,.3)}
+.btn-secondary,.filter-btn,.lb-btn {box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 3px 0 rgba(0,0,0,.55),0 7px 14px rgba(0,0,0,.2);transition:transform .2s ease,box-shadow .2s ease,background .2s ease,color .2s ease}
+.btn-secondary:hover,.filter-btn:hover,.lb-btn:hover {transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 5px 0 rgba(0,0,0,.5),0 10px 18px rgba(0,0,0,.25)}
+.btn-secondary:active,.filter-btn:active,.lb-btn:active {transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.5)}
+
+</style>
 </head>
 <body>
 
@@ -508,7 +518,7 @@
                 <a href="#practice">Practice</a>
                 <a href="#leadership">Team</a>
                 <a href="#gallery">Archive</a>
-                <a href="#insights">Insights</a>
+                
                 <a href="#locations">Offices</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -529,9 +539,9 @@
             <a href="#firm" class="m-link">The Firm</a>
             <a href="#practice" class="m-link">Practice Areas</a>
             <a href="#leadership" class="m-link">Leadership &amp; Team</a>
-            <a href="#gallery" class="m-link">NBA Dinner &amp; Archive</a>
-            <a href="#testimonials" class="m-link">Client Endorsements</a>
-            <a href="#insights" class="m-link">Legal News</a>
+            <a href="#gallery" class="m-link">Chambers Archive</a>
+            
+            
             <a href="#contact" class="m-link">Contact</a>
         </div>
         <a href="tel:+2349112111021" class="mobile-menu-cta">
@@ -581,7 +591,7 @@
                 </div>
 
                 <div class="hero-visual reveal delay-1">
-                    <img src="assets/hero_arch.jpg" alt="Corporate architectural tower" class="arch-bg">
+                    <img src="assets/hero_arch.jpg" fetchpriority="high" alt="Corporate architectural tower" class="arch-bg">
                     <div class="hero-accent-line" aria-hidden="true"></div>
                     <span class="hero-vertical-text" aria-hidden="true">ATTORNEYS &middot; SOLICITORS &middot; NOTARY PUBLIC &middot; SECRETARIES</span>
                     <div class="hero-plaque">
@@ -620,12 +630,7 @@
                         <p>
                             In <strong>2025</strong>, following the appointment and swearing-in of Principal <strong>Barnabas O. Atungwu, Esq.</strong> as a <strong>Notary Public of the Federal Republic of Nigeria</strong>, the firm formally registered its expanded practice name as <strong>Acefields Attorneys, Solicitors and Notary Public</strong> &mdash; seamlessly integrating courtroom advocacy, retained Company Secretarial governance, and internationally recognised Notarial authentication.
                         </p>
-                        <div class="firm-callout">
-                            <blockquote>
-                                &ldquo;Every instrument bearing our Notarial Seal, every board we advise as Company Secretaries, and every cause we advance in court carries our personal pledge of diligence and ethical clarity.&rdquo;
-                            </blockquote>
-                            <cite>Barnabas O. Atungwu, Esq. &middot; Principal &amp; Notary Public</cite>
-                        </div>
+                        <div class="firm-callout"><blockquote>Committed to diligence, ethical clarity and attentive counsel.</blockquote><cite>Acefields Attorneys</cite></div>
                     </div>
 
                     <div class="firm-meta reveal delay-1">
@@ -776,7 +781,7 @@
                     </div>
 
                     <div class="notarial-visual reveal delay-1">
-                        <img src="assets/notary_justice.jpg" alt="Bronze Scales of Lady Justice">
+                        <img src="assets/notary_conferment.jpg" loading="lazy" alt="Barnabas O. Atungwu at his notary public swearing-in ceremony">
                     </div>
                 </div>
             </div>
@@ -789,7 +794,7 @@
 
                 <div class="principal-feature reveal">
                     <div class="principal-seal-card">
-                        <img src="assets/emblem.png" alt="Acefields Scales Emblem">
+                        <img src="assets/principal_portrait.jpg" loading="lazy" alt="Barnabas O. Atungwu, Esq.">
                         <h4>Barnabas O. Atungwu, Esq.</h4>
                         <span>Notary Public &middot; Nigeria</span>
                     </div>
@@ -822,29 +827,21 @@
                 <div class="gallery-head">
                     <div>
                         <p class="section-label reveal">CHAMBERS ARCHIVE</p>
-                        <h2 class="section-title reveal">NBA DINNER &amp; AWARD<br><em>CEREMONY HIGHLIGHTS.</em></h2>
+                        <h2 class="section-title reveal">MILESTONES IN SERVICE,<br><em>THE CHAMBERS ARCHIVE.</em></h2>
                     </div>
-                    <div class="filter-bar reveal">
-                        <button class="filter-btn active" onclick="filterGallery('ALL', this)">All Archive (9)</button>
-                        <button class="filter-btn" onclick="filterGallery('Award & Conferment', this)">Award &amp; Conferment</button>
-                        <button class="filter-btn" onclick="filterGallery('NBA Bar Dinner', this)">NBA Bar Dinner</button>
-                        <button class="filter-btn" onclick="filterGallery('Executive Portraits', this)">Executive Portraits</button>
+                    <div class="filter-bar reveal" aria-label="Filter event photographs">
+                        <button class="filter-btn active" onclick="filterGallery('ALL', this)">All events</button>
+                        <button class="filter-btn" onclick="filterGallery('Notary Swearing-in', this)">Notary swearing-in</button>
+                        <button class="filter-btn" onclick="filterGallery('2025 Legal Year', this)">2025 Legal Year</button>
+                        <button class="filter-btn" onclick="filterGallery('2026 NBA Dinner', this)">2026 NBA Dinner</button>
                     </div>
                 </div>
 
-                <div class="gallery-grid" id="galleryGrid"></div>
+                <div class="gallery-grid" id="galleryGrid"></div><div style="text-align:center;margin-top:32px"><button id="galleryMore" class="btn-secondary" type="button" onclick="showMoreGallery()">View more photographs</button></div>
             </div>
         </section>
 
-        <section class="testimonials" id="testimonials">
-            <div class="container">
-                <p class="section-label reveal">CLIENT ENDORSEMENTS</p>
-                <h2 class="section-title reveal">TRUSTED BY BOARDS,<br><em>INVESTORS &amp; FAMILIES.</em></h2>
-                <div class="rev-grid" id="reviewsGrid"></div>
-            </div>
-        </section>
-
-        <section class="insights" id="insights">
+<section class="insights" id="insights">
             <div class="container">
                 <p class="section-label reveal">LEGAL NEWS &amp; PUBLICATIONS</p>
                 <h2 class="section-title reveal">STATUTORY UPDATES &amp;<br><em>CHAMBERS COMMENTARY.</em></h2>
@@ -1018,8 +1015,8 @@
                         <li><a href="#firm">The Firm &amp; Heritage</a></li>
                         <li><a href="#practice">Practice Desks</a></li>
                         <li><a href="#leadership">Leadership &amp; Team</a></li>
-                        <li><a href="#gallery">NBA Dinner &amp; Archive</a></li>
-                        <li><a href="#insights">Legal News</a></li>
+                        <li><a href="#gallery">Chambers Archive</a></li>
+                        
                         <li><a href="admin.html">Chambers Admin</a></li>
                     </ul>
                 </div>
@@ -1090,71 +1087,7 @@
             }
         ];
 
-        const DEFAULT_GALLERY = [
-            {
-                cat: "Award & Conferment",
-                title: "NBA Ibadan Branch Special Recognition Award (4th June 2026)",
-                caption: "Principal Partner Barnabas O. Atungwu, Esq. honoured with the Nigerian Bar Association (Ibadan Branch) Special Recognition Award in appreciation of his immense support to the Bar.",
-                img: "assets/gallery/nba_01.jpg",
-                pos: "center 22%"
-            },
-            {
-                cat: "Award & Conferment",
-                title: "Official Presentation of the Special Recognition Plaque",
-                caption: "Senior leaders of the Nigerian Bar Association, Ibadan Branch presenting the Special Recognition Award plaque to Barnabas O. Atungwu, Esq. during the 2026 Bar Dinner.",
-                img: "assets/gallery/nba_02.jpg",
-                pos: "center 18%"
-            },
-            {
-                cat: "Award & Conferment",
-                title: "Citation & Conferment at the NBA Ibadan Podium",
-                caption: "Formal citation and conferment proceedings honouring Barnabas O. Atungwu, Esq. at the 2026 NBA Ibadan Branch Professional Dinner & Award Ceremony.",
-                img: "assets/gallery/nba_03.jpg",
-                pos: "center 18%"
-            },
-            {
-                cat: "NBA Bar Dinner",
-                title: "2026 NBA Ibadan Professional Dinner Celebration",
-                caption: "Barnabas O. Atungwu, Esq. with learned senior colleagues beside the ceremonial 2026 NBA Dinner gavel cake.",
-                img: "assets/gallery/nba_04.jpg",
-                pos: "center 16%"
-            },
-            {
-                cat: "Executive Portraits",
-                title: "Black-Tie Fellowship with Learned Colleagues",
-                caption: "Executive portrait at the 2026 Nigerian Bar Association (Ibadan Branch) Professional Dinner & Award Ceremony.",
-                img: "assets/gallery/nba_05.jpg",
-                pos: "center 16%"
-            },
-            {
-                cat: "Executive Portraits",
-                title: "Red-Carpet Arrival — NBA Ibadan Annual Dinner",
-                caption: "Formal arrival at the 2026 Nigerian Bar Association (Ibadan Branch) Professional Dinner & Award Night.",
-                img: "assets/gallery/nba_06.jpg",
-                pos: "center 18%"
-            },
-            {
-                cat: "NBA Bar Dinner",
-                title: "Grand Banquet Hall — Bench & Bar Fellowship",
-                caption: "Distinguished members of the Bench and Bar gathered in formal fellowship during the 2026 NBA Ibadan Branch Dinner.",
-                img: "assets/gallery/nba_07.jpg",
-                pos: "center 35%"
-            },
-            {
-                cat: "NBA Bar Dinner",
-                title: "Executive Dinner Table Proceedings",
-                caption: "Barnabas O. Atungwu, Esq. and guests seated during award and dinner proceedings at the NBA Ibadan Branch Banquet.",
-                img: "assets/gallery/nba_08.jpg",
-                pos: "center 24%"
-            },
-            {
-                cat: "Executive Portraits",
-                title: "Evening Reception Portrait — NBA Dinner & Awards",
-                caption: "Commemorative reception portrait at the 2026 Nigerian Bar Association (Ibadan Branch) Dinner & Award Ceremony.",
-                img: "assets/gallery/nba_09.jpg",
-                pos: "center 16%"
-            }
-        ];
+        const DEFAULT_GALLERY = [{"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_01.jpg", "hd": "assets/gallery/hd/gal_01.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_13.jpg", "hd": "assets/gallery/hd/gal_13.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "NBA Ibadan Special Recognition Award", "caption": "Award presented to Barnabas Atungwu, Esq. on 4 June 2026 in appreciation of his support to the Bar.", "img": "assets/gallery/thumbs/gal_21.jpg", "hd": "assets/gallery/hd/gal_21.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_02.jpg", "hd": "assets/gallery/hd/gal_02.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_14.jpg", "hd": "assets/gallery/hd/gal_14.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_22.jpg", "hd": "assets/gallery/hd/gal_22.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_03.jpg", "hd": "assets/gallery/hd/gal_03.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_15.jpg", "hd": "assets/gallery/hd/gal_15.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_23.jpg", "hd": "assets/gallery/hd/gal_23.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_04.jpg", "hd": "assets/gallery/hd/gal_04.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_05.jpg", "hd": "assets/gallery/hd/gal_05.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_06.jpg", "hd": "assets/gallery/hd/gal_06.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_07.jpg", "hd": "assets/gallery/hd/gal_07.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_08.jpg", "hd": "assets/gallery/hd/gal_08.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_09.jpg", "hd": "assets/gallery/hd/gal_09.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_10.jpg", "hd": "assets/gallery/hd/gal_10.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_11.jpg", "hd": "assets/gallery/hd/gal_11.jpg", "pos": "center 20%"}, {"cat": "Notary Swearing-in", "title": "Notary Public Swearing-in Ceremony", "caption": "Barnabas O. Atungwu, Esq. at his swearing-in as Notary Public of the Federal Republic of Nigeria.", "img": "assets/gallery/thumbs/gal_12.jpg", "hd": "assets/gallery/hd/gal_12.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_16.jpg", "hd": "assets/gallery/hd/gal_16.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_17.jpg", "hd": "assets/gallery/hd/gal_17.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_18.jpg", "hd": "assets/gallery/hd/gal_18.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_19.jpg", "hd": "assets/gallery/hd/gal_19.jpg", "pos": "center 20%"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service & Celebrations", "caption": "Moments from the 2025 Legal Year service and celebrations.", "img": "assets/gallery/thumbs/gal_20.jpg", "hd": "assets/gallery/hd/gal_20.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_24.jpg", "hd": "assets/gallery/hd/gal_24.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_25.jpg", "hd": "assets/gallery/hd/gal_25.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_26.jpg", "hd": "assets/gallery/hd/gal_26.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_27.jpg", "hd": "assets/gallery/hd/gal_27.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_28.jpg", "hd": "assets/gallery/hd/gal_28.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_29.jpg", "hd": "assets/gallery/hd/gal_29.jpg", "pos": "center 20%"}];
 
         const DEFAULT_REVIEWS = [
             {
@@ -1211,9 +1144,10 @@
 
         let curGalCat = 'ALL';
         let curLbIndex = -1;
+        let galleryLimit = 9;
 
         function getFilteredGallery() {
-            return getStore('ace_gallery_v7', DEFAULT_GALLERY).filter(g => curGalCat === 'ALL' || g.cat === curGalCat);
+            return DEFAULT_GALLERY.concat(getStore('ace_gallery_v7', [])).filter(g => curGalCat === 'ALL' || g.cat === curGalCat);
         }
 
         function renderDynamic() {
@@ -1232,8 +1166,8 @@
             `).join('');
 
             const gal = getFilteredGallery();
-            document.getElementById('galleryGrid').innerHTML = gal.map((g, i) => `
-                <article class="gallery-card" onclick="openGallery(${i})">
+            document.getElementById('galleryGrid').innerHTML = gal.slice(0, galleryLimit).map((g, i) => `
+                <article class="gallery-card" tabindex="0" role="button" aria-label="View ${g.title}" onclick="openGallery(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery(${i})}">
                     <div class="gallery-media">
                         <img src="${g.img}" alt="${g.title}" style="object-position:${g.pos || 'center 20%'};" loading="lazy">
                         <span class="gallery-tag">${g.cat}</span>
@@ -1245,39 +1179,18 @@
                 </article>
             `).join('');
 
-            const revs = getStore('ace_reviews_v7', DEFAULT_REVIEWS);
-            document.getElementById('reviewsGrid').innerHTML = revs.map(r => `
-                <article class="rev-card">
-                    <div>
-                        <div class="rev-stars" aria-hidden="true">${STAR_SVG}</div>
-                        <blockquote>&ldquo;${r.quote}&rdquo;</blockquote>
-                    </div>
-                    <div class="rev-meta">
-                        <strong>${r.author}</strong>
-                        <span>${r.role}</span>
-                    </div>
-                </article>
-            `).join('');
-
-            const arts = getStore('ace_articles_v7', DEFAULT_ARTICLES);
-            document.getElementById('blogGrid').innerHTML = arts.map((a, i) => `
-                <article class="news-card">
-                    <div>
-                        <span class="news-meta">${a.meta}</span>
-                        <h3>${a.title}</h3>
-                        <p>${a.summary}</p>
-                    </div>
-                    <button class="read-btn" onclick="openArticle(${i})">Read Publication ${ARROW_SVG}</button>
-                </article>
-            `).join('');
+            document.getElementById('galleryMore').hidden = gal.length <= galleryLimit;
         }
 
         function filterGallery(cat, btn) {
             curGalCat = cat;
+            galleryLimit = 9;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderDynamic();
         }
+
+        function showMoreGallery() { galleryLimit += 9; renderDynamic(); }
 
         function openGallery(idx) {
             const gal = getFilteredGallery();
@@ -1288,7 +1201,7 @@
             document.getElementById('mTitle').textContent = g.title;
             document.getElementById('mBody').innerHTML = `
                 <div style="background:#050507;border:1px solid rgba(208,172,110,0.22);margin-bottom:18px;display:flex;justify-content:center;">
-                    <img src="${g.img}" alt="${g.title}" style="max-height:62vh;width:auto;object-fit:contain;">
+                    <img src="${g.hd || g.img}" alt="${g.title}" style="max-height:62vh;width:auto;object-fit:contain;">
                 </div>
                 <p>${g.caption}</p>
                 <div class="lb-controls">
