@@ -6,6 +6,20 @@
     <title>Acefields Attorneys, Solicitors and Notary Public | Ibadan · Abuja · Lagos · Jos</title>
     <meta name="description" content="Acefields Attorneys, Solicitors and Notary Public — Established in 2016 and re-registered in 2025 upon appointment as Notary Public for Nigeria. Legal Practitioners, Notary Public and Company Secretarial Practitioners across Ibadan, Abuja, Lagos and Jos.">
     <meta name="theme-color" content="#09090B">
+    <link rel="canonical" href="https://acefieldsattorneys.com.ng/">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Acefields Attorneys, Solicitors and Notary Public">
+    <meta property="og:title" content="Acefields Attorneys, Solicitors and Notary Public">
+    <meta property="og:description" content="Legal Practitioners, Notary Public for Nigeria and Company Secretarial Practitioners. Ibadan HQ with correspondence chambers in Abuja, Lagos and Jos.">
+    <meta property="og:url" content="https://acefieldsattorneys.com.ng/">
+    <meta property="og:image" content="https://acefieldsattorneys.com.ng/assets/og_image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Acefields Attorneys, Solicitors and Notary Public">
+    <meta name="twitter:description" content="Legal Practitioners, Notary Public for Nigeria and Company Secretarial Practitioners across Ibadan, Abuja, Lagos and Jos.">
+    <meta name="twitter:image" content="https://acefieldsattorneys.com.ng/assets/og_image.jpg">
     <link rel="icon" type="image/png" href="assets/emblem.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,24 +27,53 @@
 
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "LegalService",
-        "name": "Acefields Attorneys, Solicitors and Notary Public",
-        "foundingDate": "2016",
-        "telephone": "+2349112111021",
-        "email": "info@acefieldsattorneys.com.ng",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Law Forte Complex, 43, Abeokuta Road, Beside SAO Fuel Station, Odo Ona",
-            "addressLocality": "Ibadan",
-            "addressRegion": "Oyo State",
-            "addressCountry": "NG"
-        },
-        "sameAs": [
-            "https://www.instagram.com/acefieldsattorneys.notaries",
-            "https://www.facebook.com/share/1BoV1zG5Ci/"
-        ]
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "@id": "https://acefieldsattorneys.com.ng/#firm",
+  "name": "Acefields Attorneys, Solicitors and Notary Public",
+  "url": "https://acefieldsattorneys.com.ng/",
+  "logo": "https://acefieldsattorneys.com.ng/assets/emblem.png",
+  "image": "https://acefieldsattorneys.com.ng/assets/og_image.jpg",
+  "foundingDate": "2016",
+  "telephone": "+2349112111021",
+  "email": "info@acefieldsattorneys.com.ng",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Law Forte Complex, 43, Abeokuta Road, Beside SAO Fuel Station, Odo Ona",
+    "addressLocality": "Ibadan",
+    "addressRegion": "Oyo State",
+    "addressCountry": "NG"
+  },
+  "areaServed": [
+    "Ibadan",
+    "Abuja",
+    "Lagos",
+    "Jos"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday"
+      ],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Friday",
+      "opens": "08:00",
+      "closes": "17:00"
     }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/acefieldsattorneys.notaries",
+    "https://www.facebook.com/share/1BoV1zG5Ci/"
+  ]
+}
     </script>
 
     <style>
@@ -155,7 +198,7 @@
         @media (max-width: 1020px) { .nav-links, .nav-cta { display: none; } .nav-hamburger { display: flex; } }
 
         .mobile-menu {
-            position: fixed; inset: 0; background: var(--obsidian); z-index: 1050;
+            position: fixed; inset: 0; background: var(--obsidian); z-index: 995; padding-top: var(--nav-h);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: opacity 0.45s var(--ease-out), visibility 0.45s var(--ease-out);
             padding: 40px 24px;
@@ -322,7 +365,7 @@
         .principal-seal-card { background: var(--obsidian); border: 1px solid var(--hairline); padding: 42px 24px; text-align: center; position: relative; }
         .principal-seal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--crimson), var(--champagne)); }
         .principal-seal-card img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; margin: 0 auto 20px; }
-        .principal-seal-card h4 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 500; color: var(--ivory); margin-bottom: 6px; }
+        .principal-seal-card .seal-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 500; color: var(--ivory); margin-bottom: 6px; }
         .principal-seal-card span { display: inline-block; font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--champagne); border: 1px solid var(--hairline-strong); padding: 5px 12px; margin-top: 6px; }
         .principal-details h3 { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 500; color: var(--ivory); margin-bottom: 6px; }
         .principal-subrole { display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--champagne); margin-bottom: 20px; }
@@ -376,18 +419,7 @@
         .rev-meta span { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--champagne); }
         @media (max-width: 900px) { .rev-grid { grid-template-columns: 1fr; } }
 
-        /* INSIGHTS */
-        .insights { padding: 112px 0; background: var(--obsidian-elevated); border-top: 1px solid var(--hairline); }
-        .news-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .news-card { background: var(--obsidian-card); border: 1px solid var(--hairline); padding: 34px 28px; display: flex; flex-direction: column; justify-content: space-between; transition: border-color 0.35s var(--ease-out), transform 0.35s var(--ease-out); }
-        .news-card:hover { border-color: var(--champagne); transform: translateY(-4px); }
         .news-meta { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--champagne); margin-bottom: 14px; display: block; }
-        .news-card h3 { font-family: var(--font-serif); font-size: 1.28rem; font-weight: 500; color: var(--ivory); line-height: 1.34; margin-bottom: 14px; }
-        .news-card p { font-size: 0.88rem; color: var(--stone); line-height: 1.72; margin-bottom: 24px; }
-        .read-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--champagne); }
-        .read-btn svg { width: 15px; height: 15px; transition: transform 0.3s var(--ease-out); }
-        .news-card:hover .read-btn svg { transform: translateX(4px); }
-        @media (max-width: 900px) { .news-grid { grid-template-columns: 1fr; } }
 
         /* LOCATIONS */
         .locations { padding: 112px 0; border-top: 1px solid var(--hairline); }
@@ -498,6 +530,10 @@
 .btn-secondary:active,.filter-btn:active,.lb-btn:active {transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.5)}
 
 .profile-expanded{margin-top:24px;border:1px solid var(--hairline-strong);background:var(--obsidian-card)}.profile-expanded summary{cursor:pointer;list-style:none;padding:22px 28px;color:var(--champagne);font-size:.73rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}.profile-expanded summary::-webkit-details-marker{display:none}.profile-expanded summary span{font-size:1.5rem;line-height:1}.profile-expanded[open] summary{border-bottom:1px solid var(--hairline)}.profile-content{padding:30px;max-width:1000px}.profile-content h3{font-family:var(--font-serif);color:var(--champagne-light);font-size:1.35rem;font-weight:500;margin:24px 0 12px}.profile-content h3:first-child{margin-top:0}.profile-content p{font-size:.95rem;line-height:1.8;color:var(--stone);margin-bottom:14px}.profile-content strong{color:var(--ivory);font-weight:600}@media(max-width:600px){.profile-content{padding:22px}.profile-expanded summary{padding:20px}}
+.menu-close{position:absolute;top:18px;right:20px;width:48px;height:48px;border:1px solid var(--hairline-strong);border-radius:2px;display:flex;align-items:center;justify-content:center;color:var(--champagne)}
+.filter-btn,.lb-btn{min-height:44px}
+.soc-icon-btn{width:44px;height:44px}
+.footer-col ul li a{display:inline-block;padding:4px 0}
 </style>
 </head>
 <body>
@@ -537,6 +573,9 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <button class="menu-close" id="menuClose" aria-label="Close menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
         <div class="mobile-menu-links">
             <a href="#firm" class="m-link">The Firm</a>
             <a href="#practice" class="m-link">Practice Areas</a>
@@ -797,7 +836,7 @@
                 <div class="principal-feature reveal">
                     <div class="principal-seal-card">
                         <img src="assets/principal_portrait.jpg" loading="lazy" alt="Barnabas Oigocho Atungwu, Esq.">
-                        <h4>Barnabas Oigocho Atungwu, Esq.</h4>
+                        <p class="seal-name">Barnabas Oigocho Atungwu, Esq.</p>
                         <span>Notary Public &middot; Nigeria</span>
                     </div>
                     <div class="principal-details">
@@ -881,13 +920,7 @@
             </div>
         </section>
 
-<section class="insights" id="insights">
-            <div class="container">
-                <p class="section-label reveal">LEGAL NEWS &amp; PUBLICATIONS</p>
-                <h2 class="section-title reveal">STATUTORY UPDATES &amp;<br><em>CHAMBERS COMMENTARY.</em></h2>
-                <div class="news-grid" id="blogGrid"></div>
-            </div>
-        </section>
+
 
         <section class="testimonials" id="testimonials"><div class="container">
 <p class="section-label reveal">CLIENT FEEDBACK</p><h2 class="section-title reveal">WORDS OF TRUST,<br><em>IN THEIR OWN WORDS.</em></h2>
@@ -1035,11 +1068,11 @@
                             </div>
 
                             <button type="submit" class="form-submit">
-                                Request Consultation
+                                Send Brief via WhatsApp
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                             </button>
                             <p class="form-note">
-                                Please withhold confidential evidentiary documents until conflict-of-interest clearance is confirmed by Counsel.
+                                Submitting opens WhatsApp with your brief pre-filled for direct delivery to Chambers. You may also email <a href="mailto:info@acefieldsattorneys.com.ng" style="color:var(--champagne)">info@acefieldsattorneys.com.ng</a>. Please withhold confidential evidentiary documents until conflict-of-interest clearance is confirmed by Counsel.
                             </p>
                         </form>
                     </div>
@@ -1066,8 +1099,7 @@
                         <li><a href="#leadership">Leadership &amp; Team</a></li>
                         <li><a href="#gallery">Chambers Archive</a></li>
                         
-                        <li><a href="admin.html">Chambers Admin</a></li>
-                    </ul>
+                                            </ul>
                 </div>
 
                 <div class="footer-col">
@@ -1136,7 +1168,7 @@
             }
         ];
 
-        const DEFAULT_GALLERY = [{"cat": "Notary Appointment", "title": "Appointment as Notary Public", "caption": "Photo highlights of Barnabas Oigocho Atungwu, Esq.'s appointment as Notary Public.", "img": "assets/gallery/thumbs/notary.jpg", "hd": "assets/gallery/hd/notary.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment", "title": "Appointment as Notary Public", "caption": "Photo highlights of Barnabas Oigocho Atungwu, Esq.'s appointment as Notary Public.", "img": "assets/gallery/thumbs/notary2.jpg", "hd": "assets/gallery/hd/notary2.jpg", "pos": "center center", "fit": "contain"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service", "caption": "Photo highlights from the 2025 Legal Year Service.", "img": "assets/gallery/thumbs/legal.jpg", "hd": "assets/gallery/hd/legal.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career1.jpg", "hd": "assets/gallery/hd/career1.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "2026 NBA Dinner", "title": "NBA Ibadan Special Recognition Award", "caption": "Award presented to Barnabas Atungwu, Esq. on 4 June 2026 in appreciation of his support to the Bar.", "img": "assets/gallery/thumbs/gal_21.jpg", "hd": "assets/gallery/hd/gal_21.jpg", "pos": "center 20%"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner1.jpg", "hd": "assets/gallery/hd/dinner1.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner2.jpg", "hd": "assets/gallery/hd/dinner2.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner3.jpg", "hd": "assets/gallery/hd/dinner3.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner4.jpg", "hd": "assets/gallery/hd/dinner4.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner5.jpg", "hd": "assets/gallery/hd/dinner5.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner6.jpg", "hd": "assets/gallery/hd/dinner6.jpg", "pos": "center center", "fit": "contain"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_22.jpg", "hd": "assets/gallery/hd/gal_22.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_23.jpg", "hd": "assets/gallery/hd/gal_23.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_24.jpg", "hd": "assets/gallery/hd/gal_24.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_25.jpg", "hd": "assets/gallery/hd/gal_25.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_26.jpg", "hd": "assets/gallery/hd/gal_26.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_27.jpg", "hd": "assets/gallery/hd/gal_27.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_28.jpg", "hd": "assets/gallery/hd/gal_28.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_29.jpg", "hd": "assets/gallery/hd/gal_29.jpg", "pos": "center 20%"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas O. Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner7.jpg", "hd": "assets/gallery/hd/dinner7.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career2.jpg", "hd": "assets/gallery/hd/career2.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career3.jpg", "hd": "assets/gallery/hd/career3.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career4.jpg", "hd": "assets/gallery/hd/career4.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career5.jpg", "hd": "assets/gallery/hd/career5.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career6.jpg", "hd": "assets/gallery/hd/career6.jpg", "pos": "center 20%", "fit": "contain"}];
+        const DEFAULT_GALLERY = [{"cat": "Notary Appointment", "title": "Appointment as Notary Public", "caption": "Photo highlights of Barnabas Oigocho Atungwu, Esq.'s appointment as Notary Public.", "img": "assets/gallery/thumbs/notary.jpg", "hd": "assets/gallery/hd/notary.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment", "title": "Appointment as Notary Public", "caption": "Photo highlights of Barnabas Oigocho Atungwu, Esq.'s appointment as Notary Public.", "img": "assets/gallery/thumbs/notary2.jpg", "hd": "assets/gallery/hd/notary2.jpg", "pos": "center center", "fit": "contain"}, {"cat": "2025 Legal Year", "title": "2025 Legal Year Service", "caption": "Photo highlights from the 2025 Legal Year Service.", "img": "assets/gallery/thumbs/legal.jpg", "hd": "assets/gallery/hd/legal.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career1.jpg", "hd": "assets/gallery/hd/career1.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "2026 NBA Dinner", "title": "NBA Ibadan Special Recognition Award", "caption": "Award presented to Barnabas Atungwu, Esq. on 4 June 2026 in appreciation of his support to the Bar.", "img": "assets/gallery/thumbs/gal_21.jpg", "hd": "assets/gallery/hd/gal_21.jpg", "pos": "center 45%"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner1.jpg", "hd": "assets/gallery/hd/dinner1.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner2.jpg", "hd": "assets/gallery/hd/dinner2.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner3.jpg", "hd": "assets/gallery/hd/dinner3.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner4.jpg", "hd": "assets/gallery/hd/dinner4.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner5.jpg", "hd": "assets/gallery/hd/dinner5.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas Oigocho Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner6.jpg", "hd": "assets/gallery/hd/dinner6.jpg", "pos": "center center", "fit": "contain"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_22.jpg", "hd": "assets/gallery/hd/gal_22.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_23.jpg", "hd": "assets/gallery/hd/gal_23.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_24.jpg", "hd": "assets/gallery/hd/gal_24.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_25.jpg", "hd": "assets/gallery/hd/gal_25.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_26.jpg", "hd": "assets/gallery/hd/gal_26.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_27.jpg", "hd": "assets/gallery/hd/gal_27.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_28.jpg", "hd": "assets/gallery/hd/gal_28.jpg", "pos": "center 20%"}, {"cat": "2026 NBA Dinner", "title": "2026 NBA Ibadan Bar Dinner & Recognition", "caption": "Highlights from the NBA Ibadan Branch Annual Professional Bar Dinner and presentation of an award of recognition.", "img": "assets/gallery/thumbs/gal_29.jpg", "hd": "assets/gallery/hd/gal_29.jpg", "pos": "center 20%"}, {"cat": "Notary Appointment Dinner", "title": "Dinner in Honour of the Notary Public Appointment", "caption": "Highlights from the dinner hosted in honour of the appointment of Barnabas O. Atungwu, Esq. as Notary Public.", "img": "assets/gallery/thumbs/dinner7.jpg", "hd": "assets/gallery/hd/dinner7.jpg", "pos": "center center", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career2.jpg", "hd": "assets/gallery/hd/career2.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career3.jpg", "hd": "assets/gallery/hd/career3.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career4.jpg", "hd": "assets/gallery/hd/career4.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career5.jpg", "hd": "assets/gallery/hd/career5.jpg", "pos": "center 20%", "fit": "contain"}, {"cat": "Career Exposure Programme", "title": "Acefields Career Exposure Programme", "caption": "Highlights from the maiden edition of the Acefields Career Exposure Programme for secondary school students, offering early exposure to the legal profession through theoretical and practical sessions, courtroom visits and observation of court sessions.", "img": "assets/gallery/thumbs/career6.jpg", "hd": "assets/gallery/hd/career6.jpg", "pos": "center 20%", "fit": "contain"}];
 
         DEFAULT_GALLERY.splice(3, 0, {"cat": "Recognition", "title": "Icon of Hope Award", "caption": "Icon of Hope Award from the National Association of Nigerian Students (Northern Zone), recognising Barnabas Atungwu, Esq.", "img": "assets/gallery/thumbs/icon_hope.jpg", "hd": "assets/gallery/hd/icon_hope.jpg", "pos": "center 45%"});
 
@@ -1158,26 +1190,7 @@
             }
         ];
 
-        const DEFAULT_ARTICLES = [
-            {
-                meta: "Electricity Law · Regulatory Briefing",
-                title: "Navigating State Electricity Markets Under Nigeria’s Electricity Act",
-                summary: "Key licensing, embedded generation, mini-grid, and Power Purchase Agreement (PPA) considerations for industrial off-takers and investors across Oyo, Lagos, and the FCT.",
-                body: "<p>The enactment of Nigeria’s Electricity Act and the progressive transfer of regulatory oversight to State Electricity Regulatory Commissions have created historic opportunities alongside new compliance obligations for independent power producers, mini-grid developers, and industrial off-takers.</p><p>Entities developing captive, embedded, or mini-grid power solutions must align project structures with applicable federal or state electricity frameworks, grid codes, tariff methodologies, and bankable Power Purchase Agreements (PPAs).</p><p>Our Electricity Law desk advises project sponsors, manufacturers, residential estates, and investors from feasibility and licensing through PPA negotiation and regulatory dispute resolution.</p>"
-            },
-            {
-                meta: "Company Secretarial · CAMA 2020",
-                title: "Essential Post-Incorporation Filings Every Nigerian Board Must Maintain",
-                summary: "Why timely annual returns, Persons with Significant Control (PSC) disclosures, and statutory registers protect corporate directors from regulatory penalties.",
-                body: "<p>Under the Companies and Allied Matters Act (CAMA) 2020, corporate compliance extends well beyond obtaining a Certificate of Incorporation. Maintaining Active status on the Corporate Affairs Commission (CAC) portal requires timely filing of Annual Returns, prompt PSC disclosures, and accurate statutory registers.</p><p>As Company Secretarial Practitioners, Acefields Attorneys provides retained board support, AGM administration, share capital restructuring, and statutory compliance audits.</p>"
-            },
-            {
-                meta: "Notary Public & Property Law",
-                title: "Document Notarisation & Land Title Due Diligence for Diaspora Clients",
-                summary: "A practical safeguard guide for authenticating cross-border powers of attorney and verifying root of title prior to Nigerian property acquisitions.",
-                body: "<p>For Nigerians residing abroad and international organisations transacting in Nigeria, two legal safeguards remain indispensable: proper Notarial authentication of cross-border instruments and independent land registry verification prior to property acquisition.</p><p>A duly executed Notarial Seal authenticates powers of attorney, statutory declarations, academic credentials, and commercial instruments for recognition by foreign embassies and Nigerian registries alike.</p>"
-            }
-        ];
+        
 
         const STAR_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'.repeat(5);
         const ARROW_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
@@ -1220,7 +1233,7 @@
             document.getElementById('galleryGrid').innerHTML = gal.slice(0, galleryLimit).map((g, i) => `
                 <article class="gallery-card" tabindex="0" role="button" aria-label="View ${g.title}" onclick="openGallery(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery(${i})}">
                     <div class="gallery-media">
-                        <img src="${g.img}" alt="${g.title}" style="object-position:${g.pos || 'center 20%'};object-fit:${g.fit || 'cover'};" loading="lazy">
+                        <img src="${g.img}" alt="${g.title}" style="object-position:${g.pos || 'center 20%'};" loading="lazy">
                         <span class="gallery-tag">${g.cat}</span>
                     </div>
                     <div class="gallery-body">
@@ -1263,15 +1276,7 @@
             document.getElementById('readerModal').classList.add('open');
         }
 
-        function openArticle(idx) {
-            curLbIndex = -1;
-            const arts = getStore('ace_articles_v7', DEFAULT_ARTICLES);
-            const a = arts[idx];
-            document.getElementById('mMeta').textContent = a.meta;
-            document.getElementById('mTitle').textContent = a.title;
-            document.getElementById('mBody').innerHTML = a.body;
-            document.getElementById('readerModal').classList.add('open');
-        }
+        
 
         function closeModal() {
             curLbIndex = -1;
@@ -1334,16 +1339,20 @@
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
 
-            ham.addEventListener('click', () => {
-                const open = menu.classList.toggle('open');
+            function setMenu(open) {
+                menu.classList.toggle('open', open);
                 ham.classList.toggle('active', open);
                 document.body.classList.toggle('menu-open', open);
+                ham.setAttribute('aria-expanded', String(open));
+                menu.setAttribute('aria-hidden', String(!open));
+                if (!open) ham.focus();
+            }
+            ham.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+            document.getElementById('menuClose').addEventListener('click', () => setMenu(false));
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false);
             });
-            document.querySelectorAll('.m-link').forEach(a => a.addEventListener('click', () => {
-                menu.classList.remove('open');
-                ham.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }));
+            document.querySelectorAll('.m-link').forEach(a => a.addEventListener('click', () => setMenu(false)));
 
             const obs = new IntersectionObserver((entries, ob) => {
                 entries.forEach(en => {

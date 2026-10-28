@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://acefieldsattorneys.com.ng/sitemap.xml
