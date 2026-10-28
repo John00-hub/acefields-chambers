@@ -71,7 +71,7 @@
   ],
   "sameAs": [
     "https://www.instagram.com/acefieldsattorneys.notaries",
-    "https://www.facebook.com/share/1BoV1zG5Ci/"
+    "https://www.facebook.com/AcefieldsAttorneysandNotaries"
   ]
 }
     </script>
@@ -429,7 +429,7 @@
         .office-box.hq { border-color: var(--champagne); background: linear-gradient(160deg, rgba(208, 172, 110, 0.08), var(--obsidian-card)); }
         .office-tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--champagne); display: block; margin-bottom: 8px; }
         .office-box.hq .office-tag { color: var(--crimson); }
-        .office-box h4 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 500; color: var(--ivory); margin-bottom: 10px; }
+        .office-box .office-name { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 500; color: var(--ivory); margin-bottom: 10px; }
         .office-box p { font-size: 0.88rem; color: var(--stone); line-height: 1.68; }
         .hours-ledger { background: var(--obsidian-card); border: 1px solid var(--hairline-strong); padding: 32px 28px; }
         .hours-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--champagne); margin-bottom: 14px; }
@@ -530,10 +530,17 @@
 .btn-secondary:active,.filter-btn:active,.lb-btn:active {transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.5)}
 
 .profile-expanded{margin-top:24px;border:1px solid var(--hairline-strong);background:var(--obsidian-card)}.profile-expanded summary{cursor:pointer;list-style:none;padding:22px 28px;color:var(--champagne);font-size:.73rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}.profile-expanded summary::-webkit-details-marker{display:none}.profile-expanded summary span{font-size:1.5rem;line-height:1}.profile-expanded[open] summary{border-bottom:1px solid var(--hairline)}.profile-content{padding:30px;max-width:1000px}.profile-content h3{font-family:var(--font-serif);color:var(--champagne-light);font-size:1.35rem;font-weight:500;margin:24px 0 12px}.profile-content h3:first-child{margin-top:0}.profile-content p{font-size:.95rem;line-height:1.8;color:var(--stone);margin-bottom:14px}.profile-content strong{color:var(--ivory);font-weight:600}@media(max-width:600px){.profile-content{padding:22px}.profile-expanded summary{padding:20px}}
-.menu-close{position:absolute;top:18px;right:20px;width:48px;height:48px;border:1px solid var(--hairline-strong);border-radius:2px;display:flex;align-items:center;justify-content:center;color:var(--champagne)}
+.menu-close{position:absolute;top:calc(var(--nav-h) + 14px);right:20px;width:48px;height:48px;border:1px solid var(--hairline-strong);border-radius:2px;display:flex;align-items:center;justify-content:center;color:var(--champagne)}
 .filter-btn,.lb-btn{min-height:44px}
 .soc-icon-btn{width:44px;height:44px}
 .footer-col ul li a{display:inline-block;padding:4px 0}
+@media (max-width:768px){
+ .footer-col ul li a{padding:11px 0}
+ .nav-links a,.m-link{padding:12px 0}
+ .modal-close,.menu-close{min-width:44px;min-height:44px}
+ .office-box a,.footer-legal a{display:inline-block;padding:10px 4px}
+ .form-note a{display:inline-block;padding:8px 2px}
+}
 </style>
 </head>
 <body>
@@ -621,7 +628,7 @@
                             <a href="https://www.instagram.com/acefieldsattorneys.notaries" target="_blank" rel="noopener noreferrer" class="soc-icon-btn" aria-label="Acefields on Instagram">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                             </a>
-                            <a href="https://www.facebook.com/share/1BoV1zG5Ci/" target="_blank" rel="noopener noreferrer" class="soc-icon-btn" aria-label="Acefields on Facebook">
+                            <a href="https://www.facebook.com/AcefieldsAttorneysandNotaries" target="_blank" rel="noopener noreferrer" class="soc-icon-btn" aria-label="Acefields on Facebook">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                             </a>
                             <a href="mailto:info@acefieldsattorneys.com.ng" class="soc-icon-btn" aria-label="Email Chambers">
@@ -905,13 +912,13 @@
                 </div>
 
 
-                <div class="video-feature reveal" style="margin-bottom:44px;border:1px solid var(--hairline-strong);background:var(--obsidian-card)">
-                    <video controls preload="none" playsinline poster="assets/video/dinner_poster.jpg" style="display:block;width:100%;max-height:70vh;background:#050507">
+                <div class="video-feature reveal" style="margin-bottom:44px;border:1px solid var(--hairline-strong);background:var(--obsidian-card);text-align:center">
+                    <video controls preload="none" playsinline poster="assets/video/dinner_poster.jpg" style="display:block;width:100%;max-width:420px;margin:28px auto 0;aspect-ratio:9/16;max-height:74vh;object-fit:cover;background:#050507;border:1px solid var(--hairline)">
                         <source src="assets/video/dinner_highlight.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    <div style="padding:18px 24px">
-                        <h4 style="font-family:var(--font-serif);font-size:1.15rem;font-weight:500;color:var(--ivory);margin-bottom:6px">Video Highlight &mdash; 2026 NBA Law Dinner &amp; Award of Recognition</h4>
+                    <div style="padding:18px 24px 24px">
+                        <h3 style="font-family:var(--font-serif);font-size:1.15rem;font-weight:500;color:var(--ivory);margin-bottom:6px">Video Highlight &mdash; 2026 NBA Law Dinner &amp; Award of Recognition</h3>
                         <p style="font-size:.85rem;color:var(--stone)">Highlights from the Nigerian Bar Association 2026 Law Dinner and the presentation of an award of recognition to Barnabas O. Atungwu, Esq.</p>
                     </div>
                 </div>
@@ -938,22 +945,22 @@
                     <div class="offices-grid">
                         <div class="office-box hq reveal">
                             <span class="office-tag">Head Office &middot; Oyo State</span>
-                            <h4>Ibadan Chambers</h4>
+                            <h3 class="office-name">Ibadan Chambers</h3>
                             <p>Law Forte Complex, 43, Abeokuta Road,<br>Beside SAO Fuel Station, Odo Ona,<br>Ibadan, Oyo State, Nigeria.</p>
                         </div>
                         <div class="office-box reveal delay-1">
                             <span class="office-tag">Correspondence &middot; FCT</span>
-                            <h4>Abuja</h4>
+                            <h3 class="office-name">Abuja</h3>
                             <p>c/o 4, Mubi Close,<br>Garki, Abuja,<br>Federal Capital Territory.</p>
                         </div>
                         <div class="office-box reveal">
                             <span class="office-tag">Correspondence &middot; Lagos State</span>
-                            <h4>Lagos</h4>
+                            <h3 class="office-name">Lagos</h3>
                             <p>c/o No. 27, Oriwu Street, Lekki Phase 1<br>(By Petrocam / ELF Bus Stop, Lekki Right),<br>Lagos State.</p>
                         </div>
                         <div class="office-box reveal delay-1">
                             <span class="office-tag">Correspondence &middot; Plateau State</span>
-                            <h4>Jos</h4>
+                            <h3 class="office-name">Jos</h3>
                             <p>c/o Plot 675, J-Roth House,<br>Davou Mangei Street, Hwolshe,<br>Jos, Plateau State.</p>
                         </div>
                     </div>
@@ -1014,7 +1021,7 @@
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                                 @acefieldsattorneys.notaries
                             </a>
-                            <a href="https://www.facebook.com/share/1BoV1zG5Ci/" target="_blank" rel="noopener noreferrer" class="social-chip">
+                            <a href="https://www.facebook.com/AcefieldsAttorneysandNotaries" target="_blank" rel="noopener noreferrer" class="social-chip">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                                 Facebook Page
                             </a>
@@ -1118,7 +1125,7 @@
                         <li><a href="tel:+2349112111021">+234 911 211 1021</a></li>
                         <li><a href="tel:+2348179911155">+234 817 991 1155</a></li>
                         <li><a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a></li>
-                        <li><a href="https://www.instagram.com/acefieldsattorneys.notaries" target="_blank" rel="noopener">Instagram</a> &middot; <a href="https://www.facebook.com/share/1BoV1zG5Ci/" target="_blank" rel="noopener">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/acefieldsattorneys.notaries" target="_blank" rel="noopener">Instagram</a> &middot; <a href="https://www.facebook.com/AcefieldsAttorneysandNotaries" target="_blank" rel="noopener">Facebook</a></li>
                     </ul>
                 </div>
             </div>
