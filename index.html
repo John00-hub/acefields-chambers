@@ -130,6 +130,8 @@
         @media (max-width: 768px) { .container { padding: 0 24px; } }
         @media (max-width: 480px) { .container { padding: 0 18px; } }
 
+        .nav-active{color:var(--champagne)!important;position:relative}
+        .nav-active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--champagne)}
         .section-label {
             font-size: 0.68rem; font-weight: 600; letter-spacing: 0.34em;
             text-transform: uppercase; color: var(--champagne);
@@ -564,6 +566,9 @@
                 <a href="#gallery">Archive</a>
 <a href="#testimonials">Testimonials</a>
                 
+                <a href="news.html">News</a>
+                <a href="resources.html">Resources</a>
+                <a href="faq.html">FAQ</a>
                 <a href="#locations">Offices</a>
                 <a href="#contact">Contact</a>
             </div>
