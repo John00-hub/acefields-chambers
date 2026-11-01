@@ -525,6 +525,13 @@
 .faq-book a{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--champagne-light);text-decoration:none;border-bottom:1px solid var(--hairline-strong);padding-bottom:5px;transition:color .2s,border-color .2s}
 .faq-book a:hover{color:var(--ivory);border-color:var(--champagne)}
 .faq-item.open .faq-a{max-height:900px}
+
+.faq-table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-family:var(--font-sans);font-size:.82rem}
+.faq-table th{text-align:left;padding:11px 12px;border-bottom:1px solid var(--hairline-strong);color:var(--champagne-light);font-weight:600;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;line-height:1.4}
+.faq-table td{padding:11px 12px;border-bottom:1px solid var(--hairline);color:var(--stone);line-height:1.5;vertical-align:top}
+.faq-table td:first-child{color:var(--ivory)}
+.faq-fine{font-size:.8rem;color:var(--muted);padding:8px 0 0}
+@media(max-width:640px){.faq-table{font-size:.74rem}.faq-table th,.faq-table td{padding:9px 7px}}
 </style>
 <script type="application/ld+json">
 {
@@ -728,7 +735,20 @@
   </div>
   <div class="faq-item">
     <button class="faq-q" type="button" aria-expanded="false">How long does it take to register a private Limited Liability Company, Business Name or Incorporated Trustees?</button>
-    <div class="faq-a"><p>The timeline for registration at the Corporate Affairs Commission is determined by the Commission. In the chambers' experience: a Business Name takes between 1 hour and 3 days. A Private Limited Liability Company takes between 1 hour and 7 working days. Incorporated Trustees, NGOs, churches, mosques and foundations take from 40 days, inclusive of the Registrar General's Consent.</p><p class="faq-book"><a href="index.html#contact">Book a session with the chambers &#8599;</a></p></div>
+    <div class="faq-a">
+      <p>The timeline for registration at the Corporate Affairs Commission is determined by the Commission. The chambers work to two measures: the full period from instruction, and the period from payment and submission of the application to the Commission.</p>
+      <table class="faq-table">
+        <thead><tr><th>Application</th><th>Full period from instruction</th><th>From payment and submission to CAC</th></tr></thead>
+        <tbody>
+          <tr><td>Business Name</td><td>1 hour to 3 days</td><td>3 hours</td></tr>
+          <tr><td>Private Limited Liability Company</td><td>1 hour to 7 working days</td><td>6 to 12 hours</td></tr>
+          <tr><td>Incorporated Trustees: Registrar General's Consent</td><td>Included in the period below</td><td>Within 2 working days</td></tr>
+          <tr><td>Incorporated Trustees: Registration</td><td>From 40 days, inclusive of the Consent</td><td>Within 3 working days</td></tr>
+        </tbody>
+      </table>
+      <p class="faq-fine">For Incorporated Trustees, NGOs, churches, mosques and foundations, the overall period includes newspaper publications, the minutes of meeting and the Trustees Declaration Form.</p>
+      <p class="faq-book"><a href="index.html#contact">Book a session with the chambers &#8599;</a></p>
+    </div>
   </div>
   <div class="faq-item">
     <button class="faq-q" type="button" aria-expanded="false">Will my information remain confidential?</button>
