@@ -115,20 +115,20 @@
             backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--hairline);
         }
-        .site-nav .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .site-nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
         .nav-brand { display: flex; align-items: center; gap: 13px; flex-shrink: 0; }
         .nav-emblem { width: 42px; height: 42px; object-fit: contain; flex-shrink: 0; }
         .nav-wordmark { display: flex; flex-direction: column; }
         .nav-logo-main { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; letter-spacing: 0.09em; color: var(--ivory); line-height: 1.05; }
         .nav-logo-sub { font-size: 0.52rem; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; color: var(--champagne); margin-top: 4px; }
-        .nav-links { display: flex; align-items: center; gap: 20px; }
-        .nav-links a { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.09em; white-space: nowrap; text-transform: uppercase; color: var(--stone); position: relative; padding: 6px 0; }
+        .nav-links { display: flex; align-items: center; gap: 22px; }
+        .nav-links a { font-size: 0.66rem; font-weight: 400; letter-spacing: 0.08em; white-space: nowrap; text-transform: uppercase; color: var(--stone); position: relative; padding: 6px 0; }
         .nav-links a:hover, .nav-links a.active { color: var(--ivory); }
         .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--champagne); transition: width 0.4s var(--ease-out); }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
         .nav-cta {
-            display: inline-flex; align-items: center; gap: 9px;
-            padding: 11px 22px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
+            display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+            padding: 11px 18px; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.11em;
             text-transform: uppercase; color: var(--obsidian); background: var(--champagne);
             border: 1px solid var(--champagne); border-radius: 2px; transition: all 0.4s var(--ease-out); flex-shrink: 0;
         }
@@ -138,7 +138,8 @@
         .nav-hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .nav-hamburger.active span:nth-child(2) { opacity: 0; }
         .nav-hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-        @media (max-width: 1020px) { .nav-links, .nav-cta { display: none; } .nav-hamburger { display: flex; } }
+        @media (max-width: 1200px) { .nav-links { gap: 15px; } .nav-links a { font-size: 0.64rem; letter-spacing: 0.07em; } }
+        @media (max-width: 1040px) { .nav-links, .nav-cta { display: none; } .nav-hamburger { display: flex; } }
 
         .mobile-menu {
             position: fixed; inset: 0; background: var(--obsidian); z-index: 995; padding-top: var(--nav-h);
@@ -367,7 +368,7 @@
         /* LOCATIONS */
         .locations { padding: 112px 0; border-top: 1px solid var(--hairline); }
         .loc-layout { margin-top: 48px; display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 44px; align-items: start; }
-        .offices-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .offices-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
         .office-box { background: var(--obsidian-card); border: 1px solid var(--hairline); padding: 28px 24px; }
         .office-box.hq { border-color: var(--champagne); background: linear-gradient(160deg, rgba(208, 172, 110, 0.08), var(--obsidian-card)); }
         .office-tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--champagne); display: block; margin-bottom: 8px; }
@@ -542,7 +543,6 @@
                 
                 <a href="news.html" class="nav-active" aria-current="page">News</a>
                 <a href="resources.html" class="nav-active" aria-current="page">Resources</a>
-                <a href="templates.html">Templates</a>
                 <a href="faq.html" class="nav-active" aria-current="page">FAQ</a>
                 <a href="index.html#locations">Offices</a>
                 <a href="index.html#contact">Contact</a>
