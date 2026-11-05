@@ -567,7 +567,9 @@
 </section>
 <section class="page-body">
   <div class="container">
-    
+
+<div id="liveArticles" style="margin-bottom:34px;"></div>
+
 <div class="pg-grid">
 
   <article class="pg-card" style="border-color:var(--hairline-strong)">
@@ -751,9 +753,30 @@
                 .filter(g => curGalCat === 'ALL' || g.cat === curGalCat);
         }
 
+        function renderLiveArticles() {
+            const box = document.getElementById('liveArticles');
+            if (!box) return;
+            const posts = (window.aceLive && window.aceLive.posts) || [];
+            if (!posts.length) { box.innerHTML = ''; return; }
+            box.innerHTML = posts.map(function (p) {
+                const when = p.created_at ? new Date(p.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+                return '<article class="pg-card" style="border-color:var(--gold,#D0AC6E);margin-bottom:14px;">'
+                    + '<span class="pg-date">' + (when || 'News') + '</span>'
+                    + '<h3>' + escapeText(p.title || '') + '</h3>'
+                    + (p.summary ? '<p>' + escapeText(p.summary) + '</p>' : '')
+                    + (p.category ? '<span class="pg-tag">' + escapeText(p.category) + '</span>' : '')
+                    + '</article>';
+            }).join('');
+        }
+        function escapeText(v) {
+            return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
         document.addEventListener('ace:live', function () {
+            renderLiveArticles();
             if (typeof renderDynamic === 'function') renderDynamic();
         });
+        if (window.aceLive && window.aceLive.loaded) renderLiveArticles();
 
         function renderDynamic() {
             const liveTeam = (window.aceLive && window.aceLive.team || []).map(m => ({
