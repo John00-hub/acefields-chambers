@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Firm Admin Portal | Acefields Attorneys, Solicitors &amp; Notary Public</title>
 <style>
   :root {
@@ -49,6 +52,7 @@
       </div>
     </div>
     <span id="whoAmI" style="font-size:12px;color:var(--muted);"></span>
+    <span style="font-size:10.5px;color:var(--muted);opacity:.7;">build 2026-11-05c</span>
     <a href="index.html" class="btn-back">← View Live Firm Website</a>
     <button class="btn-back" style="background:transparent;cursor:pointer;" onclick="signOut()">Sign out</button>
   </div>
@@ -58,7 +62,7 @@
     <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;">Sign in with the chambers account to publish Legal News, Event Photos, Team Profiles &amp; Testimonials.</p>
     <input id="loginEmail" type="email" placeholder="Chambers email" autocomplete="username">
     <input id="loginPass" type="password" placeholder="Password" autocomplete="current-password">
-    <button class="btn" style="width:100%;" onclick="signIn()">Sign In</button>
+    <button class="btn" id="signBtn" style="width:100%;" onclick="signIn()">Sign In</button>
     <p id="loginMsg" style="font-size:12px;color:var(--crimson);margin-top:12px;"></p>
   </div>
 
@@ -178,18 +182,26 @@ async function signIn() {
   const msg = document.getElementById('loginMsg');
   msg.textContent = '';
   if (!email || !pass) { msg.textContent = 'Enter your email and password.'; return; }
+  const btn = document.getElementById('signBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Signing in...'; }
   msg.style.color = 'var(--muted)'; msg.textContent = 'Signing in...';
+  function resetBtn() { if (btn) { btn.disabled = false; btn.textContent = 'Sign In'; } }
   try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(function () { ctrl.abort(); }, 20000);
     const r = await fetch(SUPA.url + '/auth/v1/token?grant_type=password', {
       method: 'POST',
       headers: { 'apikey': SUPA.key, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, password: pass })
+      body: JSON.stringify({ email: email, password: pass }),
+      signal: ctrl.signal
     });
+    clearTimeout(timer);
     const d = await r.json();
     if (!r.ok || !d.access_token) {
       console.warn('signin failed', r.status, d);
       msg.style.color = 'var(--crimson)';
       msg.textContent = 'Sign in failed. Check the email and password.';
+      resetBtn();
       return;
     }
     saveSession(d);
@@ -198,7 +210,11 @@ async function signIn() {
   } catch (e) {
     console.warn('signin threw', e);
     msg.style.color = 'var(--crimson)';
-    msg.textContent = 'Network error. Try again.';
+    var off = (e && e.name === 'AbortError');
+    msg.textContent = off
+      ? 'The connection timed out. Check your data connection and try again.'
+      : 'Network error. Try again.';
+    resetBtn();
   }
 }
 
