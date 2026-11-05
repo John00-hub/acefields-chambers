@@ -743,11 +743,24 @@
         let galleryLimit = 9;
 
         function getFilteredGallery() {
-            return DEFAULT_GALLERY.concat(getStore('ace_gallery_v7', [])).filter(g => curGalCat === 'ALL' || g.cat === curGalCat);
+            const live = (window.aceLive && window.aceLive.gallery || []).map(g => ({
+                cat: 'Event Gallery', title: g.caption || 'Event Photo', caption: g.caption || '',
+                img: g.image_url || '', hd: g.image_url || '', pos: 'center center'
+            }));
+            return DEFAULT_GALLERY.concat(getStore('ace_gallery_v7', [])).concat(live)
+                .filter(g => curGalCat === 'ALL' || g.cat === curGalCat);
         }
 
+        document.addEventListener('ace:live', function () {
+            if (typeof renderDynamic === 'function') renderDynamic();
+        });
+
         function renderDynamic() {
-            const team = getStore('ace_team_v7', DEFAULT_TEAM);
+            const liveTeam = (window.aceLive && window.aceLive.team || []).map(m => ({
+                name: m.name, role: m.role || '', bio: m.bio || '', photo: m.photo_url || '',
+                initials: (m.name || '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase()
+            }));
+            const team = liveTeam.length ? liveTeam : getStore('ace_team_v7', DEFAULT_TEAM);
             document.getElementById('teamGrid').innerHTML = team.map(m => `
                 <article class="team-card">
                     <div class="team-top">
@@ -915,6 +928,42 @@
             } catch (e) {}
         })();
     </script>
+
+
+<script>
+/* ===== Acefields live content bridge (Supabase) =====
+   Public pages read only PUBLISHED rows. The publishable key below is
+   safe to expose. The service_role key must never appear in any page. */
+window.ACE_SUPA = {
+  url: 'https://dugdeofuabjpqmyaszur.supabase.co',
+  key: 'sb_publishable_UfW-w-9jbqs4Y7Rc2TtpYw_cKm2uRbp'
+};
+window.aceLive = { posts: [], team: [], testimonials: [], gallery: [], loaded: false };
+
+async function aceFetch(table, query) {
+  const r = await fetch(window.ACE_SUPA.url + '/rest/v1/' + table + '?' + query, {
+    headers: { apikey: window.ACE_SUPA.key, Authorization: 'Bearer ' + window.ACE_SUPA.key }
+  });
+  if (!r.ok) throw new Error(table + ' ' + r.status);
+  return r.json();
+}
+
+(async function () {
+  try {
+    const [posts, team, testimonials, gallery] = await Promise.all([
+      aceFetch('posts', 'select=title,slug,summary,body,category,image_url,author,created_at&published=eq.true&order=created_at.desc&limit=50'),
+      aceFetch('team', 'select=name,role,bio,photo_url,sort_order&published=eq.true&order=sort_order.asc'),
+      aceFetch('testimonials', 'select=client_name,quote,source,sort_order&published=eq.true&order=sort_order.asc'),
+      aceFetch('gallery', 'select=caption,image_url,event_date,sort_order&published=eq.true&order=sort_order.asc')
+    ]);
+    window.aceLive = { posts, team, testimonials, gallery, loaded: true };
+    document.dispatchEvent(new CustomEvent('ace:live'));
+  } catch (e) {
+    console.warn('Live content unavailable, showing built-in content.', e);
+    window.aceLive.loaded = false;
+  }
+})();
+</script>
 
 </body>
 </html>

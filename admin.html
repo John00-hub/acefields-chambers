@@ -48,14 +48,18 @@
         <small>Event Gallery · Legal News · Team · Client Reviews</small>
       </div>
     </div>
+    <span id="whoAmI" style="font-size:12px;color:var(--muted);"></span>
     <a href="index.html" class="btn-back">← View Live Firm Website</a>
+    <button class="btn-back" style="background:transparent;cursor:pointer;" onclick="signOut()">Sign out</button>
   </div>
 
   <div id="loginGate">
     <h2 style="font-size:19px;margin-bottom:8px;color:var(--gold-hi);">Authorised Access</h2>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;">Enter Firm Passcode to manage Legal News, Event Photos, Team Profiles &amp; Testimonials. (Preview PIN: <code>2026</code>)</p>
-    <input id="pinInput" type="password" placeholder="Enter Firm Passcode (2026)">
-    <button class="btn" style="width:100%;" onclick="unlock()">Unlock Admin Dashboard →</button>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px;">Sign in with the chambers account to publish Legal News, Event Photos, Team Profiles &amp; Testimonials.</p>
+    <input id="loginEmail" type="email" placeholder="Chambers email" autocomplete="username">
+    <input id="loginPass" type="password" placeholder="Password" autocomplete="current-password">
+    <button class="btn" style="width:100%;" onclick="signIn()">Sign In</button>
+    <p id="loginMsg" style="font-size:12px;color:var(--crimson);margin-top:12px;"></p>
   </div>
 
   <div id="cmsApp" style="display:none;">
@@ -66,7 +70,7 @@
       <button class="t-btn" onclick="showTab('revTab', this)"> Testimonials</button>
     </div>
 
-    <p style="padding:14px;border:1px solid #d0ac6e;margin:12px 0">Demo only: changes are saved in this browser on this device. They do not publish to the public website. The passcode is not secure authentication.</p>
+    <p style="padding:14px;border:1px solid #d0ac6e;margin:12px 0"></p>
     <div id="galTab" class="panel active">
       <h3 style="margin-bottom:12px;color:var(--gold-hi);">Upload Event / Firm Picture</h3>
       <label>Category</label>
@@ -128,19 +132,92 @@
 </div>
 
 <script>
-function unlock() {
-  if (document.getElementById('pinInput').value.trim() === '2026') {
-    document.getElementById('loginGate').style.display = 'none';
-    document.getElementById('cmsApp').style.display = 'block';
-    refreshLists();
-  } else { alert('Passcode is 2026'); }
+/* ===== Acefields CMS: Supabase backed =====
+   Only the publishable key is used here. Row Level Security requires a
+   signed-in user for every write, so the key cannot be abused. */
+const SUPA = {
+  url: 'https://dugdeofuabjpqmyaszur.supabase.co',
+  key: 'sb_publishable_UfW-w-9jbqs4Y7Rc2TtpYw_cKm2uRbp'
+};
+const SESSION_KEY = 'ace_session_v1';
+let SESSION = null;
+
+function api(path, opts) {
+  opts = opts || {};
+  const headers = Object.assign({
+    'apikey': SUPA.key,
+    'Content-Type': 'application/json'
+  }, opts.headers || {});
+  if (SESSION && SESSION.access_token) headers['Authorization'] = 'Bearer ' + SESSION.access_token;
+  return fetch(SUPA.url + path, Object.assign({}, opts, { headers: headers }));
 }
+
+function saveSession(d) {
+  SESSION = d;
+  try { localStorage.setItem(SESSION_KEY, JSON.stringify({ access_token: d.access_token, refresh_token: d.refresh_token, email: (d.user || {}).email })); } catch (e) {}
+}
+function restoreSession() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return false;
+    const s = JSON.parse(raw);
+    if (!s.access_token) return false;
+    SESSION = { access_token: s.access_token, refresh_token: s.refresh_token, user: { email: s.email } };
+    return true;
+  } catch (e) { return false; }
+}
+function signOut() {
+  SESSION = null;
+  try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
+  location.reload();
+}
+
+async function signIn() {
+  const email = (document.getElementById('loginEmail').value || '').trim();
+  const pass = document.getElementById('loginPass').value || '';
+  const msg = document.getElementById('loginMsg');
+  msg.textContent = '';
+  if (!email || !pass) { msg.textContent = 'Enter your email and password.'; return; }
+  msg.style.color = 'var(--muted)'; msg.textContent = 'Signing in...';
+  try {
+    const r = await fetch(SUPA.url + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: { 'apikey': SUPA.key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: pass })
+    });
+    const d = await r.json();
+    if (!r.ok || !d.access_token) {
+      console.warn('signin failed', r.status, d);
+      msg.style.color = 'var(--crimson)';
+      msg.textContent = 'Sign in failed. Check the email and password.';
+      return;
+    }
+    saveSession(d);
+    msg.textContent = '';
+    enterApp();
+  } catch (e) {
+    console.warn('signin threw', e);
+    msg.style.color = 'var(--crimson)';
+    msg.textContent = 'Network error. Try again.';
+  }
+}
+
+function enterApp() {
+  document.getElementById('loginGate').style.display = 'none';
+  const app = document.getElementById('cmsApp');
+  app.style.display = 'block';
+  const who = document.getElementById('whoAmI');
+  if (who) who.textContent = 'Signed in as ' + ((SESSION.user || {}).email || 'chambers');
+  refreshLists();
+}
+
 function showTab(id, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
 }
+
 function readImg(inputEl, cb) {
   const f = inputEl.files && inputEl.files[0];
   if (!f) return cb('');
@@ -159,75 +236,131 @@ function readImg(inputEl, cb) {
   };
   reader.readAsDataURL(f);
 }
-function getArr(k) { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch(e) { return []; } }
-function setArr(k, v) { localStorage.setItem(k, JSON.stringify(v)); refreshLists(); }
 
-function addPhoto() {
-  const cat = document.getElementById('gCat').value;
-  const title = document.getElementById('gTitle').value.trim();
-  const caption = document.getElementById('gCap').value.trim();
+function slugify(t) {
+  return (t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+}
+
+async function insertRow(table, row) {
+  const r = await api('/rest/v1/' + table, {
+    method: 'POST',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify(row)
+  });
+  if (!r.ok) {
+    const t = await r.text();
+    throw new Error(table + ' ' + r.status + ' ' + t.slice(0, 160));
+  }
+}
+
+async function addPhoto() {
+  const cat = (document.getElementById('gCat').value || '').trim();
+  const title = (document.getElementById('gTitle').value || '').trim();
+  const caption = (document.getElementById('gCap').value || '').trim();
   if (!title) return alert('Enter event title');
-  readImg(document.getElementById('gFile'), dataUrl => {
-    const arr = getArr('ace_gallery_v7');
-    arr.unshift({ cat, title, caption, img: dataUrl });
-    setArr('ace_gallery_v7', arr);
-    alert('Photo published to the Firm Event Gallery!');
+  readImg(document.getElementById('gFile'), async dataUrl => {
+    try {
+      await insertRow('gallery', { caption: (title + (caption ? ' ' + caption : '')).trim(), image_url: dataUrl, event_date: null, published: true });
+      document.getElementById('gTitle').value = '';
+      document.getElementById('gCap').value = '';
+      alert('Photo published to the Firm Event Gallery.');
+      refreshLists();
+    } catch (e) { alert('Could not publish photo. ' + e.message); }
   });
 }
-function addArticle() {
-  const meta = document.getElementById('nMeta').value.trim() || 'Legal Update';
-  const title = document.getElementById('nTitle').value.trim();
-  const summary = document.getElementById('nSum').value.trim();
-  const raw = document.getElementById('nBody').value.trim();
+
+async function addArticle() {
+  const category = (document.getElementById('nMeta').value || '').trim() || 'Legal News & Updates';
+  const title = (document.getElementById('nTitle').value || '').trim();
+  const summary = (document.getElementById('nSum').value || '').trim();
+  const raw = (document.getElementById('nBody').value || '').trim();
   if (!title) return alert('Enter headline');
-  const body = raw.split('\n').filter(Boolean).map(p => `<p>${p}</p>`).join('');
-  const arr = getArr('ace_articles_v7');
-  arr.unshift({ meta, title, summary, body });
-  setArr('ace_articles_v7', arr);
-  alert('Article published!');
+  const body = raw.split('\n').filter(Boolean).map(p => '<p>' + p + '</p>').join('');
+  try {
+    await insertRow('posts', { title: title, slug: slugify(title) + '-' + Date.now().toString().slice(-5), summary: summary, body: body, category: category, author: (SESSION.user || {}).email || '', published: true });
+    document.getElementById('nTitle').value = '';
+    document.getElementById('nSum').value = '';
+    document.getElementById('nBody').value = '';
+    alert('Article published to the live website.');
+    refreshLists();
+  } catch (e) { alert('Could not publish. ' + e.message); }
 }
-function addMember() {
-  const name = document.getElementById('tName').value.trim();
-  const role = document.getElementById('tRole').value.trim();
-  const bio = document.getElementById('tBio').value.trim();
+
+async function addMember() {
+  const name = (document.getElementById('tName').value || '').trim();
+  const role = (document.getElementById('tRole').value || '').trim();
+  const bio = (document.getElementById('tBio').value || '').trim();
   if (!name) return alert('Enter name');
-  const initials = name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-  readImg(document.getElementById('tFile'), photo => {
-    const arr = getArr('ace_team_v7');
-    arr.push({ initials, name, role, bio, photo });
-    setArr('ace_team_v7', arr);
-    alert('Team member added!');
+  readImg(document.getElementById('tFile'), async photo => {
+    try {
+      await insertRow('team', { name: name, role: role, bio: bio, photo_url: photo, published: true });
+      document.getElementById('tName').value = '';
+      document.getElementById('tRole').value = '';
+      document.getElementById('tBio').value = '';
+      alert('Team member added.');
+      refreshLists();
+    } catch (e) { alert('Could not add team member. ' + e.message); }
   });
 }
-function addReview() {
-  const quote = document.getElementById('rQuote').value.trim();
-  const author = document.getElementById('rAuthor').value.trim();
-  const role = document.getElementById('rRole').value.trim();
+
+async function addReview() {
+  const quote = (document.getElementById('rQuote').value || '').trim();
+  const author = (document.getElementById('rAuthor').value || '').trim();
+  const role = (document.getElementById('rRole').value || '').trim();
   if (!quote) return alert('Enter testimonial quote');
-  const arr = getArr('ace_reviews_v7');
-  arr.unshift({ quote, author, role });
-  setArr('ace_reviews_v7', arr);
-  alert('Testimonial added!');
+  try {
+    await insertRow('testimonials', { client_name: author || 'Client', quote: quote, source: role || null, published: true });
+    document.getElementById('rQuote').value = '';
+    document.getElementById('rAuthor').value = '';
+    document.getElementById('rRole').value = '';
+    alert('Testimonial added.');
+    refreshLists();
+  } catch (e) { alert('Could not add testimonial. ' + e.message); }
 }
-function delItem(k, idx) {
-  const arr = getArr(k);
-  arr.splice(idx, 1);
-  setArr(k, arr);
+
+const TABLES = [
+  ['posts',        'newsList', x => x.title],
+  ['gallery',      'galList',  x => x.caption || 'Untitled photo'],
+  ['team',         'teamList', x => x.name],
+  ['testimonials', 'revList',  x => (x.client_name || '') + ': ' + (x.quote || '').slice(0, 50) + '...']
+];
+
+async function refreshLists() {
+  for (const [table, elId, fn] of TABLES) {
+    const el = document.getElementById(elId);
+    if (!el) continue;
+    el.innerHTML = '<div style="font-size:12px;color:var(--muted);padding:6px 0;">Loading...</div>';
+    try {
+      const r = await api('/rest/v1/' + table + '?select=*&order=created_at.desc');
+      const rows = await r.json();
+      if (!r.ok) throw new Error(r.status);
+      el.innerHTML = rows.length
+        ? rows.map(x => '<div class="item-row"><span>' + escapeHtml(String(fn(x))) + '</span>' +
+            '<button class="del" onclick="delItem(\'' + table + '\',\'' + x.id + '\')">Delete</button></div>').join('')
+        : '<div style="font-size:12px;color:var(--muted);padding:6px 0;">Nothing published yet.</div>';
+    } catch (e) {
+      el.innerHTML = '<div style="font-size:12px;color:var(--crimson);padding:6px 0;">Could not load. ' + escapeHtml(e.message) + '</div>';
+    }
+  }
 }
-function refreshLists() {
-  const map = [
-    ['ace_gallery_v7', 'galList', x => x.title],
-    ['ace_articles_v7', 'newsList', x => x.title],
-    ['ace_team_v7', 'teamList', x => x.name],
-    ['ace_reviews_v7', 'revList', x => x.author + ': ' + x.quote.slice(0,50) + '...']
-  ];
-  map.forEach(([k, elId, fn]) => {
-    const arr = getArr(k);
-    document.getElementById(elId).innerHTML = arr.map((x, i) =>
-      `<div class="item-row"><span>${fn(x)}</span><button class="del" onclick="delItem('${k}',${i})">Delete</button></div>`
-    ).join('');
-  });
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+
+async function delItem(table, id) {
+  if (!confirm('Remove this item from the live website?')) return;
+  try {
+    const r = await api('/rest/v1/' + table + '?id=eq.' + id, { method: 'DELETE' });
+    if (!r.ok) throw new Error(r.status);
+    refreshLists();
+  } catch (e) { alert('Could not delete. ' + e.message); }
+}
+
+/* auto sign in on reload if the session is still valid */
+document.addEventListener('DOMContentLoaded', function () {
+  if (restoreSession()) enterApp();
+});
 </script>
 </body>
 </html>
