@@ -772,25 +772,8 @@
             return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
-        function renderLiveReviews() {
-            const posts = (window.aceLive && window.aceLive.testimonials) || [];
-            if (!posts.length) return;
-            const grid = document.getElementById('revGrid') || document.querySelector('.review-grid, .reviews-grid');
-            if (!grid) return;
-            const html = posts.map(function (r) {
-                return '<article class="review-card" style="border:1px solid var(--gold,#D0AC6E);border-radius:2px;padding:22px;margin-bottom:14px;background:rgba(255,255,255,.02);">'
-                    + '<p style="font-size:.95rem;line-height:1.75;">&#8220;' + escapeText(r.quote) + '&#8221;</p>'
-                    + '<p style="margin-top:14px;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#D0AC6E);">'
-                    + escapeText(r.client_name) + '</p>'
-                    + (r.source ? '<p style="font-size:.78rem;opacity:.75;">' + escapeText(r.source) + '</p>' : '')
-                    + '</article>';
-            }).join('');
-            grid.innerHTML = html + grid.innerHTML;
-        }
-
         document.addEventListener('ace:live', function () {
             renderLiveArticles();
-            renderLiveReviews();
             if (typeof renderDynamic === 'function') renderDynamic();
         });
         if (window.aceLive && window.aceLive.loaded) renderLiveArticles();
