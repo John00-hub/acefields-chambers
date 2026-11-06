@@ -58,10 +58,12 @@
     }
 
     /* ---------- applicant blocks that can be added to ---------- */
+    var done = [];
     var adders = page.querySelectorAll('.bn-prop');
     Array.prototype.forEach.call(adders, function (block) {
       var item = block.closest('.bn-item');
-      if (!item) return;
+      if (!item || done.indexOf(item) > -1) return;
+      done.push(item);
       var heading = item.querySelector('h2');
       var sectionName = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').replace(/\s+/g, ' ').trim() : 'Applicant';
       function singular(word) {
@@ -102,9 +104,11 @@
           input.setAttribute('data-applicant', holderName);
         });
         source.parentNode.insertBefore(clone, add);
+        refreshIdentity();
         var first = clone.querySelector('.bn-input');
         if (first) first.focus();
       });
+      refreshIdentity();
 
       // a secretary is one person, no adding needed
       if (/secretary/i.test(sectionName)) {
@@ -126,6 +130,36 @@
       var sectionName = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').replace(/\s+/g, ' ').trim() : 'Section';
       convertFields(item, sectionName);
     });
+
+
+    /* the NIN section must grow with the number of applicants */
+    function refreshIdentity() {
+      var identity = null;
+      Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
+        var h = item.querySelector('h2');
+        if (h && /identification/i.test(h.innerText)) identity = item;
+      });
+      if (!identity) return;
+      var holder = page.querySelector('.bn-prop h3');
+      var holderItem = holder ? holder.closest('.bn-item') : null;
+      if (!holderItem) return;
+      var names = Array.prototype.map.call(holderItem.querySelectorAll('.bn-prop h3'), function (h) {
+        return prettyLabel(h.innerText);
+      });
+      var wrap = identity.querySelector('.bn-fields');
+      if (!wrap) return;
+      var count = names.length || 1;
+      if (wrap.getAttribute('data-count') === String(count)) return;
+      wrap.setAttribute('data-count', String(count));
+      wrap.innerHTML = '';
+      var sectionName = (identity.querySelector('h2').innerText || 'Means of Identification').replace(/^\s*\d+\s*/, '').trim();
+      names.forEach(function (name) {
+        var f = document.createElement('div');
+        f.className = 'bn-field';
+        f.innerHTML = 'NIN, ' + name.toLowerCase() + '<input type="text" class="bn-input" data-label="NIN, ' + name + '" data-section="' + sectionName + '" placeholder="Tap to fill" aria-label="NIN for ' + name + '">';
+        wrap.appendChild(f);
+      });
+    }
 
     /* ---------- passport and signature attachments ---------- */
     Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
