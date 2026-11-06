@@ -219,7 +219,7 @@
       var up = document.createElement('div');
       up.className = 'bn-upload';
       up.innerHTML = '<label>Attach a ' + kind + '</label>' +
-        '<input type="file" accept="image/*" class="bn-file">' +
+        '<input type="file" accept="image/*" class="bn-file" aria-label="Attach a ' + kind + '">' +
         '<div class="bn-files"></div>';
       item.appendChild(up);
 

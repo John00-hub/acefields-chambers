@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Legal Document Templates | Acefields Attorneys</title>
-<meta name="description" content="Ready to use legal document templates from Acefields Attorneys: notices to quit, tenancy agreements, employment documents and letters to electricity distribution companies.">
+<meta name="description" content="Download or request legal templates drafted by Acefields Attorneys: notice to quit, tenancy and employment contracts, demand letters and more.">
 <meta name="theme-color" content="#09090B">
 <link rel="canonical" href="https://acefieldsattorneys.com.ng/templates.html">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -255,15 +255,15 @@ body.menu-open{overflow:hidden}
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </button>
     <div class="mobile-menu-links">
-      <a href="style.css#firm" class="m-link">The Firm</a>
-      <a href="style.css#practice" class="m-link">Practice</a>
-      <a href="style.css#leadership" class="m-link">Team</a>
-      <a href="style.css#testimonials" class="m-link">Testimonials</a>
-      <a href="style.css#gallery" class="m-link">Archive</a>
+      <a href="index.html#firm" class="m-link">The Firm</a>
+      <a href="index.html#practice" class="m-link">Practice</a>
+      <a href="index.html#leadership" class="m-link">Team</a>
+      <a href="index.html#testimonials" class="m-link">Testimonials</a>
+      <a href="index.html#gallery" class="m-link">Archive</a>
       <a href="news.html" class="m-link">News</a>
       <a href="resources.html" class="m-link">Resources</a>
       <a href="faq.html" class="m-link">FAQ</a>
-      <a href="style.css#contact" class="m-link">Contact</a>
+      <a href="index.html#contact" class="m-link">Contact</a>
     </div>
     <a href="tel:+2349112111021" class="mobile-menu-cta">CALL 0911 211 1021</a>
   </div>
@@ -593,12 +593,13 @@ body.menu-open{overflow:hidden}
 
         function closeModal() {
             curLbIndex = -1;
-            document.getElementById('readerModal').classList.remove('open');
+            const m = document.getElementById('readerModal');
+            if (m) m.classList.remove('open');
         }
 
         document.addEventListener('keydown', e => {
-            const isOpen = document.getElementById('readerModal').classList.contains('open');
-            if (!isOpen) return;
+            const modalEl = document.getElementById('readerModal');
+            if (!modalEl || !modalEl.classList.contains('open')) return;
             if (e.key === 'Escape') closeModal();
             if (curLbIndex >= 0 && e.key === 'ArrowLeft') openGallery(curLbIndex - 1);
             if (curLbIndex >= 0 && e.key === 'ArrowRight') openGallery(curLbIndex + 1);
