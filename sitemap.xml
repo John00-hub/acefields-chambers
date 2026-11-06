@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://acefieldsattorneys.com.ng/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://acefieldsattorneys.com.ng/news.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://acefieldsattorneys.com.ng/resources.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://acefieldsattorneys.com.ng/faq.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://acefieldsattorneys.com.ng/news/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://acefieldsattorneys.com.ng/resources/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://acefieldsattorneys.com.ng/faq/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url>
-    <loc>https://acefieldsattorneys.com.ng/business-name-registration.html</loc>
+    <loc>https://acefieldsattorneys.com.ng/business-name-registration/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://acefieldsattorneys.com.ng/company-registration.html</loc>
+    <loc>https://acefieldsattorneys.com.ng/company-registration/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://acefieldsattorneys.com.ng/incorporated-trustees-registration.html</loc>
+    <loc>https://acefieldsattorneys.com.ng/incorporated-trustees-registration/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://acefieldsattorneys.com.ng/templates.html</loc>
+    <loc>https://acefieldsattorneys.com.ng/templates/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://acefieldsattorneys.com.ng/template-request.html</loc>
+    <loc>https://acefieldsattorneys.com.ng/template-request/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
