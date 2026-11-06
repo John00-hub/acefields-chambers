@@ -161,6 +161,52 @@
       });
     }
 
+
+    /* objects run a to g on the printed forms, but some filings need more */
+    function setupObjects() {
+      var letters = 'abcdefghijklmnopqrstuvwxyz';
+      Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
+        var h = item.querySelector('h2');
+        if (!h || !/objects?/i.test(h.innerText)) return;
+        // the single object page already has its own core object field
+        if (/core object/i.test(h.innerText)) return;
+        var wrap = item.querySelector('.bn-fields');
+        if (!wrap) return;
+        var sectionName = h.innerText.replace(/^\s*\d+\s*/, '').trim();
+
+        var add = document.createElement('button');
+        add.type = 'button';
+        add.className = 'bn-add';
+        add.innerText = '+ Add another object';
+
+        function wire(container, startAt) {
+          var n = startAt;
+          var row = document.createElement('div');
+          row.className = 'bn-fields';
+          var field = document.createElement('div');
+          field.className = 'bn-field';
+          var letter = letters[n] || ('extra ' + (n - 6));
+          var label = 'Object (' + letter + ')';
+          field.innerHTML = label + '<input type="text" class="bn-input" data-label="' + label + '" data-section="' + sectionName + '" placeholder="Tap to fill" aria-label="' + label + '">';
+          row.appendChild(field);
+          container.parentNode.insertBefore(row, container.nextSibling);
+          container = row;
+          return container;
+        }
+
+        var current = wrap;
+        add.addEventListener('click', function () {
+          var count = item.querySelectorAll('.bn-input').length;
+          current = wire(current, count);
+          var last = current.querySelector('.bn-input');
+          if (last) last.focus();
+        });
+        item.appendChild(add);
+      });
+    }
+
+    setupObjects();
+
     /* ---------- passport and signature attachments ---------- */
     Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
       var heading = item.querySelector('h2');
