@@ -251,7 +251,9 @@
       box.className = 'bn-note';
       box.innerHTML = '<label for="bnNotes">Anything else the firm should know</label>' +
         '<textarea id="bnNotes" rows="3" placeholder="Optional"></textarea>';
-      cta.parentNode.insertBefore(box, cta);
+      /* the notes box belongs above the declaration, which sits directly before the buttons */
+      var before = cta.parentNode.querySelector('.bn-declare') || cta;
+      cta.parentNode.insertBefore(box, before);
     }
 
     /* ---------- assemble and send ---------- */
@@ -259,6 +261,15 @@
     if (send) {
       send.addEventListener('click', function (e) {
         e.preventDefault();
+
+        /* the declaration must be assented to before anything leaves the page */
+        var consent = document.getElementById('bnConsent');
+        if (consent && !consent.checked) {
+          alert('Please confirm the consent statement underneath the form before sending. It authorises the firm to use the information you have supplied.');
+          consent.focus();
+          return;
+        }
+
         var lines = [];
         var title = (document.title || 'this filing').split('|')[0].replace(/\s+Checklist\s*$/i, '').trim();
         lines.push('Good day *Acefields Attorneys, Solicitors and Notary Public*,');
@@ -309,6 +320,13 @@
         if (page.querySelector('.bn-upload')) {
           lines.push('');
           lines.push('I will send the passport photographs and signatures in this chat now.');
+        }
+
+        if (consent && consent.checked) {
+          lines.push('');
+          lines.push('*Declaration*');
+          lines.push('I confirm that the information I have supplied is true, correct and authentic to the best of my knowledge.');
+          lines.push('I consent to and authorise Acefields Attorneys, Solicitors and Notary Public to use the information I have provided in the execution of my instructions.');
         }
 
         window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(lines.join(String.fromCharCode(10))), '_blank');

@@ -60,6 +60,12 @@ h1 em{color:var(--champagne-light);font-style:italic}
 .check:last-of-type{border-bottom:0}
 .check input{width:18px;height:18px;margin-top:3px;flex:0 0 auto;accent-color:#D0AC6E}
 
+.item.declare{border-color:var(--hairline-strong);background:rgba(208,172,110,.05)}
+.declaration{font-size:.92rem;color:var(--stone);line-height:1.7;margin:14px 0 4px}
+.declaration strong{color:var(--ivory)}
+.req{color:var(--champagne);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-left:6px}
+.selects{display:grid;gap:14px;margin-top:16px}
+.selected{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .actions{margin-top:30px}
 .send{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px 26px;background:linear-gradient(155deg,#f1d8a8 0%,#d0ac6e 48%,#ad8247 100%);border:1px solid #e6cb98;color:#09090b;font-family:var(--font-sans);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;cursor:pointer;border-radius:2px}
 .send:hover{filter:brightness(1.05)}
@@ -309,6 +315,14 @@ main{padding:40px 0 60px}
       </div>
     </div>
 
+    <div class="item declare">
+      <h2><span class="n">15</span> Your declaration</h2>
+      <p class="hint">This section is required. The firm cannot act on the intake without these two statements.</p>
+      <p class="declaration"><strong>Authentication of information.</strong> I confirm that the information I have supplied in this intake is true, correct and authentic to the best of my knowledge, and that I am authorised to supply it to the firm.</p>
+      <label class="check required-check"><input type="checkbox" id="mcConsent" data-section="Declaration" data-label="Consent to use of information" data-required="1"> <span>I consent to and authorise Acefields Attorneys, Solicitors and Notary Public to use and rely on the information I have provided in the execution of my instructions, including in any petition, application or filing made on my behalf.<span class="req"> Required</span></span></label>
+      <p class="hint" style="margin-top:14px;">If any information changes before the firm acts on it, I will tell the firm promptly.</p>
+    </div>
+
     <div class="actions">
       <button type="button" class="send" id="sendIntake">Send these details to the firm</button>
       <p class="send-note">This opens WhatsApp with your answers arranged by section, so you can read it before sending. If you would prefer email, send the same details to <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a>. How the firm handles your information is set out in the <a href="/privacy">Privacy</a>.</p>
@@ -347,6 +361,7 @@ main{padding:40px 0 60px}
         value = (el.value || '').trim();
       }
       if (!value) return;
+      if (el.getAttribute('data-required')) return;
       count++;
       var section = el.getAttribute('data-section');
       if (section !== last) { lines.push(''); lines.push('*' + section + '*'); last = section; }
@@ -355,11 +370,20 @@ main{padding:40px 0 60px}
 
     if (!count) return null;
     lines.push('');
+    lines.push('');
+    lines.push('I confirm that the information above is true, correct and authentic to the best of my knowledge.');
+    lines.push('I consent to and authorise the firm to use the information provided in the execution of my instructions.');
     lines.push('I understand this does not create a solicitor and client relationship until the firm confirms instructions.');
     return lines.join(String.fromCharCode(10));
   }
 
   btn.addEventListener('click', function () {
+    var consent = document.getElementById('mcConsent');
+    if (consent && !consent.checked) {
+      alert('Please tick the declaration in section 15 before sending. It confirms the details are true and authorises the firm to use them.');
+      consent.focus();
+      return;
+    }
     var text = build();
     if (!text) {
       alert('Please complete at least one section before sending. You may leave any question you cannot answer.');
