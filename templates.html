@@ -202,6 +202,19 @@
 .pg-btn.solid:hover{background:var(--champagne-light)}
 @media(max-width:720px){.page-hero{padding:150px 0 48px}.pg-dl{flex-direction:column;gap:12px}}
 </style>
+<style>
+/* mobile menu: scrolls on short screens, never clips the last link */
+.mobile-menu{justify-content:flex-start!important;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:calc(var(--nav-h) + 16px) 22px calc(30px + env(safe-area-inset-bottom))!important}
+.mobile-menu-links{flex:0 0 auto!important;gap:13px!important;margin-bottom:26px!important}
+.mobile-menu-links a{font-size:1.22rem!important;line-height:1.25}
+.mobile-menu-cta{flex-shrink:0;margin-bottom:20px}
+.mobile-menu .menu-close{display:none!important}
+.nav-hamburger{z-index:1200!important;position:relative}
+.nav-hamburger.active span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-hamburger.active span:nth-child(2){opacity:0}
+.nav-hamburger.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+body.menu-open{overflow:hidden}
+</style>
 </head>
 <body>
 <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
