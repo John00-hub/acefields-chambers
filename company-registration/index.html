@@ -294,6 +294,13 @@ body.menu-open{overflow:hidden}
 .bn-add:hover{border-color:var(--champagne);color:var(--ivory)}
 .bn-manual-attach{margin:16px 0 4px;padding:12px 14px;background:rgba(208,172,110,.06);border-left:2px solid var(--champagne);color:var(--stone);font-size:.82rem;line-height:1.65}
 .bn-manual-attach strong{color:var(--ivory)}
+.bn-upload{margin:16px 0 4px;padding:14px;background:rgba(208,172,110,.06);border-left:2px solid var(--champagne)}
+.bn-upload-label{display:inline-flex;align-items:center;justify-content:center;padding:11px 18px;border:1px solid var(--champagne);color:var(--champagne);font-size:.74rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:background .25s,color .25s}
+.bn-upload-label:hover{background:rgba(208,172,110,.14);color:var(--champagne-light)}
+.bn-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.bn-upload-hint{margin:10px 0 0;color:var(--muted);font-size:.78rem;line-height:1.55}
+.bn-upload-status{margin:6px 0 0;color:var(--champagne-light);font-size:.78rem;min-height:1em}
+
 @media print{.site-nav,.site-footer,.bn-cta{display:none}body{background:#fff;color:#000}.bn-item,.bn-prop{border-color:#ccc;background:#fff}.bn-field{color:#444}.bn-item h2,.bn-prop h3{color:#000}}
 </style><main>
 <section class="page-hero">
@@ -666,7 +673,7 @@ body.menu-open{overflow:hidden}
         })();
     </script>
 
-<script defer src="/assets/js/forms.js?v=202611071852"></script>
+<script defer src="/assets/js/forms.js?v=202611072259"></script>
 
 </body>
 </html>

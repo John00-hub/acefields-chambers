@@ -207,35 +207,50 @@
 
     setupObjects();
 
-    /* ---------- clear manual document handoff ---------- */
+    /* ---------- document sections get a real upload field ---------- */
     Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
       var heading = item.querySelector('h2');
       var title = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').trim().toLowerCase() : '';
       var requiresDocument = title.indexOf('passport') > -1 || title.indexOf('signature') > -1 || title.indexOf('document') > -1;
       if (!requiresDocument) return;
-      var note = document.createElement('p');
-      note.className = 'bn-manual-attach';
+
       var docLabel = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').trim() : 'Document';
-      var filing = (document.title || '').split('|')[0].replace(/\s+Checklist\s*$/i, '').trim();
-      var docSubject = encodeURIComponent(docLabel + ' — ' + filing);
-      var docBody = encodeURIComponent(
-        'Good day Acefields Attorneys, Solicitors and Notary Public,' +
-        String.fromCharCode(10, 10) +
-        'Please find attached my ' + docLabel.toLowerCase() + ' for ' + filing + '.' +
-        String.fromCharCode(10, 10) +
-        'Name: ' +
-        String.fromCharCode(10) +
-        'Telephone: ' +
-        String.fromCharCode(10, 10) +
-        '— Sent from the firm website'
-      );
-      note.innerHTML = '<strong>Send this separately by email.</strong> This form does not upload files. '
-        + 'After your mail app opens, attach the requested document to that email before you send it. '
-        + 'You can also email it on its own to '
-        + '<a href="mailto:info@acefieldsattorneys.com.ng?subject=' + docSubject + '&body=' + docBody + '" '
-        + 'style="color:#D0AC6E;border-bottom:1px solid rgba(208,172,110,.45);text-decoration:none;white-space:nowrap">'
-        + 'info@acefieldsattorneys.com.ng</a>.';
-      item.appendChild(note);
+
+      var wrap = document.createElement('div');
+      wrap.className = 'bn-upload';
+
+      var label = document.createElement('label');
+      label.className = 'bn-upload-label';
+      label.setAttribute('for', 'bnFile' + (item.dataset.fid || (item.dataset.fid = Math.random().toString(36).slice(2))));
+      label.textContent = 'Attach ' + docLabel.toLowerCase();
+
+      var input = document.createElement('input');
+      input.type = 'file';
+      input.id = label.getAttribute('for');
+      input.className = 'bn-file';
+      input.name = docLabel.replace(/\s+/g, '_');
+      input.setAttribute('data-doc', docLabel);
+      input.accept = 'image/*,application/pdf';
+
+      var hint = document.createElement('p');
+      hint.className = 'bn-upload-hint';
+      hint.textContent = 'Photograph or scan. JPG, PNG or PDF. Attaches to the form when you send.';
+
+      var status = document.createElement('p');
+      status.className = 'bn-upload-status';
+      status.setAttribute('aria-live', 'polite');
+
+      input.addEventListener('change', function () {
+        if (!input.files || !input.files.length) { status.textContent = ''; return; }
+        var f = input.files[0];
+        status.textContent = f.name + ' selected (' + Math.round(f.size / 1024) + ' KB)';
+      });
+
+      wrap.appendChild(label);
+      wrap.appendChild(input);
+      wrap.appendChild(hint);
+      wrap.appendChild(status);
+      item.appendChild(wrap);
     });
 
     /* ---------- free text ---------- */
@@ -243,21 +258,25 @@
     if (cta) {
       var box = document.createElement('div');
       box.className = 'bn-note';
-      box.innerHTML = '<label for="bnNotes">Anything else the firm should know</label>' +
+      box.innerHTML =
+        '<label for="bnEmail">Your email address</label>' +
+        '<input id="bnEmail" type="email" name="email" placeholder="So the firm can reply to you" required>' +
+        '<label for="bnPhone" style="margin-top:14px">Your telephone number</label>' +
+        '<input id="bnPhone" type="tel" name="phone" placeholder="0803 ..." required>' +
+        '<label for="bnNotes" style="margin-top:14px">Anything else the firm should know</label>' +
         '<textarea id="bnNotes" rows="3" placeholder="Optional"></textarea>';
       /* the notes box belongs above the declaration, which sits directly before the buttons */
       var before = cta.parentNode.querySelector('.bn-declare') || cta;
       cta.parentNode.insertBefore(box, before);
     }
 
-    /* ---------- assemble and send ---------- */
+    /* ---------- assemble and send through FormSubmit ---------- */
     var send = cta ? cta.querySelector('a') : null;
     if (send) {
-      send.textContent = 'Send these details by email';
+      send.textContent = 'Send these details to the firm';
       send.addEventListener('click', function (e) {
         e.preventDefault();
 
-        /* the declaration must be assented to before anything leaves the page */
         var consent = document.getElementById('bnConsent');
         if (consent && !consent.checked) {
           alert('Please confirm the consent statement underneath the form before sending. It authorises the firm to use the information you have supplied.');
@@ -265,75 +284,85 @@
           return;
         }
 
-        var lines = [];
         var title = (document.title || 'this filing').split('|')[0].replace(/\s+Checklist\s*$/i, '').trim();
-        lines.push('Good day Acefields Attorneys, Solicitors and Notary Public,');
-        lines.push('');
-        lines.push('I would like to proceed with ' + title + '. The details are below.');
-        lines.push('');
-
         var lastSection = '';
         var filled = 0;
+        var entries = [];
 
         Array.prototype.forEach.call(page.querySelectorAll('.bn-input'), function (node) {
           var value = node.value.trim();
           if (!value) return;
           filled++;
-          var section = node.getAttribute('data-section') || (node.closest('.bn-item') || {}).innerText;
+          var section = node.getAttribute('data-section') || 'Details';
           var label = node.getAttribute('data-label') || 'Field';
-          if (section !== lastSection) {
-            lines.push('');
-            lines.push(section.toUpperCase());
-            lastSection = section;
-          }
           var who = node.getAttribute('data-applicant');
           var shown = prettyLabel(label);
           if (who) {
             var owner = prettyLabel(who);
             shown = owner + ', ' + shown.charAt(0).toLowerCase() + shown.slice(1);
           }
-          lines.push('• ' + shown + ': ' + value);
+          entries.push({ section: section, label: shown, value: value });
         });
 
         var notes = document.getElementById('bnNotes');
-        if (notes && notes.value.trim()) {
-          lines.push('');
-          lines.push('ADDITIONAL NOTES');
-          lines.push(notes.value.trim());
-        }
+        var noteText = notes ? notes.value.trim() : '';
 
-        if (!filled && !(notes && notes.value.trim())) {
-          alert('Please fill in the details you have, then tap send again.');
+        if (!filled && !noteText && !document.querySelector('.bn-file')) {
+          alert('Please fill in the details you have, then send again.');
           return;
         }
 
-        if (page.querySelector('.bn-manual-attach')) {
-          lines.push('');
-          lines.push('DOCUMENTS');
-          lines.push('No files were attached by the website. Please attach each requested document (passport photograph, specimen signature and any other item listed) to this email before sending it.');
+        var files = [];
+        Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+          if (fi.files && fi.files.length) files.push(fi);
+        });
+
+        var totalBytes = files.reduce(function (n, fi) { return n + fi.files[0].size; }, 0);
+        if (totalBytes > 10 * 1024 * 1024) {
+          alert('Those attachments come to more than 10MB. Please attach smaller photographs or scans and send again.');
+          return;
         }
 
-        if (consent && consent.checked) {
-          lines.push('');
-          lines.push('DECLARATION');
-          lines.push('I confirm that the information I have supplied is true, correct and authentic to the best of my knowledge.');
-          lines.push('I consent to and authorise Acefields Attorneys, Solicitors and Notary Public to use the information I have provided in the execution of my instructions.');
+        var f = document.createElement('form');
+        f.method = 'POST';
+        f.action = 'https://formsubmit.co/' + EMAIL;
+        f.enctype = 'multipart/form-data';
+        f.style.display = 'none';
+
+        function add(name, value) {
+          var i = document.createElement('input');
+          i.type = 'hidden';
+          i.name = name;
+          i.value = value;
+          f.appendChild(i);
         }
 
-        var body = lines.join(String.fromCharCode(10)) + String.fromCharCode(10, 10)
-                 + '— Sent from the firm intake form on acefieldsattorneys.com.ng';
+        add('_subject', title + ' - new submission from the website');
+        add('_template', 'table');
+        add('_captcha', 'false');
+        add('_honey', '');
+        add('_next', location.origin + '/thank-you/');
+        add('Filing', title);
+        add('Client email', (document.getElementById('bnEmail') || {}).value || 'not supplied');
+        add('Client telephone', (document.getElementById('bnPhone') || {}).value || 'not supplied');
 
-        var subject = title + ' — details for the firm';
+        entries.forEach(function (en) {
+          add(en.section + ' | ' + en.label, en.value);
+        });
 
-        /* A mailto link cannot carry a long intake: Gmail, iOS Mail and Outlook
-           truncate or drop the body once the URL passes roughly 2,000 characters,
-           which left the firm receiving empty emails. So the details are copied to
-           the clipboard and shown on the page, and only the subject travels in the
-           link. The client pastes the text into the email. */
-        var href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject);
+        if (noteText) add('Additional notes', noteText);
 
-        showEmailPanel(cta, href, body, subject);
-        copyToClipboard(body);
+        var consentText = 'I confirm the information I have supplied is true, correct and authentic to the best of my knowledge, and I authorise Acefields Attorneys, Solicitors and Notary Public to use it in executing my instructions.';
+        add('Declaration', consentText);
+
+        files.forEach(function (fi) { add(fi.getAttribute('data-doc') + ' attached', fi.files[0].name); });
+
+        document.body.appendChild(f);
+
+        /* move the real file inputs in so the files travel with the post */
+        files.forEach(function (fi) { f.appendChild(fi); });
+
+        f.submit();
       });
     }
 
