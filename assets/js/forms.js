@@ -1,11 +1,10 @@
 /* Acefields registration intake.
    Turns the printed checklist pages into fillable forms.
-   Nothing leaves the phone until the client taps the WhatsApp button.
-   Applicants can be added for as many people as the filing needs, and
-   passports and signatures can be attached as images. */
+   Nothing leaves the phone until the client chooses to open WhatsApp.
+   Applicants can be added for as many people as the filing needs.
+   Required documents are attached manually inside WhatsApp, not here. */
 (function () {
   var WHATSAPP = '2348179911555';
-  var MAX_IMAGE_EDGE = 900;
 
 
   var KEEP_UPPER = { NIN: 1, CAC: 1, DOB: 1, TIN: 1, NGO: 1, IT: 1, BVN: 1 };
@@ -207,41 +206,16 @@
 
     setupObjects();
 
-    /* ---------- passport and signature attachments ---------- */
+    /* ---------- clear manual document handoff ---------- */
     Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
       var heading = item.querySelector('h2');
       var title = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').trim().toLowerCase() : '';
-      var kind = title.indexOf('passport') > -1 ? 'passport photograph'
-        : title.indexOf('signature') > -1 ? 'signature'
-        : title.indexOf('document') > -1 ? 'document' : '';
-      if (!kind) return;
-
-      var up = document.createElement('div');
-      up.className = 'bn-upload';
-      up.innerHTML = '<label>Attach a ' + kind + '</label>' +
-        '<input type="file" accept="image/*" class="bn-file" aria-label="Attach a ' + kind + '">' +
-        '<div class="bn-files"></div>';
-      item.appendChild(up);
-
-      var fileInput = up.querySelector('.bn-file');
-      var list = up.querySelector('.bn-files');
-      var added = 0;
-
-      fileInput.addEventListener('change', function () {
-        var file = fileInput.files && fileInput.files[0];
-        if (!file) return;
-        var label = (file.name || kind).slice(0, 40);
-        var chip = document.createElement('span');
-        chip.className = 'bn-chip';
-        chip.setAttribute('data-kind', kind);
-        chip.setAttribute('data-name', label);
-        chip.setAttribute('data-value', 'attached');
-        chip.innerText = label + ' (attached)';
-        list.appendChild(chip);
-        added++;
-        fileInput.value = '';
-        fileInput.setAttribute('data-uploaded', '1');
-      });
+      var requiresDocument = title.indexOf('passport') > -1 || title.indexOf('signature') > -1 || title.indexOf('document') > -1;
+      if (!requiresDocument) return;
+      var note = document.createElement('p');
+      note.className = 'bn-manual-attach';
+      note.innerHTML = '<strong>Send this separately in WhatsApp.</strong> This form does not upload files. After WhatsApp opens, attach the requested document manually in that chat before sending your request.';
+      item.appendChild(note);
     });
 
     /* ---------- free text ---------- */
@@ -279,18 +253,12 @@
         var lastSection = '';
         var filled = 0;
 
-        Array.prototype.forEach.call(page.querySelectorAll('.bn-input, .bn-chip'), function (node) {
-          var value = node.classList.contains('bn-input') ? node.value.trim() : 'Yes, to follow by WhatsApp';
+        Array.prototype.forEach.call(page.querySelectorAll('.bn-input'), function (node) {
+          var value = node.value.trim();
           if (!value) return;
           filled++;
           var section = node.getAttribute('data-section') || (node.closest('.bn-item') || {}).innerText;
-          if (!node.classList.contains('bn-input')) {
-            var item = node.closest('.bn-item');
-            var heading = item ? item.querySelector('h2') : null;
-            section = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').trim() : 'Documents';
-          }
-          var label = node.getAttribute('data-label') || node.getAttribute('data-name') || 'Attachment';
-          if (node.classList.contains('bn-chip')) label = node.getAttribute('data-name') + ' (' + node.getAttribute('data-kind') + ')';
+          var label = node.getAttribute('data-label') || 'Field';
           if (section !== lastSection) {
             lines.push('');
             lines.push('*' + section + '*');
@@ -298,7 +266,7 @@
           }
           var who = node.getAttribute('data-applicant');
           var shown = prettyLabel(label);
-          if (who && !node.classList.contains('bn-chip')) {
+          if (who) {
             var owner = prettyLabel(who);
             shown = owner + ', ' + shown.charAt(0).toLowerCase() + shown.slice(1);
           }
@@ -317,9 +285,10 @@
           return;
         }
 
-        if (page.querySelector('.bn-upload')) {
+        if (page.querySelector('.bn-manual-attach')) {
           lines.push('');
-          lines.push('I will send the passport photographs and signatures in this chat now.');
+          lines.push('*Documents*');
+          lines.push('No files were attached by the website. Please attach each requested document manually in this WhatsApp chat before sending your request.');
         }
 
         if (consent && consent.checked) {

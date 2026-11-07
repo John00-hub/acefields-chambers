@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrimonial Causes Intake | Acefields Attorneys, Solicitors and Notary Public</title>
-<meta name="description" content="A structured intake for matrimonial causes: dissolution of marriage, judicial separation and related applications. Completed by the client and sent directly to the firm.">
+<title>Matrimonial Causes Enquiry | Acefields Attorneys, Solicitors and Notary Public</title>
+<meta name="description" content="A brief first-contact enquiry for matrimonial matters. The firm checks for conflicts before taking detailed instructions.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://acefieldsattorneys.com.ng/matrimonial-causes/">
 <meta name="theme-color" content="#08070A">
@@ -71,6 +71,11 @@ h1 em{color:var(--champagne-light);font-style:italic}
 .send:hover{filter:brightness(1.05)}
 .send-note{font-size:.8rem;color:var(--muted);margin-top:14px;line-height:1.65}
 .send-note a{color:var(--champagne-light)}
+.fallback{margin-top:18px;padding:18px;background:var(--obsidian-card);border:1px solid var(--hairline-strong)}
+.fallback textarea{margin:10px 0;color:var(--ivory);resize:vertical}
+.fallback-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.fallback-actions button,.open-chat{padding:11px 16px;background:#145b3c;color:#effff5;border:1px solid #2c9a66;border-radius:2px;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;cursor:pointer}
+.open-chat{display:inline-block;background:transparent;color:var(--champagne-light);border-color:var(--hairline-strong)}
 
 footer{border-top:1px solid var(--hairline);padding:30px 0 44px;font-size:.8rem;color:var(--muted)}
 footer p{margin-bottom:8px}
@@ -104,40 +109,36 @@ main{padding:40px 0 60px}
 
 <main>
   <div class="container">
-
-    <p class="eyebrow">Matrimonial Causes</p>
-    <h1>The facts the firm needs, <em>in your own time.</em></h1>
-    <p class="lede">This intake covers dissolution of marriage, judicial separation and related applications. Complete what you can. Some questions may not apply, and you may leave any of them blank.</p>
+    <p class="eyebrow">Matrimonial Causes · First Contact</p>
+    <h1>Start with a <em>conflict check.</em></h1>
+    <p class="lede">This is a brief first-contact enquiry for divorce or dissolution, judicial separation, annulment or a related matrimonial matter. The firm will check for conflicts before asking for detailed instructions.</p>
 
     <div class="notice">
-      <p><strong>There is no charge for completing this form.</strong></p>
-      <p>Your answers stay on your own device until you tap the button at the end. Nothing is stored on this website and nothing reaches the firm until you send it yourself.</p>
-      <p>Completing this form does not create a solicitor and client relationship, and it is not a substitute for legal advice. Please do not attach or paste court documents, bank statements or identity documents here. The firm will ask for those at the right stage.</p>
+      <p><strong>There is no charge to send this enquiry.</strong></p>
+      <p>This form asks only for the names needed for an initial conflict check, a broad matter type and a safe way to contact you. Do not include your account of what happened, information about children, property or finances, identity numbers, or documents.</p>
+      <p>Your answers stay on your device until you choose to share or copy them. The website does not put your answers into a WhatsApp link or store them. No solicitor and client relationship is created unless the firm confirms it can act and accepts instructions. This form is not an emergency service.</p>
     </div>
 
     <div class="item">
-      <h2><span class="n">1</span> About you</h2>
-      <p class="hint">The person making the application. This may be you, or someone acting with authority to do so.</p>
+      <h2><span class="n">1</span> Names for the conflict check</h2>
+      <p class="hint">Please use the full names by which the parties are known. Do not add case facts here.</p>
       <div class="fields">
-        <div class="field"><label>Full name</label><input type="text" data-section="About you" data-label="Full name" placeholder="Your full name"></div>
-        <div class="field"><label>Telephone number</label><input type="tel" data-section="About you" data-label="Telephone number" placeholder="+234 ..."></div>
-        <div class="field"><label>Email address</label><input type="email" data-section="About you" data-label="Email address" placeholder="Optional"></div>
-        <div class="field"><label>Current address</label><input type="text" data-section="About you" data-label="Current address" placeholder="Where you live now"></div>
-        <div class="field"><label>Occupation</label><input type="text" data-section="About you" data-label="Occupation" placeholder="Optional"></div>
+        <div class="field"><label for="clientName">Your full name</label><input id="clientName" type="text" autocomplete="name" required data-label="Prospective client's full name" placeholder="Your full name"></div>
+        <div class="field"><label for="otherName">Other party's full name</label><input id="otherName" type="text" required data-label="Other party's full name" placeholder="Full name for conflict check"></div>
       </div>
     </div>
 
     <div class="item">
-      <h2><span class="n">2</span> About your spouse</h2>
-      <p class="hint">The other party to the marriage.</p>
+      <h2><span class="n">2</span> General type of matter</h2>
+      <p class="hint">Choose the closest option. No facts or explanation are needed now.</p>
       <div class="fields">
-        <div class="field"><label>Full name</label><input type="text" data-section="About your spouse" data-label="Full name"></div>
-        <div class="field"><label>Last known address</label><input type="text" data-section="About your spouse" data-label="Last known address"></div>
-        <div class="field"><label>Do you know where your spouse is now?</label>
-          <select data-section="About your spouse" data-label="Whether the spouse's whereabouts are known">
-            <option value="">Select</option>
-            <option>Yes, I know where my spouse is</option>
-            <option>No, I do not know where my spouse is</option>
+        <div class="field"><label for="matterType">Matter type</label>
+          <select id="matterType" required data-label="General matter type">
+            <option value="">Select one</option>
+            <option>Dissolution of marriage / divorce</option>
+            <option>Judicial separation</option>
+            <option>Annulment</option>
+            <option>Related matrimonial matter</option>
             <option>Not sure</option>
           </select>
         </div>
@@ -145,251 +146,98 @@ main{padding:40px 0 60px}
     </div>
 
     <div class="item">
-      <h2><span class="n">3</span> The marriage</h2>
-      <p class="hint">As a general rule, a petition for dissolution is not filed until the parties have been married for at least two years. Tell us the date so the firm can advise on timing.</p>
+      <h2><span class="n">3</span> A safe way to contact you</h2>
+      <p class="hint">Choose the method and details the firm may safely use. If it is not safe to contact you, do not submit contact details here; contact the firm when it is safe for you.</p>
       <div class="fields">
-        <div class="field"><label>Date of marriage</label><input type="text" data-section="The marriage" data-label="Date of marriage" placeholder="DD/MM/YYYY"></div>
-        <div class="field"><label>Place of marriage</label><input type="text" data-section="The marriage" data-label="Place of marriage" placeholder="City and state"></div>
-        <div class="field"><label>How the marriage was contracted</label>
-          <select data-section="The marriage" data-label="How the marriage was contracted">
-            <option value="">Select</option>
-            <option>Statutory marriage at a registry</option>
-            <option>Church marriage</option>
-            <option>Customary marriage</option>
-            <option>Islamic marriage</option>
-            <option>More than one of these</option>
-            <option>Not sure</option>
-          </select>
-        </div>
-        <div class="field"><label>Do you hold the marriage certificate?</label>
-          <select data-section="The marriage" data-label="Whether the marriage certificate is held">
-            <option value="">Select</option>
-            <option>Yes, I have it</option>
-            <option>No, I do not have it</option>
-            <option>I have a copy only</option>
-            <option>Not sure</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">4</span> Where each of you lives</h2>
-      <div class="fields">
-        <div class="field"><label>When did you last live together in the same home?</label><input type="text" data-section="Where each of you lives" data-label="When you last lived together" placeholder="Approximate date or year"></div>
-        <div class="field"><label>Where do you live now?</label><input type="text" data-section="Where each of you lives" data-label="Your present residence" placeholder="City and state"></div>
-        <div class="field"><label>Where does your spouse live, as far as you know?</label><input type="text" data-section="Where each of you lives" data-label="Spouse's present residence"></div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">5</span> What has happened, in your own words</h2>
-      <p class="hint">There is no need to use legal language, and no need to write at length. A short account is enough for the firm to begin.</p>
-      <div class="fields">
-        <div class="field full"><label>Your account</label><textarea rows="5" data-section="What has happened" data-label="Account in the client's own words" placeholder="Tell us briefly what has happened"></textarea></div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">6</span> Which of these apply to you</h2>
-      <p class="hint">These are the grounds recognised in a petition. Tick any that apply. Leave all of them blank if you are unsure; the firm will advise.</p>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="Adultery, and living together is intolerable"> My spouse has committed adultery, and I find it intolerable to continue living with them</label>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="Behaviour making continued living unreasonable"> My spouse has behaved in a way I cannot reasonably be expected to live with</label>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="Desertion of one year or more"> My spouse left without cause or consent and has stayed away for at least one year</label>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="Living apart for two years with consent"> We have lived apart for at least two years and both of us agree to the dissolution</label>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="Living apart for three years"> We have lived apart for at least three years</label>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="Failure to comply with an order to resume living together"> My spouse has not complied with an order to resume living together for at least a year</label>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="Spouse believed dead after long absence"> I believe my spouse may be dead, having been absent for several years</label>
-      <label class="check"><input type="checkbox" data-section="Which of these apply" data-label="None of these considered yet"> I am not yet sure which of these applies</label>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">7</span> If you have lived apart</h2>
-      <div class="fields">
-        <div class="field"><label>Approximately when did you begin living apart?</label><input type="text" data-section="Living apart" data-label="When you began living apart" placeholder="Month and year, if known"></div>
-        <div class="field"><label>Is there any written agreement between you?</label>
-          <select data-section="Living apart" data-label="Whether there is a written separation agreement">
-            <option value="">Select</option>
-            <option>Yes</option>
-            <option>No</option>
-            <option>Not sure</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">8</span> Children of the marriage</h2>
-      <p class="hint">Include any child of both parties, whether born before or during the marriage.</p>
-      <div class="fields">
-        <div class="field"><label>How many children are there?</label><input type="text" data-section="Children of the marriage" data-label="Number of children"></div>
-        <div class="field"><label>Names and dates of birth</label><input type="text" data-section="Children of the marriage" data-label="Names and dates of birth"></div>
-        <div class="field"><label>Who are the children living with now?</label><input type="text" data-section="Children of the marriage" data-label="Who the children live with"></div>
-        <div class="field"><label>Is any child under eighteen?</label>
-          <select data-section="Children of the marriage" data-label="Whether any child is a minor">
-            <option value="">Select</option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">9</span> Arrangements proposed for the children</h2>
-      <div class="fields">
-        <div class="field full"><label>Living and schooling arrangements</label><textarea rows="3" data-section="Arrangements for the children" data-label="Living and schooling arrangements" placeholder="Where the children will live and attend school"></textarea></div>
-        <div class="field"><label>Who will maintain the children?</label><input type="text" data-section="Arrangements for the children" data-label="Maintenance of the children" placeholder="Optional"></div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">10</span> Money and property</h2>
-      <p class="hint">Broad answers are enough at this stage. The firm will ask for figures and documents later if needed.</p>
-      <div class="fields">
-        <div class="field"><label>Is there a family home?</label>
-          <select data-section="Money and property" data-label="Whether there is a family home">
-            <option value="">Select</option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </div>
-        <div class="field"><label>In whose name is it held?</label><input type="text" data-section="Money and property" data-label="Name on the family home"></div>
-        <div class="field"><label>Other property or savings to be considered</label><input type="text" data-section="Money and property" data-label="Other property or savings"></div>
-        <div class="field"><label>Is maintenance for yourself being sought?</label>
-          <select data-section="Money and property" data-label="Whether maintenance is sought">
-            <option value="">Select</option>
-            <option>Yes</option>
-            <option>No</option>
-            <option>Undecided</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">11</span> Other proceedings or agreements</h2>
-      <div class="fields">
-        <div class="field"><label>Has any case concerning this marriage already been filed?</label>
-          <select data-section="Other proceedings" data-label="Whether any case has already been filed">
-            <option value="">Select</option>
-            <option>Yes</option>
-            <option>No</option>
-            <option>Not sure</option>
-          </select>
-        </div>
-        <div class="field"><label>If yes, which court and when?</label><input type="text" data-section="Other proceedings" data-label="Court and date"></div>
-        <div class="field"><label>Has any other firm acted for you on this?</label><input type="text" data-section="Other proceedings" data-label="Previous or other solicitors"></div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">12</span> Safety</h2>
-      <p class="hint">Answer only if it is safe for you to do so. If you are in immediate danger, please contact the police first.</p>
-      <label class="check"><input type="checkbox" data-section="Safety" data-label="Client reports fear of harm"> I am concerned for my safety, or for the safety of a child</label>
-      <label class="check"><input type="checkbox" data-section="Safety" data-label="Client asks for the matter to be treated urgently"> I would like this treated as a matter of urgency</label>
-      <label class="check"><input type="checkbox" data-section="Safety" data-label="Client prefers not to answer"> I would rather not answer this at this stage</label>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">13</span> What you would like to happen</h2>
-      <div class="fields">
-        <div class="field full"><label>Outcome sought</label><input type="text" data-section="What you would like to happen" data-label="Outcome sought" placeholder="For example: the marriage dissolved, or a judicial separation"></div>
-        <div class="field full"><label>Documents you already hold</label><input type="text" data-section="What you would like to happen" data-label="Documents already held" placeholder="Marriage certificate, children's birth certificates, previous court papers"></div>
-      </div>
-    </div>
-
-    <div class="item">
-      <h2><span class="n">14</span> Anything else, and how to reach you</h2>
-      <div class="fields">
-        <div class="field full"><label>Anything else the firm should know</label><textarea rows="4" data-section="Anything else" data-label="Additional information" placeholder="Optional"></textarea></div>
-        <div class="field"><label>Best time to reach you</label><input type="text" data-section="Anything else" data-label="Best time to reach you" placeholder="For example: weekday mornings"></div>
-        <div class="field"><label>Preferred contact</label>
-          <select data-section="Anything else" data-label="Preferred contact method">
-            <option value="">Select</option>
-            <option>WhatsApp</option>
+        <div class="field"><label for="contactMethod">Preferred safe contact method</label>
+          <select id="contactMethod" required data-label="Preferred safe contact method">
+            <option value="">Select one</option>
+            <option>WhatsApp message</option>
             <option>Telephone call</option>
             <option>Email</option>
           </select>
         </div>
+        <div class="field"><label for="contactDetail">Phone number or email for that method</label><input id="contactDetail" type="text" required autocomplete="off" data-label="Safe contact detail" placeholder="Enter only the detail safe to use"></div>
       </div>
     </div>
 
     <div class="item declare">
-      <h2><span class="n">15</span> Your declaration</h2>
-      <p class="hint">This section is required. The firm cannot act on the intake without these two statements.</p>
-      <p class="declaration"><strong>Authentication of information.</strong> I confirm that the information I have supplied in this intake is true, correct and authentic to the best of my knowledge, and that I am authorised to supply it to the firm.</p>
-      <label class="check required-check"><input type="checkbox" id="mcConsent" data-section="Declaration" data-label="Consent to use of information" data-required="1"> <span>I consent to and authorise Acefields Attorneys, Solicitors and Notary Public to use and rely on the information I have provided in the execution of my instructions, including in any petition, application or filing made on my behalf.<span class="req"> Required</span></span></label>
-      <p class="hint" style="margin-top:14px;">If any information changes before the firm acts on it, I will tell the firm promptly.</p>
+      <h2><span class="n">4</span> Your confirmation</h2>
+      <p class="declaration"><strong>Authentication of information.</strong> By sending this preliminary enquiry, I confirm the names and contact details I supplied are true, correct and authentic to the best of my knowledge.</p>
+      <label class="check required-check"><input type="checkbox" id="mcConsent" required> <span>I consent to and authorise Acefields Attorneys, Solicitors and Notary Public to use these details to conduct a conflict check and respond to this enquiry. I understand that detailed instructions and documents are not requested until after the initial conflict check.<span class="req"> Required</span></span></label>
     </div>
 
     <div class="actions">
-      <button type="button" class="send" id="sendIntake">Send these details to the firm</button>
-      <p class="send-note">This opens WhatsApp with your answers arranged by section, so you can read it before sending. If you would prefer email, send the same details to <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a>. How the firm handles your information is set out in the <a href="/privacy">Privacy Policy</a>.</p>
+      <button type="button" class="send" id="shareIntake">Share conflict-check enquiry</button>
+      <p class="send-note">Your device will open its share menu where available. Review the message and choose how to send it. The firm cannot tell whether you sent it or whether it was received.</p>
+      <div class="fallback" id="shareFallback" hidden>
+        <p class="hint">This browser does not support the share menu. Copy the message below, then open WhatsApp and paste it into the chat. The WhatsApp link contains no form answers.</p>
+        <textarea id="fallbackText" rows="9" readonly aria-label="Conflict-check enquiry to copy"></textarea>
+        <div class="fallback-actions"><button type="button" id="copyEnquiry">Copy enquiry</button><a class="open-chat" href="https://wa.me/2348179911555" target="_blank" rel="noopener noreferrer">Open the firm's WhatsApp</a></div>
+        <p class="hint" id="copyStatus" aria-live="polite"></p>
+      </div>
+      <p class="send-note">If you prefer, contact the firm by email at <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a> or telephone. Please do not send case facts or documents before the conflict check. Read the <a href="/privacy">Privacy Policy</a>.</p>
     </div>
-
   </div>
 </main>
 
 <footer>
   <div class="container">
     <p>&copy; 2026 Acefields Attorneys, Solicitors and Notary Public. All rights reserved.</p>
-    <p>This intake is provided for the purpose of taking instructions and does not constitute legal advice.</p>
+    <p>This is a preliminary enquiry only. It is not legal advice and does not create a solicitor and client relationship.</p>
     <p><a href="/">Home</a> &middot; <a href="/faq">FAQ</a> &middot; <a href="/resources">Resources</a> &middot; <a href="/privacy">Privacy Policy</a></p>
   </div>
 </footer>
 
 <script>
-(function () {
-  var WHATSAPP = '2348179911555';
-  var btn = document.getElementById('sendIntake');
-  if (!btn) return;
-
-  function build() {
-    var lines = [];
-    lines.push('Good day *Acefields Attorneys, Solicitors and Notary Public*,');
-    lines.push('I would like to take advice on a matrimonial matter. My answers are below.');
-    lines.push('');
-    var last = '';
-    var count = 0;
-
-    Array.prototype.forEach.call(document.querySelectorAll('[data-section]'), function (el) {
-      var value = '';
-      if (el.type === 'checkbox') {
-        value = el.checked ? 'Yes' : '';
-      } else {
-        value = (el.value || '').trim();
-      }
-      if (!value) return;
-      if (el.getAttribute('data-required')) return;
-      count++;
-      var section = el.getAttribute('data-section');
-      if (section !== last) { lines.push(''); lines.push('*' + section + '*'); last = section; }
-      lines.push('- ' + el.getAttribute('data-label') + ': ' + value);
+(function(){
+  var share=document.getElementById('shareIntake');
+  var formFields=['clientName','otherName','matterType','contactMethod','contactDetail'];
+  var fallback=document.getElementById('shareFallback');
+  var textBox=document.getElementById('fallbackText');
+  var copyButton=document.getElementById('copyEnquiry');
+  var status=document.getElementById('copyStatus');
+  var consent=document.getElementById('mcConsent');
+  var firm='Acefields Attorneys, Solicitors and Notary Public';
+  function makeMessage(){
+    var lines=[
+      'Good day '+firm+',',
+      '',
+      'I am making a preliminary matrimonial enquiry. Please conduct an initial conflict check before taking detailed instructions.',
+      ''
+    ];
+    formFields.forEach(function(id){
+      var el=document.getElementById(id);
+      var label=el.getAttribute('data-label');
+      lines.push(label+': '+el.value.trim());
     });
-
-    if (!count) return null;
     lines.push('');
-    lines.push('');
-    lines.push('I confirm that the information above is true, correct and authentic to the best of my knowledge.');
-    lines.push('I consent to and authorise the firm to use the information provided in the execution of my instructions.');
-    lines.push('I understand this does not create a solicitor and client relationship until the firm confirms instructions.');
+    lines.push('I confirm that the names and contact details above are true, correct and authentic to the best of my knowledge.');
+    lines.push('I consent to and authorise the firm to use these details to conduct a conflict check and respond to this enquiry.');
+    lines.push('I understand that no case facts or documents are included, and no solicitor and client relationship is created unless the firm confirms it can act and accepts instructions.');
     return lines.join(String.fromCharCode(10));
   }
-
-  btn.addEventListener('click', function () {
-    var consent = document.getElementById('mcConsent');
-    if (consent && !consent.checked) {
-      alert('Please tick the declaration in section 15 before sending. It confirms the details are true and authorises the firm to use them.');
-      consent.focus();
-      return;
+  function validate(){
+    var invalid=document.querySelector('#clientName:invalid, #otherName:invalid, #matterType:invalid, #contactMethod:invalid, #contactDetail:invalid');
+    if(invalid){invalid.focus();invalid.reportValidity();return false;}
+    if(!consent.checked){alert('Please tick the consent statement before sharing this enquiry.');consent.focus();return false;}
+    return true;
+  }
+  share.addEventListener('click',async function(){
+    if(!validate())return;
+    var message=makeMessage();
+    if(navigator.share){
+      try{await navigator.share({title:'Matrimonial conflict-check enquiry',text:message});return;}
+      catch(error){if(error&&error.name==='AbortError')return;}
     }
-    var text = build();
-    if (!text) {
-      alert('Please complete at least one section before sending. You may leave any question you cannot answer.');
-      return;
-    }
-    window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(text), '_blank');
+    textBox.value=message;
+    fallback.hidden=false;
+    fallback.scrollIntoView({behavior:'smooth',block:'nearest'});
+    status.textContent='Copy the enquiry, then open WhatsApp and paste it. No form answers are included in the WhatsApp link.';
+  });
+  copyButton.addEventListener('click',async function(){
+    try{await navigator.clipboard.writeText(textBox.value);status.textContent='Copied. Open WhatsApp and paste the message. Nothing was sent.';}
+    catch(error){textBox.focus();textBox.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}status.textContent=ok?'Copied. Open WhatsApp and paste the message. Nothing was sent.':'Copy was blocked. Select and copy the text above, then paste it in WhatsApp.';}
   });
 })();
 </script>
