@@ -308,6 +308,19 @@ body.menu-open{overflow:hidden}
 .req-price span:first-child{font-family:var(--font-sans);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
 .req-price strong{font-family:var(--font-serif);font-size:1.5rem;color:var(--champagne-light);font-weight:500}
 @media(max-width:700px){.req-row{grid-template-columns:1fr}.req-card{padding:24px 20px}}
+
+/* ── Email fallback panel ── */
+.email-fallback{margin-top:18px;padding:18px 20px;border:1px solid var(--hairline-strong,rgba(208,172,110,.3));background:rgba(208,172,110,.055);font-size:.9rem;line-height:1.62;color:var(--stone,#B4AEA3)}
+.email-fallback[hidden]{display:none}
+.email-fallback p{margin:0 0 9px}
+.email-fallback p:last-child{margin-bottom:0}
+.email-fallback strong{color:var(--champagne-light,#E6CB98);font-weight:600}
+.email-fallback .fallback-actions{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0}
+.email-fallback .fallback-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--champagne,#D0AC6E);background:transparent;color:var(--champagne,#D0AC6E);font-family:var(--font-sans,sans-serif);font-size:.74rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .25s ease,color .25s ease}
+.email-fallback .fallback-btn:hover{background:rgba(208,172,110,.13);color:var(--champagne-light,#E6CB98)}
+.email-fallback .fallback-btn.ghost{border-color:var(--hairline-strong,rgba(208,172,110,.3));color:var(--stone,#B4AEA3)}
+.email-fallback .copy-state{color:var(--champagne-light,#E6CB98);font-size:.7rem}
+.email-fallback a{color:var(--champagne,#D0AC6E);text-decoration:none;border-bottom:1px solid var(--hairline-strong,rgba(208,172,110,.3))}
 </style><main>
 <section class="page-hero">
   <div class="container">
@@ -368,9 +381,19 @@ body.menu-open{overflow:hidden}
           <textarea id="tplNotes" placeholder="For example the state where the property is located, or any detail that affects the template."></textarea>
         </div>
 
-        <button type="submit" class="req-submit">Send request</button>
+        <button type="submit" class="req-submit">Send request by email</button>
 
         <p class="req-note"><strong>Important Legal Notice:</strong> This template is provided for general information and reference purposes only. It is not legal advice and may not be suitable for your particular circumstances. Please obtain professional legal advice and have the document reviewed and appropriately adapted before use. Downloading or using this template does not create a solicitor client relationship with Acefields Attorneys, Solicitors &amp; Notary Public. Payment instructions are issued by email and the document is released once payment is confirmed. Where the matter is urgent, call the firm on 0911 211 1021.</p>
+
+        <div class="email-fallback" id="tplFallback" hidden>
+          <p><strong>Your email app should now be open</strong> with the request written out — press send and it reaches the firm directly.</p>
+          <p>If nothing opened, your device may not have a mail app set up. Use either option below and the request still reaches the firm:</p>
+          <div class="fallback-actions">
+            <a class="fallback-btn" data-role="reopen" href="mailto:info@acefieldsattorneys.com.ng">Open email again</a>
+            <button type="button" class="fallback-btn ghost" onclick="copyBrief('tplFallback')">Copy request <span class="copy-state"></span></button>
+          </div>
+          <p>Or write to <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a> directly, or call the firm on <a href="tel:+2349112111021">0911 211 1021</a>.</p>
+        </div>
       </form>
 
     </div>
@@ -407,16 +430,49 @@ function sendTemplateRequest(e) {
     notes ? 'Notes: ' + notes : ''
   ].filter(Boolean).join('\n');
 
-  window.location.href = 'mailto:info@acefieldsattorneys.com.ng'
+  const href = 'mailto:info@acefieldsattorneys.com.ng'
     + '?subject=' + encodeURIComponent('Template request: ' + sel.value)
     + '&body=' + encodeURIComponent(body);
 
-  const wa = 'https://wa.me/2348179911555?text=' + encodeURIComponent(
-    'Good day, I would like to request the following template:\n\n' + sel.value +
-    '\n\nName: ' + name + '\nEmail: ' + email + '\nTelephone: ' + phone + (notes ? '\nNotes: ' + notes : '')
-  );
-  setTimeout(function(){ window.open(wa, '_blank'); }, 900);
+  window.location.href = href;
+  showEmailFallback('tplFallback', href, body);
   return false;
+}
+
+/* Email-only safety net: if no mail app is configured, the request can still be sent. */
+function showEmailFallback(id, href, body) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  box.hidden = false;
+  box.dataset.href = href;
+  box.dataset.body = body;
+  const again = box.querySelector('[data-role="reopen"]');
+  if (again) again.setAttribute('href', href);
+}
+
+function copyBrief(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  const text = box.dataset.body || '';
+  const state = box.querySelector('.copy-state');
+  const flag = function(){ if (state) { state.textContent = 'Copied'; setTimeout(function(){ state.textContent = ''; }, 2400); } };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(flag).catch(function(){ legacyCopy(text, flag); });
+  } else {
+    legacyCopy(text, flag);
+  }
+}
+
+function legacyCopy(text, done) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.top = '-1000px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); done(); } catch (err) {}
+  document.body.removeChild(ta);
 }
 
 (function () {
@@ -644,17 +700,23 @@ function sendTemplateRequest(e) {
 
         function submitEnquiry(e) {
             e.preventDefault();
-            const text = [
-                'Good day *Acefields Attorneys, Solicitors and Notary Public*,',
-                'I would like to schedule a consultation via the Firm Portal:',
-                '',
-                '• *Name:* ' + document.getElementById('fName').value.trim(),
-                '• *Phone:* ' + document.getElementById('fPhone').value.trim(),
-                '• *Jurisdiction:* ' + document.getElementById('fOffice').value,
-                '• *Practice Desk:* ' + document.getElementById('fDesk').value,
-                '• *Summary:* ' + document.getElementById('fMsg').value.trim()
-            ].join(String.fromCharCode(10));
-            window.open('https://wa.me/2348179911555?text=' + encodeURIComponent(text), '_blank');
+            const name   = document.getElementById('fName').value.trim();
+            const phone  = document.getElementById('fPhone').value.trim();
+            const office = document.getElementById('fOffice').value;
+            const desk   = document.getElementById('fDesk').value;
+            const msg    = document.getElementById('fMsg').value.trim();
+            const body = [
+                'Good day Acefields Attorneys, Solicitors and Notary Public,', '',
+                'I would like to schedule a consultation via the Firm Portal:', '',
+                'Name: ' + name, 'Telephone: ' + phone,
+                'Jurisdiction: ' + office, 'Practice Desk: ' + desk,
+                'Summary: ' + msg, '', '— Sent from the Firm Portal enquiry form'
+            ].join('\n');
+            const href = 'mailto:info@acefieldsattorneys.com.ng'
+                + '?subject=' + encodeURIComponent('Consultation enquiry — ' + desk + (name ? ' — ' + name : ''))
+                + '&body=' + encodeURIComponent(body);
+            window.location.href = href;
+            return false;
         }
 
         (function() {

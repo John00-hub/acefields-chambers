@@ -557,7 +557,42 @@
 .nav-hamburger.active span:nth-child(2){opacity:0}
 .nav-hamburger.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 body.menu-open{overflow:hidden}
-</style>
+
+        /* ── Email fallback panel (form submissions route to email, never WhatsApp) ── */
+        .email-fallback {
+            margin-top: 16px;
+            padding: 18px 20px;
+            border: 1px solid var(--hairline-strong, rgba(208,172,110,.3));
+            background: rgba(208, 172, 110, 0.055);
+            font-size: 0.9rem;
+            line-height: 1.62;
+            color: var(--stone, #B4AEA3);
+        }
+        .email-fallback[hidden] { display: none; }
+        .email-fallback p { margin: 0 0 9px; }
+        .email-fallback p:last-child { margin-bottom: 0; }
+        .email-fallback strong { color: var(--champagne-light, #E6CB98); font-weight: 600; }
+        .email-fallback .fallback-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 13px 0; }
+        .email-fallback .fallback-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 16px;
+            border: 1px solid var(--champagne, #D0AC6E);
+            background: transparent;
+            color: var(--champagne, #D0AC6E);
+            font-family: var(--font-sans, sans-serif);
+            font-size: 0.74rem; font-weight: 500;
+            letter-spacing: 0.09em; text-transform: uppercase;
+            text-decoration: none; cursor: pointer;
+            transition: background .25s ease, color .25s ease;
+        }
+        .email-fallback .fallback-btn:hover { background: rgba(208,172,110,.13); color: var(--champagne-light, #E6CB98); }
+        .email-fallback .fallback-btn.ghost { border-color: var(--hairline-strong, rgba(208,172,110,.3)); color: var(--stone, #B4AEA3); }
+        .email-fallback .fallback-btn.ghost:hover { color: var(--champagne-light, #E6CB98); }
+        .email-fallback .copy-state { color: var(--champagne-light, #E6CB98); font-size: 0.7rem; letter-spacing: 0.06em; }
+        .email-fallback a { color: var(--champagne, #D0AC6E); text-decoration: none; border-bottom: 1px solid var(--hairline-strong, rgba(208,172,110,.3)); }
+        .email-fallback a:hover { color: var(--champagne-light, #E6CB98); }
+
+    </style>
 </head>
 <body>
 
@@ -1110,12 +1145,22 @@ body.menu-open{overflow:hidden}
                             </div>
 
                             <button type="submit" class="form-submit">
-                                Send Brief via WhatsApp
+                                Send Brief by Email
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                             </button>
                             <p class="form-note">
-                                Submitting opens WhatsApp with your brief pre-filled for direct delivery to the firm. You may also email <a href="mailto:info@acefieldsattorneys.com.ng" style="color:var(--champagne)">info@acefieldsattorneys.com.ng</a>. Please withhold confidential evidentiary documents until conflict-of-interest clearance is confirmed by Counsel.
+                                Submitting opens your email app with the brief pre-filled and addressed to <a href="mailto:info@acefieldsattorneys.com.ng" style="color:var(--champagne)">info@acefieldsattorneys.com.ng</a>, so the firm keeps a written record of every enquiry. Please withhold confidential evidentiary documents until conflict-of-interest clearance is confirmed by Counsel.
                             </p>
+
+                            <div class="email-fallback" id="enquiryFallback" hidden>
+                                <p><strong>Your email app should now be open</strong> with the brief written out — press send and it reaches the firm directly.</p>
+                                <p>If nothing opened, your device may not have a mail app set up. Use either option below and the enquiry still reaches the firm:</p>
+                                <div class="fallback-actions">
+                                    <a class="fallback-btn" data-role="reopen" href="mailto:info@acefieldsattorneys.com.ng">Open email again</a>
+                                    <button type="button" class="fallback-btn ghost" onclick="copyBrief('enquiryFallback')">Copy brief <span class="copy-state"></span></button>
+                                </div>
+                                <p>Or write to <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a> directly, or call the firm on <a href="tel:+2349112111021">0911 211 1021</a>.</p>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -1299,17 +1344,69 @@ body.menu-open{overflow:hidden}
 
         function submitEnquiry(e) {
             e.preventDefault();
-            const text = [
-                'Good day *Acefields Attorneys, Solicitors and Notary Public*,',
+            const name   = document.getElementById('fName').value.trim();
+            const phone  = document.getElementById('fPhone').value.trim();
+            const office = document.getElementById('fOffice').value;
+            const desk   = document.getElementById('fDesk').value;
+            const msg    = document.getElementById('fMsg').value.trim();
+
+            const body = [
+                'Good day Acefields Attorneys, Solicitors and Notary Public,',
+                '',
                 'I would like to schedule a consultation via the Firm Portal:',
                 '',
-                '• *Name:* ' + document.getElementById('fName').value.trim(),
-                '• *Phone:* ' + document.getElementById('fPhone').value.trim(),
-                '• *Jurisdiction:* ' + document.getElementById('fOffice').value,
-                '• *Practice Desk:* ' + document.getElementById('fDesk').value,
-                '• *Summary:* ' + document.getElementById('fMsg').value.trim()
-            ].join(String.fromCharCode(10));
-            window.open('https://wa.me/2348179911555?text=' + encodeURIComponent(text), '_blank');
+                'Name: ' + name,
+                'Telephone: ' + phone,
+                'Jurisdiction: ' + office,
+                'Practice Desk: ' + desk,
+                'Summary: ' + msg,
+                '',
+                '— Sent from the Firm Portal enquiry form'
+            ].join('\n');
+
+            const href = 'mailto:info@acefieldsattorneys.com.ng'
+                + '?subject=' + encodeURIComponent('Consultation enquiry — ' + desk + (name ? ' — ' + name : ''))
+                + '&body=' + encodeURIComponent(body);
+
+            window.location.href = href;
+            showEmailFallback('enquiryFallback', href, body);
+            return false;
+        }
+
+        /* Shows the "email did not open" safety net, with a copyable brief. */
+        function showEmailFallback(id, href, body) {
+            const box = document.getElementById(id);
+            if (!box) return;
+            box.hidden = false;
+            box.dataset.href = href;
+            box.dataset.body = body;
+            const again = box.querySelector('[data-role="reopen"]');
+            if (again) again.setAttribute('href', href);
+        }
+
+        function copyBrief(id) {
+            const box = document.getElementById(id);
+            if (!box) return;
+            const text = box.dataset.body || '';
+            const state = box.querySelector('.copy-state');
+            const flag = function(){ if (state) { state.textContent = 'Copied'; setTimeout(function(){ state.textContent = ''; }, 2400); } };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(flag).catch(function(){ legacyCopy(text, flag); });
+            } else {
+                legacyCopy(text, flag);
+            }
+        }
+
+        function legacyCopy(text, done) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.top = '-1000px';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); done(); } catch (err) {}
+            document.body.removeChild(ta);
         }
 
         (function() {
