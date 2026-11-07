@@ -116,7 +116,7 @@ main{padding:40px 0 60px}
     <div class="notice">
       <p><strong>There is no charge to send this enquiry.</strong></p>
       <p>This form asks only for the names needed for an initial conflict check, a broad matter type and a safe way to contact you. Do not include your account of what happened, information about children, property or finances, identity numbers, or documents.</p>
-      <p>Your answers stay on your device until you choose to share or copy them. The website does not put your answers into a WhatsApp link or store them. No solicitor and client relationship is created unless the firm confirms it can act and accepts instructions. This form is not an emergency service.</p>
+      <p>Your answers stay on your device until you choose to share or copy them. The website does not put your answers into a link or store them. No solicitor and client relationship is created unless the firm confirms it can act and accepts instructions. This form is not an emergency service.</p>
     </div>
 
     <div class="item">
@@ -152,7 +152,7 @@ main{padding:40px 0 60px}
         <div class="field"><label for="contactMethod">Preferred safe contact method</label>
           <select id="contactMethod" required data-label="Preferred safe contact method">
             <option value="">Select one</option>
-            <option>WhatsApp message</option>
+            <option>Email</option>
             <option>Telephone call</option>
             <option>Email</option>
           </select>
@@ -171,9 +171,9 @@ main{padding:40px 0 60px}
       <button type="button" class="send" id="shareIntake">Share conflict-check enquiry</button>
       <p class="send-note">Your device will open its share menu where available. Review the message and choose how to send it. The firm cannot tell whether you sent it or whether it was received.</p>
       <div class="fallback" id="shareFallback" hidden>
-        <p class="hint">This browser does not support the share menu. Copy the message below, then open WhatsApp and paste it into the chat. The WhatsApp link contains no form answers.</p>
+        <p class="hint">This browser does not support the share menu. Copy the message below, then paste it into an email to the firm. No form answers are placed in a link.</p>
         <textarea id="fallbackText" rows="9" readonly aria-label="Conflict-check enquiry to copy"></textarea>
-        <div class="fallback-actions"><button type="button" id="copyEnquiry">Copy enquiry</button><a class="open-chat" href="https://wa.me/2348179911555" target="_blank" rel="noopener noreferrer">Open the firm's WhatsApp</a></div>
+        <div class="fallback-actions"><button type="button" id="copyEnquiry">Copy enquiry</button><a class="open-chat" href="mailto:info@acefieldsattorneys.com.ng?subject=Matrimonial%20conflict-check%20enquiry">Open an email to the firm</a></div>
         <p class="hint" id="copyStatus" aria-live="polite"></p>
       </div>
       <p class="send-note">If you prefer, contact the firm by email at <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a> or telephone. Please do not send case facts or documents before the conflict check. Read the <a href="/privacy">Privacy Policy</a>.</p>
@@ -233,11 +233,11 @@ main{padding:40px 0 60px}
     textBox.value=message;
     fallback.hidden=false;
     fallback.scrollIntoView({behavior:'smooth',block:'nearest'});
-    status.textContent='Copy the enquiry, then open WhatsApp and paste it. No form answers are included in the WhatsApp link.';
+    status.textContent='Copy the enquiry, then paste it into an email to the firm. No form answers are placed in a link.';
   });
   copyButton.addEventListener('click',async function(){
-    try{await navigator.clipboard.writeText(textBox.value);status.textContent='Copied. Open WhatsApp and paste the message. Nothing was sent.';}
-    catch(error){textBox.focus();textBox.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}status.textContent=ok?'Copied. Open WhatsApp and paste the message. Nothing was sent.':'Copy was blocked. Select and copy the text above, then paste it in WhatsApp.';}
+    try{await navigator.clipboard.writeText(textBox.value);status.textContent='Copied. Paste it into an email to the firm. Nothing has been sent yet.';}
+    catch(error){textBox.focus();textBox.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}status.textContent=ok?'Copied. Paste it into an email to the firm. Nothing has been sent yet.':'Copy was blocked. Select and copy the text above, then paste it into an email to the firm.';}
   });
 })();
 </script>

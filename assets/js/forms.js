@@ -1,10 +1,11 @@
 /* Acefields registration intake.
    Turns the printed checklist pages into fillable forms.
-   Nothing leaves the phone until the client chooses to open WhatsApp.
+   Nothing leaves the device until the client chooses to send it.
    Applicants can be added for as many people as the filing needs.
-   Required documents are attached manually inside WhatsApp, not here. */
+   Submissions go by email, so the firm keeps a written record of every
+   instruction. Required documents are attached to that email, not here. */
 (function () {
-  var WHATSAPP = '2348179911555';
+  var EMAIL = 'info@acefieldsattorneys.com.ng';
 
 
   var KEEP_UPPER = { NIN: 1, CAC: 1, DOB: 1, TIN: 1, NGO: 1, IT: 1, BVN: 1 };
@@ -214,7 +215,7 @@
       if (!requiresDocument) return;
       var note = document.createElement('p');
       note.className = 'bn-manual-attach';
-      note.innerHTML = '<strong>Send this separately in WhatsApp.</strong> This form does not upload files. After WhatsApp opens, attach the requested document manually in that chat before sending your request.';
+      note.innerHTML = '<strong>Send this separately by email.</strong> This form does not upload files. After your mail app opens, attach the requested document to that email before you send it.';
       item.appendChild(note);
     });
 
@@ -233,6 +234,7 @@
     /* ---------- assemble and send ---------- */
     var send = cta ? cta.querySelector('a') : null;
     if (send) {
+      send.textContent = 'Send these details by email';
       send.addEventListener('click', function (e) {
         e.preventDefault();
 
@@ -246,7 +248,8 @@
 
         var lines = [];
         var title = (document.title || 'this filing').split('|')[0].replace(/\s+Checklist\s*$/i, '').trim();
-        lines.push('Good day *Acefields Attorneys, Solicitors and Notary Public*,');
+        lines.push('Good day Acefields Attorneys, Solicitors and Notary Public,');
+        lines.push('');
         lines.push('I would like to proceed with ' + title + '. The details are below.');
         lines.push('');
 
@@ -261,7 +264,7 @@
           var label = node.getAttribute('data-label') || 'Field';
           if (section !== lastSection) {
             lines.push('');
-            lines.push('*' + section + '*');
+            lines.push(section.toUpperCase());
             lastSection = section;
           }
           var who = node.getAttribute('data-applicant');
@@ -276,7 +279,7 @@
         var notes = document.getElementById('bnNotes');
         if (notes && notes.value.trim()) {
           lines.push('');
-          lines.push('*Additional notes*');
+          lines.push('ADDITIONAL NOTES');
           lines.push(notes.value.trim());
         }
 
@@ -287,19 +290,92 @@
 
         if (page.querySelector('.bn-manual-attach')) {
           lines.push('');
-          lines.push('*Documents*');
-          lines.push('No files were attached by the website. Please attach each requested document manually in this WhatsApp chat before sending your request.');
+          lines.push('DOCUMENTS');
+          lines.push('No files were attached by the website. Please attach each requested document (passport photograph, specimen signature and any other item listed) to this email before sending it.');
         }
 
         if (consent && consent.checked) {
           lines.push('');
-          lines.push('*Declaration*');
+          lines.push('DECLARATION');
           lines.push('I confirm that the information I have supplied is true, correct and authentic to the best of my knowledge.');
           lines.push('I consent to and authorise Acefields Attorneys, Solicitors and Notary Public to use the information I have provided in the execution of my instructions.');
         }
 
-        window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(lines.join(String.fromCharCode(10))), '_blank');
+        var body = lines.join(String.fromCharCode(10)) + String.fromCharCode(10, 10)
+                 + '— Sent from the firm intake form on acefieldsattorneys.com.ng';
+
+        var subject = title + ' — details for the firm';
+        var href = 'mailto:' + EMAIL
+                 + '?subject=' + encodeURIComponent(subject)
+                 + '&body=' + encodeURIComponent(body);
+
+        /* Long intakes can exceed what a mailto link will carry, and a device may
+           have no mail app at all. The panel below always appears so the client
+           can copy the completed details instead of losing them. */
+        showEmailPanel(cta, href, body, subject);
+        window.location.href = href;
       });
+    }
+
+    /* ---------- email handoff panel ---------- */
+    function showEmailPanel(ctaNode, href, body, subject) {
+      var existing = document.getElementById('bnEmailPanel');
+      if (existing) existing.parentNode.removeChild(existing);
+
+      var panel = document.createElement('div');
+      panel.id = 'bnEmailPanel';
+      panel.setAttribute('style', [
+        'margin-top:18px',
+        'padding:18px 20px',
+        'border:1px solid rgba(208,172,110,.30)',
+        'background:rgba(208,172,110,.055)',
+        'font-size:.9rem',
+        'line-height:1.62',
+        'color:#B4AEA3'
+      ].join(';'));
+
+      var html = '';
+      html += '<p style="margin:0 0 9px"><strong style="color:#E6CB98;font-weight:600">Your email app should now be open</strong> with these details written out, addressed to ' + EMAIL + '. Press send and the firm receives them.</p>';
+      html += '<p style="margin:0 0 9px">Attach the requested documents to that email before you send it.</p>';
+      if (href.length > 1800) {
+        html += '<p style="margin:0 0 9px">This is a long intake, and some mail apps cut long messages short. If yours does, use <strong style="color:#E6CB98;font-weight:600">Copy details</strong> below and paste them into a new email instead.</p>';
+      }
+      html += '<p style="margin:0 0 9px">If nothing opened, your device may not have a mail app set up:</p>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:10px;margin:13px 0">' +
+                '<a href="' + href + '" style="display:inline-flex;align-items:center;padding:10px 16px;border:1px solid #D0AC6E;color:#D0AC6E;font-size:.74rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;text-decoration:none">Open email again</a>' +
+                '<button type="button" id="bnCopyBtn" style="display:inline-flex;align-items:center;padding:10px 16px;border:1px solid rgba(208,172,110,.30);background:transparent;color:#B4AEA3;font-size:.74rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;font-family:inherit">Copy details <span id="bnCopyState" style="color:#E6CB98"></span></button>' +
+              '</div>';
+      html += '<p style="margin:0">Or write to <a href="mailto:' + EMAIL + '" style="color:#D0AC6E">' + EMAIL + '</a> directly, or call the firm on <a href="tel:+2349112111021" style="color:#D0AC6E">0911 211 1021</a>.</p>';
+      panel.innerHTML = html;
+
+      ctaNode.parentNode.insertBefore(panel, ctaNode.nextSibling);
+
+      var btn = document.getElementById('bnCopyBtn');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var state = document.getElementById('bnCopyState');
+          var flag = function () {
+            if (state) { state.textContent = 'Copied'; setTimeout(function () { state.textContent = ''; }, 2400); }
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(body).then(flag).catch(function () { legacyCopy(body, flag); });
+          } else {
+            legacyCopy(body, flag);
+          }
+        });
+      }
+    }
+
+    function legacyCopy(text, done) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch (err) {}
+      document.body.removeChild(ta);
     }
 
     var print = page.querySelector('.bn-print');
