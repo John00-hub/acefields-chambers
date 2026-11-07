@@ -621,17 +621,30 @@ body.menu-open{overflow:hidden}
 
         function submitEnquiry(e) {
             e.preventDefault();
-            const text = [
-                'Good day *Acefields Attorneys, Solicitors and Notary Public*,',
+            const name   = document.getElementById('fName').value.trim();
+            const phone  = document.getElementById('fPhone').value.trim();
+            const office = document.getElementById('fOffice').value;
+            const desk   = document.getElementById('fDesk').value;
+            const msg    = document.getElementById('fMsg').value.trim();
+
+            const body = [
+                'Good day Acefields Attorneys, Solicitors and Notary Public,',
+                '',
                 'I would like to schedule a consultation via the Firm Portal:',
                 '',
-                '• *Name:* ' + document.getElementById('fName').value.trim(),
-                '• *Phone:* ' + document.getElementById('fPhone').value.trim(),
-                '• *Jurisdiction:* ' + document.getElementById('fOffice').value,
-                '• *Practice Desk:* ' + document.getElementById('fDesk').value,
-                '• *Summary:* ' + document.getElementById('fMsg').value.trim()
-            ].join(String.fromCharCode(10));
-            window.open('https://wa.me/2348179911555?text=' + encodeURIComponent(text), '_blank');
+                'Name: ' + name,
+                'Telephone: ' + phone,
+                'Jurisdiction: ' + office,
+                'Practice Desk: ' + desk,
+                'Summary: ' + msg,
+                '',
+                '— Sent from the Firm Portal enquiry form'
+            ].join('\n');
+
+            window.location.href = 'mailto:info@acefieldsattorneys.com.ng'
+                + '?subject=' + encodeURIComponent('Consultation enquiry — ' + desk + (name ? ' — ' + name : ''))
+                + '&body=' + encodeURIComponent(body);
+            return false;
         }
 
         (function() {
