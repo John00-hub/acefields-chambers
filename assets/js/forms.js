@@ -215,7 +215,26 @@
       if (!requiresDocument) return;
       var note = document.createElement('p');
       note.className = 'bn-manual-attach';
-      note.innerHTML = '<strong>Send this separately by email.</strong> This form does not upload files. After your mail app opens, attach the requested document to that email before you send it.';
+      var docLabel = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').trim() : 'Document';
+      var filing = (document.title || '').split('|')[0].replace(/\s+Checklist\s*$/i, '').trim();
+      var docSubject = encodeURIComponent(docLabel + ' — ' + filing);
+      var docBody = encodeURIComponent(
+        'Good day Acefields Attorneys, Solicitors and Notary Public,' +
+        String.fromCharCode(10, 10) +
+        'Please find attached my ' + docLabel.toLowerCase() + ' for ' + filing + '.' +
+        String.fromCharCode(10, 10) +
+        'Name: ' +
+        String.fromCharCode(10) +
+        'Telephone: ' +
+        String.fromCharCode(10, 10) +
+        '— Sent from the firm website'
+      );
+      note.innerHTML = '<strong>Send this separately by email.</strong> This form does not upload files. '
+        + 'After your mail app opens, attach the requested document to that email before you send it. '
+        + 'You can also email it on its own to '
+        + '<a href="mailto:info@acefieldsattorneys.com.ng?subject=' + docSubject + '&body=' + docBody + '" '
+        + 'style="color:#D0AC6E;border-bottom:1px solid rgba(208,172,110,.45);text-decoration:none;white-space:nowrap">'
+        + 'info@acefieldsattorneys.com.ng</a>.';
       item.appendChild(note);
     });
 
