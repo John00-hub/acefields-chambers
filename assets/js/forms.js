@@ -324,64 +324,29 @@
                  + '— Sent from the firm intake form on acefieldsattorneys.com.ng';
 
         var subject = title + ' — details for the firm';
-        var href = 'mailto:' + EMAIL
-                 + '?subject=' + encodeURIComponent(subject)
-                 + '&body=' + encodeURIComponent(body);
 
-        /* Long intakes can exceed what a mailto link will carry, and a device may
-           have no mail app at all. The panel below always appears so the client
-           can copy the completed details instead of losing them. */
+        /* A mailto link cannot carry a long intake: Gmail, iOS Mail and Outlook
+           truncate or drop the body once the URL passes roughly 2,000 characters,
+           which left the firm receiving empty emails. So the details are copied to
+           the clipboard and shown on the page, and only the subject travels in the
+           link. The client pastes the text into the email. */
+        var href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject);
+
         showEmailPanel(cta, href, body, subject);
-        window.location.href = href;
+        copyToClipboard(body);
       });
     }
 
     /* ---------- email handoff panel ---------- */
-    function showEmailPanel(ctaNode, href, body, subject) {
-      var existing = document.getElementById('bnEmailPanel');
-      if (existing) existing.parentNode.removeChild(existing);
-
-      var panel = document.createElement('div');
-      panel.id = 'bnEmailPanel';
-      panel.setAttribute('style', [
-        'margin-top:18px',
-        'padding:18px 20px',
-        'border:1px solid rgba(208,172,110,.30)',
-        'background:rgba(208,172,110,.055)',
-        'font-size:.9rem',
-        'line-height:1.62',
-        'color:#B4AEA3'
-      ].join(';'));
-
-      var html = '';
-      html += '<p style="margin:0 0 9px"><strong style="color:#E6CB98;font-weight:600">Your email app should now be open</strong> with these details written out, addressed to ' + EMAIL + '. Press send and the firm receives them.</p>';
-      html += '<p style="margin:0 0 9px">Attach the requested documents to that email before you send it.</p>';
-      if (href.length > 1800) {
-        html += '<p style="margin:0 0 9px">This is a long intake, and some mail apps cut long messages short. If yours does, use <strong style="color:#E6CB98;font-weight:600">Copy details</strong> below and paste them into a new email instead.</p>';
-      }
-      html += '<p style="margin:0 0 9px">If nothing opened, your device may not have a mail app set up:</p>';
-      html += '<div style="display:flex;flex-wrap:wrap;gap:10px;margin:13px 0">' +
-                '<a href="' + href + '" style="display:inline-flex;align-items:center;padding:10px 16px;border:1px solid #D0AC6E;color:#D0AC6E;font-size:.74rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;text-decoration:none">Open email again</a>' +
-                '<button type="button" id="bnCopyBtn" style="display:inline-flex;align-items:center;padding:10px 16px;border:1px solid rgba(208,172,110,.30);background:transparent;color:#B4AEA3;font-size:.74rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;font-family:inherit">Copy details <span id="bnCopyState" style="color:#E6CB98"></span></button>' +
-              '</div>';
-      html += '<p style="margin:0">Or write to <a href="mailto:' + EMAIL + '" style="color:#D0AC6E">' + EMAIL + '</a> directly, or call the firm on <a href="tel:+2349112111021" style="color:#D0AC6E">0911 211 1021</a>.</p>';
-      panel.innerHTML = html;
-
-      ctaNode.parentNode.insertBefore(panel, ctaNode.nextSibling);
-
-      var btn = document.getElementById('bnCopyBtn');
-      if (btn) {
-        btn.addEventListener('click', function () {
-          var state = document.getElementById('bnCopyState');
-          var flag = function () {
-            if (state) { state.textContent = 'Copied'; setTimeout(function () { state.textContent = ''; }, 2400); }
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(body).then(flag).catch(function () { legacyCopy(body, flag); });
-          } else {
-            legacyCopy(body, flag);
-          }
-        });
+    function copyToClipboard(text) {
+      var state = document.getElementById('bnCopyState');
+      var ok = function () {
+        if (state) { state.textContent = 'Copied — paste it into the email'; }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok).catch(function () { legacyCopy(text, ok); });
+      } else {
+        legacyCopy(text, ok);
       }
     }
 
@@ -395,6 +360,77 @@
       ta.select();
       try { document.execCommand('copy'); done(); } catch (err) {}
       document.body.removeChild(ta);
+    }
+
+    function downloadText(text, filename) {
+      try {
+        var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 1200);
+      } catch (err) {}
+    }
+
+    function showEmailPanel(ctaNode, href, body, subject) {
+      var existing = document.getElementById('bnEmailPanel');
+      if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
+
+      var panel = document.createElement('div');
+      panel.id = 'bnEmailPanel';
+      panel.setAttribute('style', [
+        'margin-top:18px',
+        'padding:20px',
+        'border:1px solid rgba(208,172,110,.34)',
+        'background:rgba(208,172,110,.06)',
+        'font-size:.9rem',
+        'line-height:1.62',
+        'color:#B4AEA3'
+      ].join(';'));
+
+      var btn = 'display:inline-flex;align-items:center;justify-content:center;padding:11px 18px;'
+              + 'font-size:.74rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;'
+              + 'text-decoration:none;cursor:pointer;font-family:inherit;border:1px solid ';
+      var solid = btn + '#D0AC6E;background:#D0AC6E;color:#15161A;';
+      var ghost = btn + 'rgba(208,172,110,.34);background:transparent;color:#B4AEA3;';
+
+      var html = '';
+      html += '<p style="margin:0 0 12px;font-size:.98rem;color:#E6CB98;font-weight:600">Your details are ready to send</p>';
+      html += '<p style="margin:0 0 12px">Email apps cannot carry a long pre-filled message, so the details below have been <strong style="color:#E6CB98">copied to your clipboard</strong>. Open the email, then paste them in.</p>';
+      html += '<ol style="margin:0 0 14px;padding-left:20px">';
+      html += '<li style="margin-bottom:5px">Tap <strong style="color:#E6CB98">Open email app</strong> below.</li>';
+      html += '<li style="margin-bottom:5px">In the message body, paste the copied details.</li>';
+      html += '<li>Attach your passport photographs and signatures before sending.</li>';
+      html += '</ol>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px">'
+            +   '<a href="' + href + '" style="' + solid + '">Open email app</a>'
+            +   '<button type="button" id="bnCopyBtn" style="' + ghost + '">Copy details again</button>'
+            +   '<button type="button" id="bnDownloadBtn" style="' + ghost + '">Save as text file</button>'
+            + '</div>';
+      html += '<p id="bnCopyState" style="margin:0 0 10px;color:#E6CB98;font-size:.78rem;letter-spacing:.05em"></p>';
+      html += '<label for="bnEmailText" style="display:block;margin:0 0 6px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#8A8279">The details, ready to copy</label>';
+      html += '<textarea id="bnEmailText" readonly spellcheck="false" style="width:100%;box-sizing:border-box;height:170px;padding:12px;border:1px solid rgba(208,172,110,.24);background:#0E0F13;color:#D8D2C8;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.55;resize:vertical">'
+            + body.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            + '</textarea>';
+      html += '<p style="margin:12px 0 0">Or send it to <strong style="color:#E6CB98">' + EMAIL + '</strong> yourself, or call the firm on <a href="tel:+2349112111021" style="color:#D0AC6E">0911 211 1021</a>.</p>';
+
+      panel.innerHTML = html;
+      ctaNode.parentNode.insertBefore(panel, ctaNode.nextSibling);
+
+      var copyBtn = document.getElementById('bnCopyBtn');
+      if (copyBtn) copyBtn.addEventListener('click', function () {
+        var ta = document.getElementById('bnEmailText');
+        if (ta) { ta.focus(); ta.select(); }
+        copyToClipboard(body);
+      });
+
+      var dl = document.getElementById('bnDownloadBtn');
+      if (dl) dl.addEventListener('click', function () {
+        var safe = subject.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+        downloadText(body, safe + '.txt');
+      });
     }
 
     var print = page.querySelector('.bn-print');
