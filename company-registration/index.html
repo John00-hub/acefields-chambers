@@ -42,7 +42,7 @@
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: auto; scroll-padding-top: 84px; -webkit-font-smoothing: antialiased; }
         body {
             font-family: var(--font-sans);
             background-color: var(--obsidian);
@@ -603,7 +603,7 @@ body.menu-open{overflow:hidden}
                     break;
                 }
             }
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('contact').scrollIntoView({ behavior: 'auto' });
             setTimeout(() => document.getElementById('fName').focus(), 500);
         }
 
@@ -641,7 +641,19 @@ body.menu-open{overflow:hidden}
             document.addEventListener('keydown', e => {
                 if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false);
             });
-            document.querySelectorAll('.m-link').forEach(a => a.addEventListener('click', () => setMenu(false)));
+            /* Tapping a menu item should reveal the destination at once. The fade
+               leaves the overlay covering the screen for almost half a second,
+               which reads as the tap having done nothing. */
+            document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => {
+                menu.style.transition = 'none';
+                menu.classList.remove('open');
+                menu.setAttribute('aria-hidden', 'true');
+                ham.setAttribute('aria-expanded', 'false');
+                ham.classList.remove('active');
+                document.body.classList.remove('menu-open');
+                /* restore the fade for the next open */
+                setTimeout(() => { menu.style.transition = ''; }, 60);
+            }));
 
             const obs = new IntersectionObserver((entries, ob) => {
                 entries.forEach(en => {
@@ -673,7 +685,7 @@ body.menu-open{overflow:hidden}
         })();
     </script>
 
-<script defer src="/assets/js/forms.js?v=202611080514"></script>
+<script defer src="/assets/js/forms.js?v=202611080531"></script>
 
 </body>
 </html>
