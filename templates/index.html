@@ -298,6 +298,14 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
     text-justify: inter-word;
     overflow-wrap: break-word;
 }
+
+/* Two clear buckets, one for paid templates and one for the free ones. */
+.tpl-bucket { margin-bottom: 54px; }
+.tpl-bucket-head { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline-strong); }
+.tpl-bucket-head h2 { font-family: var(--font-serif); font-size: clamp(1.35rem, 2.6vw, 1.75rem); font-weight: 500;
+  color: var(--ivory); letter-spacing: -.01em; margin: 0 0 8px; }
+.tpl-bucket-head p { font-size: .9rem; color: var(--stone); margin: 0; }
+.tpl-bucket .tpl-grid { margin-bottom: 0; }
 </style><main>
 <section class="page-hero">
   <div class="container">
@@ -308,92 +316,101 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
 </section>
 <section class="page-body">
   <div class="container">
-
-    <div class="tpl-legend">
-      <span class="paid">Templates with a fee</span>
-      <span class="free">Available at no cost</span>
-    </div>
-
-    <div class="tpl-grid">
-            <article class="tpl-card">
+    <section class="tpl-bucket" aria-labelledby="tplFeeHead">
+      <div class="tpl-bucket-head">
+        <h2 id="tplFeeHead">Templates with a fee</h2>
+        <p>Drafted documents delivered by email once payment is confirmed.</p>
+      </div>
+      <div class="tpl-grid">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 01</span>
         <h3>Notice to Quit</h3>
         <p>A notice requiring a tenant to vacate premises, stating the grounds and the date by which possession must be given up.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;10,000</span><a class="tpl-btn" href="/template-request?t=01">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 02</span>
         <h3>7 Days Notice of Owner's Intention to Apply to Recover Possession</h3>
         <p>The statutory notice by which a landlord gives notice of an intention to apply to court to recover possession of premises let for residential or business purposes.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;10,000</span><a class="tpl-btn" href="/template-request?t=02">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 03</span>
         <h3>Tenancy Agreement</h3>
         <p>A complete tenancy agreement covering term, rent, obligations of both parties, repairs, and the conditions for termination.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;10,000</span><a class="tpl-btn" href="/template-request?t=03">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 04</span>
         <h3>Offer of Employment</h3>
         <p>A letter offering employment, setting out the position, remuneration, start date and the conditions of the offer.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;5,000</span><a class="tpl-btn" href="/template-request?t=04">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 05</span>
         <h3>Employment Contract</h3>
         <p>A full contract of employment covering duties, remuneration, leave, confidentiality, termination and dispute resolution.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;10,000</span><a class="tpl-btn" href="/template-request?t=05">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 06</span>
         <h3>Notice of Termination of Employment</h3>
         <p>A termination notice setting out the date of termination, entitlement and the contractual basis for the termination.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;5,000</span><a class="tpl-btn" href="/template-request?t=06">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 07</span>
         <h3>Notice of Resignation</h3>
         <p>A resignation notice recording the date of resignation and the period of notice given.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;5,000</span><a class="tpl-btn" href="/template-request?t=07">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 08</span>
         <h3>Notice to Cease and Desist</h3>
         <p>A letter requiring a party to stop a specified conduct and warning of proceedings if it continues.</p>
         <div class="tpl-foot"><span class="tpl-price">&#8358;5,000</span><a class="tpl-btn" href="/template-request?t=08">Request</a></div>
       </article>
-      <article class="tpl-card">
+      </div>
+    </section>
+
+    <section class="tpl-bucket" aria-labelledby="tplFreeHead">
+      <div class="tpl-bucket-head">
+        <h2 id="tplFreeHead">Available at no cost</h2>
+        <p>Applications and complaints the firm publishes free of charge.</p>
+      </div>
+      <div class="tpl-grid">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 09</span>
         <h3>Application for Confirmation of Meter Account Indebtedness</h3>
         <p>An application by a new tenant to an electricity distribution company requesting confirmation of the status of any indebtedness on the meter account before accepting the tenancy.</p>
-        <div class="tpl-foot"><span class="tpl-price free">Free download</span><a class="tpl-btn" href="/template-request?t=09">Request</a></div>
+        <div class="tpl-foot"><span class="tpl-price free">No fee</span><a class="tpl-btn" href="/template-request?t=09">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 10</span>
         <h3>Notification of Long Stay Travel and Request to Stop Billing</h3>
         <p>An application by an occupant notifying the electricity distribution company of a long period of travel and requesting that billing be stopped for that period.</p>
-        <div class="tpl-foot"><span class="tpl-price free">Free download</span><a class="tpl-btn" href="/template-request?t=10">Request</a></div>
+        <div class="tpl-foot"><span class="tpl-price free">No fee</span><a class="tpl-btn" href="/template-request?t=10">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 11</span>
         <h3>Complaint to an Electricity Distribution Company</h3>
         <p>A formal complaint by a consumer against an electricity distribution company, setting out the facts and the remedy sought.</p>
-        <div class="tpl-foot"><span class="tpl-price free">Free download</span><a class="tpl-btn" href="/template-request?t=11">Request</a></div>
+        <div class="tpl-foot"><span class="tpl-price free">No fee</span><a class="tpl-btn" href="/template-request?t=11">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 12</span>
         <h3>Application for Refund of Meter Cost</h3>
         <p>An application to an electricity distribution company for a refund of sums paid for a meter.</p>
-        <div class="tpl-foot"><span class="tpl-price free">Free download</span><a class="tpl-btn" href="/template-request?t=12">Request</a></div>
+        <div class="tpl-foot"><span class="tpl-price free">No fee</span><a class="tpl-btn" href="/template-request?t=12">Request</a></div>
       </article>
-      <article class="tpl-card">
+        <article class="tpl-card">
         <span class="tpl-no">TEMPLATE 13</span>
         <h3>Application on Breach of Patient's Rights</h3>
         <p>An application to a hospital setting out a breach of a patient's rights under the Patient Bill of Rights and requesting redress.</p>
-        <div class="tpl-foot"><span class="tpl-price free">Free download</span><a class="tpl-btn" href="/template-request?t=13">Request</a></div>
+        <div class="tpl-foot"><span class="tpl-price free">No fee</span><a class="tpl-btn" href="/template-request?t=13">Request</a></div>
       </article>
-    </div>
+      </div>
+    </section>
 
     <div class="tpl-how">
       <h2>How it works</h2>
