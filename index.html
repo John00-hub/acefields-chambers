@@ -330,6 +330,8 @@
         .practice-row:first-child { border-top: 1px solid var(--hairline); }
         .practice-row:hover, .practice-row:focus-visible { background: rgba(208, 172, 110, 0.04); padding-left: 28px; }
         .practice-row:focus-visible { outline: 2px solid var(--champagne); outline-offset: -2px; }
+        .notarial-item:focus-visible { outline: 2px solid var(--champagne); outline-offset: 2px; background: rgba(208, 172, 110, 0.06); }
+        .notarial-item:focus-visible span { color: var(--champagne-light); }
         .practice-row:focus-visible .p-title { color: var(--champagne-light); }
         .practice-row:focus-visible::after { width: 100%; }
         .practice-row::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 1px; background: linear-gradient(90deg, var(--crimson), var(--champagne)); transition: width 0.55s var(--ease-out); }
@@ -875,19 +877,19 @@ body.menu-open{overflow:hidden}
                             Appointed by the Chief Justice of Nigeria as a Notary Public of the Federal Republic of Nigeria, our Principal authenticates vital domestic and cross-border instruments recognized by embassies, registries, and financial institutions worldwide.
                         </p>
                         <div class="notarial-list">
-                            <div class="notarial-item" onclick="selectPractice('Notary Public & Document Authentication')">
+                            <div class="notarial-item" role="button" tabindex="0" onclick="selectPractice('Notary Public & Document Authentication')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPractice('Notary Public & Document Authentication');}">
                                 <span>International &amp; Embassy Document Certification</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                             </div>
-                            <div class="notarial-item" onclick="selectPractice('Notary Public & Document Authentication')">
+                            <div class="notarial-item" role="button" tabindex="0" onclick="selectPractice('Notary Public & Document Authentication')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPractice('Notary Public & Document Authentication');}">
                                 <span>Diaspora Powers of Attorney &amp; Deeds</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                             </div>
-                            <div class="notarial-item" onclick="selectPractice('Notary Public & Document Authentication')">
+                            <div class="notarial-item" role="button" tabindex="0" onclick="selectPractice('Notary Public & Document Authentication')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPractice('Notary Public & Document Authentication');}">
                                 <span>Statutory Declarations, Oaths &amp; Affidavits</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                             </div>
-                            <div class="notarial-item" onclick="selectPractice('Company Secretarial & Corporate Practice')">
+                            <div class="notarial-item" role="button" tabindex="0" onclick="selectPractice('Company Secretarial & Corporate Practice')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPractice('Company Secretarial & Corporate Practice');}">
                                 <span>Retained Company Secretarial &amp; CAC Filings</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                             </div>

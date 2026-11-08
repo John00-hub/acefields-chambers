@@ -105,7 +105,7 @@
         });
         source.parentNode.insertBefore(clone, add);
         refreshIdentity();
-        addPickersFor(holderName);
+        addPickersFor(holderName, sectionName);
         var first = clone.querySelector('.bn-input');
         if (first) first.focus();
       });
@@ -128,6 +128,7 @@
     /* anything outside an applicant block still needs its field */
     Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
       var heading = item.querySelector('h2');
+      if (heading && /identification/i.test(heading.innerText)) return; /* built below, by person */
       var sectionName = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').replace(/\s+/g, ' ').trim() : 'Section';
       convertFields(item, sectionName);
     });
@@ -150,15 +151,42 @@
       var wrap = identity.querySelector('.bn-fields');
       if (!wrap) return;
       var count = names.length || 1;
-      if (wrap.getAttribute('data-count') === String(count)) return;
+      var stamp = names.join('|');
+      if (wrap.getAttribute('data-count') === String(count) && wrap.getAttribute('data-names') === stamp) return;
       wrap.setAttribute('data-count', String(count));
-      wrap.innerHTML = '';
+      wrap.setAttribute('data-names', stamp);
       var sectionName = (identity.querySelector('h2').innerText || 'Means of Identification').replace(/^\s*\d+\s*/, '').trim();
+
+      /* Rebuild by reusing the field that is already on the page for each person.
+         Clearing the section and starting again used to throw away any number
+         already typed, so adding a proprietor silently erased the NINs above. */
+      var existing = {};
+      Array.prototype.forEach.call(wrap.children, function (field) {
+        var inp = field.querySelector('input');
+        if (inp) existing[inp.getAttribute('data-label')] = field;
+      });
+
       names.forEach(function (name) {
+        var label = 'NIN, ' + name;
+        var field = existing[label];
+        if (field) {
+          delete existing[label];
+          field.setAttribute('data-nin-person', label);
+          wrap.appendChild(field);   /* moving keeps everything already typed */
+          return;
+        }
         var f = document.createElement('div');
         f.className = 'bn-field';
-        f.innerHTML = 'NIN, ' + name.toLowerCase() + '<input type="text" class="bn-input" data-label="NIN, ' + name + '" data-section="' + sectionName + '" placeholder="Tap to fill" aria-label="NIN for ' + name + '">';
+        f.setAttribute('data-nin-person', label);
+        f.innerHTML = 'NIN, ' + name.toLowerCase() + '<input type="text" class="bn-input" data-label="' + label + '" data-section="' + sectionName + '" placeholder="Tap to fill" aria-label="NIN for ' + name + '">';
         wrap.appendChild(f);
+      });
+
+      /* anything left over, including the printed placeholders that have no
+         input yet, is cleared so the section holds exactly one field per person */
+      Array.prototype.forEach.call(wrap.children, function (field) {
+        if (field.getAttribute('data-nin-person')) return;
+        if (field.parentNode) field.parentNode.removeChild(field);
       });
     }
 
@@ -291,9 +319,14 @@
     }
 
     /* when another applicant block is added, that person needs their own pickers */
-    function addPickersFor(person) {
+    /* Only the roles the checklist asks documents for. Shareholders and other
+       members are not asked for an identity card or signature, so adding one
+       must not quietly create pickers for them. */
+    function addPickersFor(person, role) {
       if (!person) return;
-      var clean = prettyLabel(String(person).replace(/\s+/g, ' ').trim());
+      if (role && !/director|trustee|proprietor|secretary/i.test(role)) return;
+      var clean = prettyLabel(String(person).replace(/\s+/g, ' ').trim())
+        .replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
       docSets.forEach(function (set) {
         if (set.people.indexOf(clean) > -1) return;
         set.people.push(clean);
@@ -336,6 +369,62 @@
       var before = cta.parentNode.querySelector('.bn-declare') || cta;
       cta.parentNode.insertBefore(box, before);
     }
+
+    /* ---------- what is still missing, shown before the client sends ---------- */
+    function buildDocCheck() {
+      var picks = page.querySelectorAll('.bn-file');
+      if (!picks.length) return;
+
+      var box = document.createElement('div');
+      box.className = 'bn-doc-check';
+      box.setAttribute('role', 'status');
+      box.setAttribute('aria-live', 'polite');
+      box.innerHTML = '<p class="bn-doc-check-title"></p><ul class="bn-doc-check-list"></ul>' +
+        '<p class="bn-doc-check-note">You can send without them. The firm will ask for whatever is still needed.</p>';
+
+      var cta = page.querySelector('.bn-cta');
+      if (!cta || !cta.parentNode) return;
+      cta.parentNode.insertBefore(box, cta);
+
+      function refresh() {
+        var all = page.querySelectorAll('.bn-file');
+        var missing = [];
+        Array.prototype.forEach.call(all, function (fi) {
+          if (!fi.files || !fi.files.length) missing.push(fi.getAttribute('data-doc'));
+        });
+        var title = box.querySelector('.bn-doc-check-title');
+        var list = box.querySelector('.bn-doc-check-list');
+        var note = box.querySelector('.bn-doc-check-note');
+
+        list.innerHTML = '';
+        if (!missing.length) {
+          box.className = 'bn-doc-check complete';
+          title.textContent = 'All ' + all.length + ' documents attached';
+          note.textContent = 'Everything the checklist asks for is attached.';
+          return;
+        }
+        box.className = 'bn-doc-check' + (missing.length === all.length ? ' none' : '');
+        title.textContent = missing.length === all.length
+          ? 'No documents attached yet'
+          : missing.length + ' of ' + all.length + ' documents still to attach';
+        missing.forEach(function (d) {
+          var li = document.createElement('li');
+          li.textContent = d;
+          list.appendChild(li);
+        });
+        note.textContent = 'You can still send your details now. The firm will reply and tell you how to send the rest.';
+      }
+
+      Array.prototype.forEach.call(picks, function (fi) {
+        fi.addEventListener('change', refresh);
+      });
+      page.addEventListener('change', function (e) {
+        if (e.target && e.target.classList && e.target.classList.contains('bn-file')) refresh();
+      });
+      refresh();
+      box.refresh = refresh;
+    }
+    buildDocCheck();
 
     /* ---------- assemble and send through FormSubmit ---------- */
     var send = cta ? cta.querySelector('a') : null;
@@ -419,6 +508,21 @@
         });
         if (odd.length) {
           alert('Please attach photographs, scans or PDF files only. ' + odd[0].files[0].name + ' is not one of those.');
+          return;
+        }
+
+        /* Say plainly what is going out without its documents, and let the
+           client go back if they meant to attach them. */
+        var noFile = [];
+        Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+          if (!fi.files || !fi.files.length) noFile.push(fi.getAttribute('data-doc'));
+        });
+        if (noFile.length && !window.confirm(
+          'You are about to send this form without ' + noFile.length + ' of ' +
+          page.querySelectorAll('.bn-file').length + ' documents:\n\n' +
+          noFile.map(function (d) { return '  - ' + d; }).join('\n') +
+          '\n\nYou can send now and the firm will ask for the rest, or cancel and attach them first.\n\nSend anyway?'
+        )) {
           return;
         }
 
