@@ -40,7 +40,10 @@
       Array.prototype.forEach.call(fields, function (f) {
         if (f.querySelector('input, textarea')) return;
         var text = f.innerText.replace(/\s+/g, ' ').trim();
+        /* the asterisk is decoration, so it never becomes part of the label */
+        text = text.replace(/\s*\*\s*$/, '');
         if (!text) return;
+        var mandatory = f.classList.contains('bn-req');
         var input = document.createElement('input');
         input.type = 'text';
         input.className = 'bn-input';
@@ -53,6 +56,14 @@
         input.setAttribute('placeholder', 'Tap to fill');
         f.innerHTML = '';
         f.appendChild(document.createTextNode(text));
+        if (mandatory) {
+          var star = document.createElement('span');
+          star.className = 'bn-star';
+          star.setAttribute('aria-hidden', 'true');
+          star.textContent = ' *';
+          f.appendChild(star);
+          input.setAttribute('aria-required', 'true');
+        }
         f.appendChild(input);
       });
     }
@@ -235,6 +246,30 @@
     }
 
     setupObjects();
+
+    /* ---------- "+ Add another member" and similar ---------- */
+    /* Some lists are plain fields rather than applicant blocks, so they need
+       their own button. Pressing it adds one more labelled field. */
+    Array.prototype.forEach.call(page.querySelectorAll('.bn-add-fields'), function (btn) {
+      btn.addEventListener('click', function () {
+        var wrap = page.querySelector(btn.getAttribute('data-target'));
+        if (!wrap) return;
+        var item = wrap.closest('.bn-item');
+        var heading = item ? item.querySelector('h2') : null;
+        var sectionName = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').replace(/\s+/g, ' ').trim() : 'Section';
+        var prefix = btn.getAttribute('data-label') || 'Member';
+        var n = wrap.querySelectorAll('.bn-field').length + 1;
+
+        var f = document.createElement('div');
+        f.className = 'bn-field' + (btn.hasAttribute('data-required') ? ' bn-req' : '');
+        f.textContent = prefix + ' ' + n;
+        wrap.appendChild(f);
+
+        convertFields(item, sectionName);
+        var input = f.querySelector('input');
+        if (input) input.focus();
+      });
+    });
 
     /* ---------- documents: one labelled picker per person, per document ----------
        A single picker per document meant a second file replaced the first, so a
