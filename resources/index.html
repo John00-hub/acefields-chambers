@@ -214,6 +214,14 @@
 .nav-hamburger.active span:nth-child(2){opacity:0}
 .nav-hamburger.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 body.menu-open{overflow:hidden}
+
+/* Body text set flush at both margins, at every screen size, as the firm asked.
+   Headings are left alone: stretching large display type opens ugly rivers. */
+p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
+}
 </style>
 </head>
 <body>

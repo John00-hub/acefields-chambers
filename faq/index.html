@@ -342,6 +342,14 @@ body.menu-open{overflow:hidden}
 <style>
 /* inline booking links need a comfortable tap height on phones */
 a[href*="wa.me"][target="_blank"]{display:inline-flex;align-items:center;min-height:44px;padding:6px 2px}
+
+/* Body text set flush at both margins, at every screen size, as the firm asked.
+   Headings are left alone: stretching large display type opens ugly rivers. */
+p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
+}
 </style>
 </head>
 <body>

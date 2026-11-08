@@ -31,6 +31,14 @@ a.ghost{border:1px solid var(--hairline-strong);color:var(--stone)}
 a.ghost:hover{border-color:var(--champagne);color:var(--champagne-light)}
 .note{font-size:.79rem;color:var(--muted);line-height:1.65;margin-top:24px;padding-top:20px;border-top:1px solid var(--hairline)}
 .note a{color:var(--champagne);text-decoration:none;border-bottom:1px solid var(--hairline-strong)}
+
+/* Body text set flush at both margins, at every screen size, as the firm asked.
+   Headings are left alone: stretching large display type opens ugly rivers. */
+p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
+}
 </style>
 </head>
 <body>

@@ -321,6 +321,14 @@ body.menu-open{overflow:hidden}
 .email-fallback .fallback-btn.ghost{border-color:var(--hairline-strong,rgba(208,172,110,.3));color:var(--stone,#B4AEA3)}
 .email-fallback .copy-state{color:var(--champagne-light,#E6CB98);font-size:.7rem}
 .email-fallback a{color:var(--champagne,#D0AC6E);text-decoration:none;border-bottom:1px solid var(--hairline-strong,rgba(208,172,110,.3))}
+
+/* Body text set flush at both margins, at every screen size, as the firm asked.
+   Headings are left alone: stretching large display type opens ugly rivers. */
+p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
+}
 </style><main>
 <section class="page-hero">
   <div class="container">

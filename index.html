@@ -597,7 +597,15 @@ body.menu-open{overflow:hidden}
         .email-fallback a { color: var(--champagne, #D0AC6E); text-decoration: none; border-bottom: 1px solid var(--hairline-strong, rgba(208,172,110,.3)); }
         .email-fallback a:hover { color: var(--champagne-light, #E6CB98); }
 
-    </style>
+    
+/* Body text set flush at both margins, at every screen size, as the firm asked.
+   Headings are left alone: stretching large display type opens ugly rivers. */
+p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
+}
+</style>
 </head>
 <body>
 
@@ -839,7 +847,7 @@ body.menu-open{overflow:hidden}
                         <span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
                         <div>
                             <h3 class="p-title">Corporate, Commercial &amp; Employment Law</h3>
-                            <p class="p-desc">Commercial contract structuring, joint ventures, debt recovery, and executive employment &amp; labour advisory before the National Industrial Court of Nigeria.</p>
+                            <p class="p-desc">Commercial contract structuring, joint ventures, debt recovery, CAC pre and post incorporation services, executive employment &amp; labour advisory, and litigation before the National Industrial Court of Nigeria.</p>
                         </div>
                         <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
                     </div>

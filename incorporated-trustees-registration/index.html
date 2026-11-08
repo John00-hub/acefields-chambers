@@ -315,6 +315,14 @@ body.menu-open{overflow:hidden}
 .bn-upload-status{margin:6px 0 0;color:var(--champagne-light);font-size:.78rem;min-height:1em}
 
 @media print{.site-nav,.site-footer,.bn-cta{display:none}body{background:#fff;color:#000}.bn-item,.bn-prop{border-color:#ccc;background:#fff}.bn-field{color:#444}.bn-item h2,.bn-prop h3{color:#000}}
+
+/* Body text set flush at both margins, at every screen size, as the firm asked.
+   Headings are left alone: stretching large display type opens ugly rivers. */
+p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
+}
 </style><main>
 <section class="page-hero">
   <div class="container">
@@ -693,7 +701,7 @@ body.menu-open{overflow:hidden}
         })();
     </script>
 
-<script defer src="/assets/js/forms.js?v=202611080614"></script>
+<script defer src="/assets/js/forms.js?v=202611081856"></script>
 
 </body>
 </html>

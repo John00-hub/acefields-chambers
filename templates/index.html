@@ -290,6 +290,14 @@ body.menu-open{overflow:hidden}
 .tpl-how ol strong{color:var(--ivory);font-weight:600}
 .tpl-fine{font-size:.82rem;color:var(--muted);line-height:1.75;border-left:2px solid var(--hairline-strong);padding-left:16px;margin:0 0 34px}
 @media(max-width:820px){.tpl-grid{grid-template-columns:1fr}}
+
+/* Body text set flush at both margins, at every screen size, as the firm asked.
+   Headings are left alone: stretching large display type opens ugly rivers. */
+p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    overflow-wrap: break-word;
+}
 </style><main>
 <section class="page-hero">
   <div class="container">
