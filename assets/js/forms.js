@@ -187,15 +187,18 @@
           return;
         }
         var f = document.createElement('div');
-        f.className = 'bn-field';
+        f.className = 'bn-field bn-req';
         f.setAttribute('data-nin-person', label);
-        f.innerHTML = 'NIN, ' + name.toLowerCase() + '<input type="text" class="bn-input" data-label="' + label + '" data-section="' + sectionName + '" placeholder="Tap to fill" aria-label="NIN for ' + name + '">';
+        f.innerHTML = 'NIN, ' + name.toLowerCase()
+          + '<span class="bn-star" aria-hidden="true"> *</span>'
+          + '<input type="text" class="bn-input" data-label="' + label + '" data-section="' + sectionName
+          + '" placeholder="Tap to fill" aria-label="NIN for ' + name + '" aria-required="true">';
         wrap.appendChild(f);
       });
 
       /* anything left over, including the printed placeholders that have no
          input yet, is cleared so the section holds exactly one field per person */
-      Array.prototype.forEach.call(wrap.children, function (field) {
+      Array.prototype.slice.call(wrap.children).forEach(function (field) {
         if (field.getAttribute('data-nin-person')) return;
         if (field.parentNode) field.parentNode.removeChild(field);
       });
