@@ -30,7 +30,7 @@
             --crimson: #E6393C;
             --ivory: #F5F1E9;
             --stone: #B4AEA3;
-            --muted: #7D786F;
+            --muted: #8E8779;
             --hairline: rgba(208, 172, 110, 0.14);
             --hairline-strong: rgba(208, 172, 110, 0.30);
             --font-serif: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
@@ -435,7 +435,7 @@ function sendTemplateRequest(e) {
   add('_subject', 'Template request: ' + sel.value);
   add('_template', 'table');
   add('_captcha', 'false');
-  add('_next', location.origin + '/thank-you/?docs=sent');
+  add('_next', location.origin + '/thank-you/');
   add('Template requested', sel.value);
   add('Amount payable', price && price !== '0' ? 'N' + Number(price).toLocaleString('en-NG') : 'No fee');
   add('Full name', name);
@@ -720,7 +720,7 @@ function sendTemplateRequest(e) {
             add('_subject', 'Consultation enquiry - ' + desk);
             add('_template', 'table');
             add('_captcha', 'false');
-            add('_next', location.origin + '/thank-you/?docs=sent');
+            add('_next', location.origin + '/thank-you/');
             add('Name', name);
             add('Telephone', phone);
             add('email', '');

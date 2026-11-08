@@ -105,6 +105,7 @@
         });
         source.parentNode.insertBefore(clone, add);
         refreshIdentity();
+        addPickersFor(holderName);
         var first = clone.querySelector('.bn-input');
         if (first) first.focus();
       });
@@ -207,28 +208,49 @@
 
     setupObjects();
 
-    /* ---------- document sections get a real upload field per document ---------- */
-    function makeUpload(item, docLabel, suffix) {
+    /* ---------- documents: one labelled picker per person, per document ----------
+       A single picker per document meant a second file replaced the first, so a
+       form asking for a photograph and a signature from each proprietor could
+       never carry both. Each document now gets one picker for every named person,
+       and adding a person adds their pickers too. */
+    var docSets = [];
+
+    function peopleNames() {
+      var out = [];
+      Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
+        var h = item.querySelector('h2');
+        if (!h) return;
+        if (!/director|trustee|proprietor|secretary/i.test(h.innerText)) return;
+        Array.prototype.forEach.call(item.querySelectorAll('.bn-prop h3'), function (h3) {
+          var n = prettyLabel(h3.innerText.replace(/\s+/g, ' ').trim())
+            .replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
+          if (n && out.indexOf(n) === -1) out.push(n);
+        });
+      });
+      return out;
+    }
+
+    function addPicker(set, person) {
       var wrap = document.createElement('div');
       wrap.className = 'bn-upload';
 
       var label = document.createElement('label');
       label.className = 'bn-upload-label';
-      var id = 'bnFile' + Math.random().toString(36).slice(2);
+      var id = 'bnFile' + Math.random().toString(36).slice(2, 9);
       label.setAttribute('for', id);
-      label.textContent = 'Attach ' + docLabel.toLowerCase();
+      label.textContent = 'Attach ' + set.title.toLowerCase() + (person ? ' for ' + person : '');
 
       var input = document.createElement('input');
       input.type = 'file';
       input.id = id;
       input.className = 'bn-file';
-      input.name = 'attachment_' + (docLabel + (suffix ? ' ' + suffix : '')).toLowerCase().replace(/[^a-z0-9]+/g, '_');
-      input.setAttribute('data-doc', docLabel + (suffix ? ' - ' + suffix : ''));
+      input.name = 'attachment_' + (set.title + (person ? ' ' + person : '')).toLowerCase().replace(/[^a-z0-9]+/g, '_');
+      input.setAttribute('data-doc', set.title + (person ? ' - ' + person : ''));
       input.accept = 'image/*,application/pdf';
 
       var hint = document.createElement('p');
       hint.className = 'bn-upload-hint';
-      hint.textContent = 'Photograph or scan. JPG, PNG or PDF. Maximum 10MB in total.';
+      hint.textContent = 'One file for this person: a photograph or a scan, JPG, PNG or PDF. All attachments together must stay under 10MB.';
 
       var status = document.createElement('p');
       status.className = 'bn-upload-status';
@@ -244,41 +266,57 @@
       wrap.appendChild(input);
       wrap.appendChild(hint);
       wrap.appendChild(status);
-      item.appendChild(wrap);
+      set.wrap.appendChild(wrap);
+    }
+
+    function makeDocSet(item, title) {
+      var set = { title: title, people: [], wrap: document.createElement('div') };
+      set.wrap.className = 'bn-doc-set';
+
+      var head = document.createElement('p');
+      head.className = 'bn-doc-title';
+      head.textContent = title;
+      set.wrap.appendChild(head);
+
+      item.appendChild(set.wrap);
+      docSets.push(set);
+
+      var names = peopleNames();
+      if (!names.length) {
+        addPicker(set, '');
+      } else {
+        names.forEach(function (n) { set.people.push(n); addPicker(set, n); });
+      }
+      return set;
+    }
+
+    /* when another applicant block is added, that person needs their own pickers */
+    function addPickersFor(person) {
+      if (!person) return;
+      var clean = prettyLabel(String(person).replace(/\s+/g, ' ').trim());
+      docSets.forEach(function (set) {
+        if (set.people.indexOf(clean) > -1) return;
+        set.people.push(clean);
+        addPicker(set, clean);
+      });
     }
 
     Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
       var heading = item.querySelector('h2');
       if (!heading) return;
-      var raw = heading.innerText.replace(/^\s*\d+\s*/, '').trim();
-      var title = raw.toLowerCase();
+      var title = heading.innerText.replace(/^\s*\d+\s*/, '').trim().toLowerCase();
 
-      /* Passport Photograph and Signature each get their own single upload */
-      if (title.indexOf('passport') > -1) {
-        makeUpload(item, 'Passport photograph', '');
-        return;
-      }
-      if (title.indexOf('signature') > -1) {
-        makeUpload(item, 'Signature', '');
-        return;
-      }
+      if (title.indexOf('passport') > -1) { makeDocSet(item, 'Passport photograph'); return; }
+      if (title.indexOf('signature') > -1) { makeDocSet(item, 'Signature'); return; }
 
-      /* A combined Documents section gets one upload per document it lists */
       if (title.indexOf('document') > -1) {
         var text = (item.innerText || '').toLowerCase();
         if (text.indexOf('national identity') > -1 || text.indexOf('identity card') > -1) {
-          makeUpload(item, 'National identity card', '');
+          makeDocSet(item, 'National identity card');
         }
-        if (text.indexOf('signature') > -1) {
-          makeUpload(item, 'Signatures', 'all signatories');
-        }
-        if (text.indexOf('passport photograph') > -1) {
-          var trustees = /trustee/i.test(document.title);
-          makeUpload(item, 'Passport photographs', trustees ? 'trustees and secretary' : 'directors and secretary');
-        }
-        if (!item.querySelector('.bn-upload')) {
-          makeUpload(item, 'Supporting document', '');
-        }
+        if (text.indexOf('signature') > -1) makeDocSet(item, 'Specimen signature');
+        if (text.indexOf('passport photograph') > -1) makeDocSet(item, 'Passport photograph');
+        if (!item.querySelector('.bn-doc-set')) makeDocSet(item, 'Supporting document');
       }
     });
 
@@ -375,6 +413,15 @@
           return;
         }
 
+        var odd = files.filter(function (fi) {
+          var t = fi.files[0].type || '';
+          return t && t.indexOf('image/') !== 0 && t !== 'application/pdf';
+        });
+        if (odd.length) {
+          alert('Please attach photographs, scans or PDF files only. ' + odd[0].files[0].name + ' is not one of those.');
+          return;
+        }
+
         var totalBytes = files.reduce(function (n, fi) { return n + fi.files[0].size; }, 0);
         if (totalBytes > 10 * 1024 * 1024) {
           alert('Those attachments come to more than 10MB. Please attach smaller photographs or scans and send again.');
@@ -399,7 +446,7 @@
         add('_template', 'table');
         add('_captcha', 'false');
         add('_honey', '');
-        add('_next', location.origin + '/thank-you/?docs=' + (files.length ? 'sent' : 'missing'));
+        add('_next', location.origin + '/thank-you/');
         add('Filing', title);
         add('Client email', emailVal);
         add('Client telephone', phoneVal);
