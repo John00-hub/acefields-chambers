@@ -399,7 +399,7 @@
         add('_template', 'table');
         add('_captcha', 'false');
         add('_honey', '');
-        add('_next', location.origin + '/thank-you/');
+        add('_next', location.origin + '/thank-you/?docs=' + (files.length ? 'sent' : 'missing'));
         add('Filing', title);
         add('Client email', emailVal);
         add('Client telephone', phoneVal);
