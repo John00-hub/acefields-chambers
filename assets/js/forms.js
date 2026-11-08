@@ -146,6 +146,22 @@
 
 
     /* the NIN section must grow with the number of applicants */
+    /* People inside a block marked optional, such as the second proprietor or
+       the company secretary, are optional in every respect: their NIN, their
+       passport photograph and their signature are not demanded. */
+    function optionalPeopleNames() {
+      var out = [];
+      Array.prototype.forEach.call(page.querySelectorAll('.bn-prop.bn-opt'), function (b) {
+        var h = b.querySelector('h3');
+        if (!h) return;
+        var n = prettyLabel(h.innerText.replace(/\s+/g, ' ').trim())
+          .replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
+        if (n && out.indexOf(n) === -1) out.push(n);
+      });
+      return out;
+    }
+
+
     function refreshIdentity() {
       var identity = null;
       Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
@@ -177,22 +193,33 @@
         if (inp) existing[inp.getAttribute('data-label')] = field;
       });
 
+      var optional = optionalPeopleNames();
       names.forEach(function (name) {
         var label = 'NIN, ' + name;
+        var wanted = optional.indexOf(name) === -1;
         var field = existing[label];
         if (field) {
           delete existing[label];
           field.setAttribute('data-nin-person', label);
+          field.className = 'bn-field' + (wanted ? ' bn-req' : '');
+          var star = field.querySelector('.bn-star');
+          if (star && !wanted) star.parentNode.removeChild(star);
+          var inp = field.querySelector('input');
+          if (inp) {
+            if (wanted) inp.setAttribute('aria-required', 'true');
+            else inp.removeAttribute('aria-required');
+          }
           wrap.appendChild(field);   /* moving keeps everything already typed */
           return;
         }
         var f = document.createElement('div');
-        f.className = 'bn-field bn-req';
+        f.className = 'bn-field' + (wanted ? ' bn-req' : '');
         f.setAttribute('data-nin-person', label);
         f.innerHTML = 'NIN, ' + name.toLowerCase()
-          + '<span class="bn-star" aria-hidden="true"> *</span>'
+          + (wanted ? '<span class="bn-star" aria-hidden="true"> *</span>' : '')
           + '<input type="text" class="bn-input" data-label="' + label + '" data-section="' + sectionName
-          + '" placeholder="Tap to fill" aria-label="NIN for ' + name + '" aria-required="true">';
+          + '" placeholder="Tap to fill" aria-label="NIN for ' + name + '"'
+          + (wanted ? ' aria-required="true"' : '') + '>';
         wrap.appendChild(f);
       });
 
@@ -472,30 +499,11 @@
     buildDocCheck();
 
 
-    /* A person marked optional only has to supply documents once the client
-       has started filling that person in. */
-    function personIsOptional(name) {
-      if (!name) return false;
-      var block = null;
-      Array.prototype.forEach.call(page.querySelectorAll('.bn-prop'), function (b) {
-        var h = b.querySelector('h3');
-        if (!h) return;
-        var label = prettyLabel(h.innerText.replace(/\s+/g, ' ').trim())
-          .replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
-        if (label === name) block = b;
-      });
-      if (!block || !block.classList.contains('bn-opt')) return false;
-      var any = false;
-      Array.prototype.forEach.call(block.querySelectorAll('.bn-input'), function (i) {
-        if (i.value.trim()) any = true;
-      });
-      return !any;
-    }
-
     function requiredPickers() {
+      var skip = optionalPeopleNames();
       var out = [];
       Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
-        if (!personIsOptional(fi.getAttribute('data-person'))) out.push(fi);
+        if (skip.indexOf(fi.getAttribute('data-person')) === -1) out.push(fi);
       });
       return out;
     }
