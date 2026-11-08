@@ -381,20 +381,10 @@ body.menu-open{overflow:hidden}
           <textarea id="tplNotes" placeholder="For example the state where the property is located, or any detail that affects the template."></textarea>
         </div>
 
-        <button type="submit" class="req-submit">Send request by email</button>
+        <button type="submit" class="req-submit">Send request</button>
 
         <p class="req-note"><strong>Important Legal Notice:</strong> This template is provided for general information and reference purposes only. It is not legal advice and may not be suitable for your particular circumstances. Please obtain professional legal advice and have the document reviewed and appropriately adapted before use. Downloading or using this template does not create a solicitor client relationship with Acefields Attorneys, Solicitors &amp; Notary Public. Payment instructions are issued by email and the document is released once payment is confirmed. Where the matter is urgent, call the firm on 0911 211 1021.</p>
-
-        <div class="email-fallback" id="tplFallback" hidden>
-          <p><strong>Your email app should now be open</strong> with the request written out — press send and it reaches the firm directly.</p>
-          <p>If nothing opened, your device may not have a mail app set up. Use either option below and the request still reaches the firm:</p>
-          <div class="fallback-actions">
-            <a class="fallback-btn" data-role="reopen" href="mailto:info@acefieldsattorneys.com.ng">Open email again</a>
-            <button type="button" class="fallback-btn ghost" onclick="copyBrief('tplFallback')">Copy request <span class="copy-state"></span></button>
-          </div>
-          <p>Or write to <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a> directly, or call the firm on <a href="tel:+2349112111021">0911 211 1021</a>.</p>
-        </div>
-      </form>
+</form>
 
     </div>
   </div>
@@ -418,62 +408,49 @@ function sendTemplateRequest(e) {
   const email = document.getElementById('tplEmail').value.trim();
   const phone = document.getElementById('tplPhone').value.trim();
   const notes = document.getElementById('tplNotes').value.trim();
-  if (!sel.value || !name || !email || !phone) { return false; }
 
-  const body = [
-    'Template request',
-    '',
-    'Template: ' + sel.value,
-    'Name: ' + name,
-    'Email: ' + email,
-    'Telephone: ' + phone,
-    notes ? 'Notes: ' + notes : ''
-  ].filter(Boolean).join('\n');
+  if (!sel.value) { alert('Please choose the template you are requesting.'); sel.focus(); return false; }
+  if (!name) { alert('Please enter your full name.'); document.getElementById('tplName').focus(); return false; }
+  if (!email) { alert('Please enter your email address so the document can be sent to you.'); document.getElementById('tplEmail').focus(); return false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { alert('That email address does not look complete. Please check it and try again.'); document.getElementById('tplEmail').focus(); return false; }
+  if (!phone) { alert('Please enter your telephone number.'); document.getElementById('tplPhone').focus(); return false; }
 
-  const href = 'mailto:info@acefieldsattorneys.com.ng'
-    + '?subject=' + encodeURIComponent('Template request: ' + sel.value)
-    + '&body=' + encodeURIComponent(body);
+  const btn = document.querySelector('.req-submit');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
 
-  window.location.href = href;
-  showEmailFallback('tplFallback', href, body);
+  const f = document.createElement('form');
+  f.method = 'POST';
+  f.action = 'https://formsubmit.co/info@acefieldsattorneys.com.ng';
+  f.style.display = 'none';
+
+  const add = (k, v) => {
+    const i = document.createElement('input');
+    i.type = 'hidden'; i.name = k; i.value = v;
+    f.appendChild(i);
+  };
+
+  const opt = sel.options[sel.selectedIndex];
+  const price = opt ? (opt.dataset.price || '0') : '0';
+
+  add('_subject', 'Template request: ' + sel.value);
+  add('_template', 'table');
+  add('_captcha', 'false');
+  add('_next', location.origin + '/thank-you/?docs=sent');
+  add('Template requested', sel.value);
+  add('Amount payable', price && price !== '0' ? 'N' + Number(price).toLocaleString('en-NG') : 'No fee');
+  add('Full name', name);
+  add('email', email);
+  add('Telephone', phone);
+  if (notes) add('Notes', notes);
+
+  document.body.appendChild(f);
+  f.submit();
   return false;
 }
 
 /* Email-only safety net: if no mail app is configured, the request can still be sent. */
-function showEmailFallback(id, href, body) {
-  const box = document.getElementById(id);
-  if (!box) return;
-  box.hidden = false;
-  box.dataset.href = href;
-  box.dataset.body = body;
-  const again = box.querySelector('[data-role="reopen"]');
-  if (again) again.setAttribute('href', href);
-}
 
-function copyBrief(id) {
-  const box = document.getElementById(id);
-  if (!box) return;
-  const text = box.dataset.body || '';
-  const state = box.querySelector('.copy-state');
-  const flag = function(){ if (state) { state.textContent = 'Copied'; setTimeout(function(){ state.textContent = ''; }, 2400); } };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(flag).catch(function(){ legacyCopy(text, flag); });
-  } else {
-    legacyCopy(text, flag);
-  }
-}
 
-function legacyCopy(text, done) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.setAttribute('readonly', '');
-  ta.style.position = 'fixed';
-  ta.style.top = '-1000px';
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand('copy'); done(); } catch (err) {}
-  document.body.removeChild(ta);
-}
 
 (function () {
   const p = new URLSearchParams(window.location.search).get('t');
@@ -720,17 +697,40 @@ function legacyCopy(text, done) {
             const office = document.getElementById('fOffice').value;
             const desk   = document.getElementById('fDesk').value;
             const msg    = document.getElementById('fMsg').value.trim();
-            const body = [
-                'Good day Acefields Attorneys, Solicitors and Notary Public,', '',
-                'I would like to schedule a consultation via the Firm Portal:', '',
-                'Name: ' + name, 'Telephone: ' + phone,
-                'Jurisdiction: ' + office, 'Practice Desk: ' + desk,
-                'Summary: ' + msg, '', '— Sent from the Firm Portal enquiry form'
-            ].join('\n');
-            const href = 'mailto:info@acefieldsattorneys.com.ng'
-                + '?subject=' + encodeURIComponent('Consultation enquiry — ' + desk + (name ? ' — ' + name : ''))
-                + '&body=' + encodeURIComponent(body);
-            window.location.href = href;
+
+            if (!name && !phone && !msg) {
+                alert('Please fill in your details before sending.');
+                return false;
+            }
+            if (!name) { alert('Please enter your name.'); document.getElementById('fName').focus(); return false; }
+            if (!phone) { alert('Please enter your telephone number so the firm can reach you.'); document.getElementById('fPhone').focus(); return false; }
+            if (!msg) { alert('Please add a brief summary of your matter.'); document.getElementById('fMsg').focus(); return false; }
+
+            const f = document.createElement('form');
+            f.method = 'POST';
+            f.action = 'https://formsubmit.co/info@acefieldsattorneys.com.ng';
+            f.style.display = 'none';
+
+            const add = (k, v) => {
+                const i = document.createElement('input');
+                i.type = 'hidden'; i.name = k; i.value = v;
+                f.appendChild(i);
+            };
+
+            add('_subject', 'Consultation enquiry - ' + desk);
+            add('_template', 'table');
+            add('_captcha', 'false');
+            add('_next', location.origin + '/thank-you/?docs=sent');
+            add('Name', name);
+            add('Telephone', phone);
+            add('email', '');
+            add('Preferred jurisdiction', office);
+            add('Practice desk', desk);
+            add('Summary of matter', msg);
+            add('Source', 'Website enquiry form: ' + location.pathname);
+
+            document.body.appendChild(f);
+            f.submit();
             return false;
         }
 

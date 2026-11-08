@@ -1151,17 +1151,7 @@ body.menu-open{overflow:hidden}
                             <p class="form-note">
                                 Submitting opens your email app with the brief pre-filled and addressed to <a href="mailto:info@acefieldsattorneys.com.ng" style="color:var(--champagne)">info@acefieldsattorneys.com.ng</a>, so the firm keeps a written record of every enquiry. Please withhold confidential evidentiary documents until conflict-of-interest clearance is confirmed by Counsel.
                             </p>
-
-                            <div class="email-fallback" id="enquiryFallback" hidden>
-                                <p><strong>Your email app should now be open</strong> with the brief written out — press send and it reaches the firm directly.</p>
-                                <p>If nothing opened, your device may not have a mail app set up. Use either option below and the enquiry still reaches the firm:</p>
-                                <div class="fallback-actions">
-                                    <a class="fallback-btn" data-role="reopen" href="mailto:info@acefieldsattorneys.com.ng">Open email again</a>
-                                    <button type="button" class="fallback-btn ghost" onclick="copyBrief('enquiryFallback')">Copy brief <span class="copy-state"></span></button>
-                                </div>
-                                <p>Or write to <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a> directly, or call the firm on <a href="tel:+2349112111021">0911 211 1021</a>.</p>
-                            </div>
-                        </form>
+</form>
                     </div>
                 </div>
             </div>
@@ -1387,40 +1377,6 @@ body.menu-open{overflow:hidden}
         }
 
         /* Shows the "email did not open" safety net, with a copyable brief. */
-        function showEmailFallback(id, href, body) {
-            const box = document.getElementById(id);
-            if (!box) return;
-            box.hidden = false;
-            box.dataset.href = href;
-            box.dataset.body = body;
-            const again = box.querySelector('[data-role="reopen"]');
-            if (again) again.setAttribute('href', href);
-        }
-
-        function copyBrief(id) {
-            const box = document.getElementById(id);
-            if (!box) return;
-            const text = box.dataset.body || '';
-            const state = box.querySelector('.copy-state');
-            const flag = function(){ if (state) { state.textContent = 'Copied'; setTimeout(function(){ state.textContent = ''; }, 2400); } };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(flag).catch(function(){ legacyCopy(text, flag); });
-            } else {
-                legacyCopy(text, flag);
-            }
-        }
-
-        function legacyCopy(text, done) {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.setAttribute('readonly', '');
-            ta.style.position = 'fixed';
-            ta.style.top = '-1000px';
-            document.body.appendChild(ta);
-            ta.select();
-            try { document.execCommand('copy'); done(); } catch (err) {}
-            document.body.removeChild(ta);
-        }
 
         (function() {
             const nav = document.getElementById('siteNav');
