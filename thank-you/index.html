@@ -46,34 +46,14 @@ a.ghost:hover{border-color:var(--champagne);color:var(--champagne-light)}
 
   <div class="rule"></div>
 
-  <div id="docBlock" hidden>
-  <p style="color:var(--ivory);font-weight:500;margin-bottom:12px">You did not attach your documents</p>
-  <ol>
-    <li>Email the <strong>passport photographs</strong> and <strong>specimen signatures</strong> to <a href="mailto:info@acefieldsattorneys.com.ng" style="color:var(--champagne);text-decoration:none;border-bottom:1px solid var(--hairline-strong)">info@acefieldsattorneys.com.ng</a></li>
-    <li>Put the filing name in the subject line so the firm can match it to your details</li>
-    <li>Call <a href="tel:+2349112111021" style="color:var(--champagne);text-decoration:none">0911 211 1021</a> if anything is unclear</li>
-  </ol>
-  </div>
-
   <div class="actions">
     <a class="btn primary" href="/">Return to the website</a>
-    <a class="btn ghost" id="docBtn" href="mailto:info@acefieldsattorneys.com.ng?subject=Documents%20for%20my%20filing" hidden>Email my documents</a>
   </div>
 
   <p class="note">
     Submitting this form does not create a solicitor and client relationship. A relationship is created only when the firm confirms it can act and accepts your instructions.
   </p>
 </main>
-<script>
-(function(){
-  var docs = new URLSearchParams(location.search).get('docs');
-  if (docs === 'missing') {
-    var b = document.getElementById('docBlock');
-    var btn = document.getElementById('docBtn');
-    if (b) b.hidden = false;
-    if (btn) btn.hidden = false;
-  }
-})();
-</script>
+
 </body>
 </html>

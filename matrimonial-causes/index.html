@@ -168,14 +168,8 @@ main{padding:40px 0 60px}
     </div>
 
     <div class="actions">
-      <button type="button" class="send" id="shareIntake">Share conflict-check enquiry</button>
-      <p class="send-note">Your device will open its share menu where available. Review the message and choose how to send it. The firm cannot tell whether you sent it or whether it was received.</p>
-      <div class="fallback" id="shareFallback" hidden>
-        <p class="hint">This browser does not support the share menu. Copy the message below, then paste it into an email to the firm. No form answers are placed in a link.</p>
-        <textarea id="fallbackText" rows="9" readonly aria-label="Conflict-check enquiry to copy"></textarea>
-        <div class="fallback-actions"><button type="button" id="copyEnquiry">Copy enquiry</button><a class="open-chat" href="mailto:info@acefieldsattorneys.com.ng?subject=Matrimonial%20conflict-check%20enquiry">Open an email to the firm</a></div>
-        <p class="hint" id="copyStatus" aria-live="polite"></p>
-      </div>
+      <button type="button" class="send" id="shareIntake">Send conflict-check enquiry</button>
+      <p class="send-note">Your enquiry goes directly to the firm. Do not include case facts or documents at this stage.</p>
       <p class="send-note">If you prefer, contact the firm by email at <a href="mailto:info@acefieldsattorneys.com.ng">info@acefieldsattorneys.com.ng</a> or telephone. Please do not send case facts or documents before the conflict check. Read the <a href="/privacy">Privacy Policy</a>.</p>
     </div>
   </div>
@@ -193,10 +187,6 @@ main{padding:40px 0 60px}
 (function(){
   var share=document.getElementById('shareIntake');
   var formFields=['clientName','otherName','matterType','contactMethod','contactDetail'];
-  var fallback=document.getElementById('shareFallback');
-  var textBox=document.getElementById('fallbackText');
-  var copyButton=document.getElementById('copyEnquiry');
-  var status=document.getElementById('copyStatus');
   var consent=document.getElementById('mcConsent');
   var firm='Acefields Attorneys, Solicitors and Notary Public';
   function makeMessage(){
@@ -223,21 +213,40 @@ main{padding:40px 0 60px}
     if(!consent.checked){alert('Please tick the consent statement before sharing this enquiry.');consent.focus();return false;}
     return true;
   }
-  share.addEventListener('click',async function(){
+  share.addEventListener('click',function(){
     if(!validate())return;
     var message=makeMessage();
-    if(navigator.share){
-      try{await navigator.share({title:'Matrimonial conflict-check enquiry',text:message});return;}
-      catch(error){if(error&&error.name==='AbortError')return;}
+
+    var btn=document.getElementById('shareIntake');
+    if(btn){btn.disabled=true;btn.textContent='Sending...';}
+
+    var f=document.createElement('form');
+    f.method='POST';
+    f.action='https://formsubmit.co/info@acefieldsattorneys.com.ng';
+    f.style.display='none';
+
+    function add(k,v){
+      var el=document.createElement('input');
+      el.type='hidden';el.name=k;el.value=v;
+      f.appendChild(el);
     }
-    textBox.value=message;
-    fallback.hidden=false;
-    fallback.scrollIntoView({behavior:'smooth',block:'nearest'});
-    status.textContent='Copy the enquiry, then paste it into an email to the firm. No form answers are placed in a link.';
-  });
-  copyButton.addEventListener('click',async function(){
-    try{await navigator.clipboard.writeText(textBox.value);status.textContent='Copied. Paste it into an email to the firm. Nothing has been sent yet.';}
-    catch(error){textBox.focus();textBox.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}status.textContent=ok?'Copied. Paste it into an email to the firm. Nothing has been sent yet.':'Copy was blocked. Select and copy the text above, then paste it into an email to the firm.';}
+
+    add('_subject','Matrimonial conflict-check enquiry');
+    add('_template','table');
+    add('_captcha','false');
+    add('_next',location.origin+'/thank-you/?docs=sent');
+    add('Enquiry','Preliminary matrimonial conflict check. Detailed instructions and documents are not supplied at this stage.');
+
+    formFields.forEach(function(id){
+      var el=document.getElementById(id);
+      var label=el.getAttribute('data-label')||id;
+      add(label, el.value.trim());
+    });
+
+    add('Declaration','I confirm the names and contact details supplied are true and I authorise the firm to use them to conduct a conflict check and respond.');
+
+    document.body.appendChild(f);
+    f.submit();
   });
 })();
 </script>
