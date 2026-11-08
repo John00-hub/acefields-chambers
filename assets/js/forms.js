@@ -317,6 +317,7 @@
       input.className = 'bn-file';
       input.name = 'attachment_' + (set.title + (person ? ' ' + person : '')).toLowerCase().replace(/[^a-z0-9]+/g, '_');
       input.setAttribute('data-doc', set.title + (person ? ' - ' + person : ''));
+      input.setAttribute('data-person', person || '');
       input.accept = 'image/*,application/pdf';
       input.setAttribute('aria-required', 'true');
 
@@ -431,9 +432,9 @@
       cta.parentNode.insertBefore(box, cta);
 
       function refresh() {
-        var all = page.querySelectorAll('.bn-file');
+        var all = requiredPickers();
         var missing = [];
-        Array.prototype.forEach.call(all, function (fi) {
+        all.forEach(function (fi) {
           if (!fi.files || !fi.files.length) missing.push(fi.getAttribute('data-doc'));
         });
         var title = box.querySelector('.bn-doc-check-title');
@@ -443,7 +444,7 @@
         list.innerHTML = '';
         if (!missing.length) {
           box.className = 'bn-doc-check complete';
-          title.textContent = 'All ' + all.length + ' documents attached';
+          title.textContent = all.length ? ('All ' + all.length + ' documents attached') : 'No documents required yet';
           note.textContent = 'Everything the checklist asks for is attached.';
           return;
         }
@@ -469,6 +470,35 @@
       box.refresh = refresh;
     }
     buildDocCheck();
+
+
+    /* A person marked optional only has to supply documents once the client
+       has started filling that person in. */
+    function personIsOptional(name) {
+      if (!name) return false;
+      var block = null;
+      Array.prototype.forEach.call(page.querySelectorAll('.bn-prop'), function (b) {
+        var h = b.querySelector('h3');
+        if (!h) return;
+        var label = prettyLabel(h.innerText.replace(/\s+/g, ' ').trim())
+          .replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
+        if (label === name) block = b;
+      });
+      if (!block || !block.classList.contains('bn-opt')) return false;
+      var any = false;
+      Array.prototype.forEach.call(block.querySelectorAll('.bn-input'), function (i) {
+        if (i.value.trim()) any = true;
+      });
+      return !any;
+    }
+
+    function requiredPickers() {
+      var out = [];
+      Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+        if (!personIsOptional(fi.getAttribute('data-person'))) out.push(fi);
+      });
+      return out;
+    }
 
     /* ---------- assemble and send through FormSubmit ---------- */
     var send = cta ? cta.querySelector('a') : null;
@@ -559,7 +589,8 @@
            The message names exactly what is still missing. */
         var noFile = [];
         var firstEmpty = null;
-        Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+        var required = requiredPickers();
+        Array.prototype.forEach.call(required, function (fi) {
           if (fi.files && fi.files.length) return;
           noFile.push(fi.getAttribute('data-doc'));
           if (!firstEmpty) firstEmpty = fi;
