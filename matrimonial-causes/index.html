@@ -64,6 +64,7 @@ h1 em{color:var(--champagne-light);font-style:italic}
 .declaration{font-size:.92rem;color:var(--stone);line-height:1.7;margin:14px 0 4px}
 .declaration strong{color:var(--ivory)}
 .req{color:var(--champagne);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-left:6px}
+.req-legend{font-size:.8rem;color:var(--muted);margin:0 0 22px;letter-spacing:.02em}
 .selects{display:grid;gap:14px;margin-top:16px}
 .selected{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .actions{margin-top:30px}
@@ -127,12 +128,13 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
       <p>Your answers stay on your device until you tap the send button, and nothing is sent before that. When you tap send, the page submits the enquiry over an encrypted connection to <strong>FormSubmit</strong>, a form delivery service, which forwards it by email to the firm's mailbox. The website itself does not store your answers. No solicitor and client relationship is created unless the firm confirms it can act and accepts instructions. This form is not an emergency service.</p>
     </div>
 
+      <p class="req-legend">Fields marked <span class="req" aria-hidden="true">*</span> are mandatory. The enquiry cannot be sent until each one is completed.</p>
     <div class="item">
       <h2><span class="n">1</span> Names for the conflict check</h2>
       <p class="hint">Please use the full names by which the parties are known. Do not add case facts here.</p>
       <div class="fields">
-        <div class="field"><label for="clientName">Your full name</label><input id="clientName" type="text" autocomplete="name" required data-label="Prospective client's full name" placeholder="Your full name"></div>
-        <div class="field"><label for="otherName">Other party's full name</label><input id="otherName" type="text" required data-label="Other party's full name" placeholder="Full name for conflict check"></div>
+        <div class="field"><label for="clientName">Your full name<span class="req" aria-hidden="true"> *</span></label><input id="clientName" type="text" autocomplete="name" required data-label="Prospective client's full name" placeholder="Your full name"></div>
+        <div class="field"><label for="otherName">Other party's full name<span class="req" aria-hidden="true"> *</span></label><input id="otherName" type="text" required data-label="Other party's full name" placeholder="Full name for conflict check"></div>
       </div>
     </div>
 
@@ -140,7 +142,7 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
       <h2><span class="n">2</span> General type of matter</h2>
       <p class="hint">Choose the closest option. No facts or explanation are needed now.</p>
       <div class="fields">
-        <div class="field"><label for="matterType">Matter type</label>
+        <div class="field"><label for="matterType">Matter type<span class="req" aria-hidden="true"> *</span></label>
           <select id="matterType" required data-label="General matter type">
             <option value="">Select one</option>
             <option>Dissolution of marriage / divorce</option>
@@ -157,7 +159,7 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
       <h2><span class="n">3</span> A safe way to contact you</h2>
       <p class="hint">Choose the method and details the firm may safely use. If it is not safe to contact you, do not submit contact details here; contact the firm when it is safe for you.</p>
       <div class="fields">
-        <div class="field"><label for="contactMethod">Preferred safe contact method</label>
+        <div class="field"><label for="contactMethod">Preferred safe contact method<span class="req" aria-hidden="true"> *</span></label>
           <select id="contactMethod" required data-label="Preferred safe contact method">
             <option value="">Select one</option>
             <option>Email</option>
@@ -165,7 +167,7 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
             <option>Email</option>
           </select>
         </div>
-        <div class="field"><label for="contactDetail">Phone number or email for that method</label><input id="contactDetail" type="text" required autocomplete="off" data-label="Safe contact detail" placeholder="Enter only the detail safe to use"></div>
+        <div class="field"><label for="contactDetail">Phone number or email for that method<span class="req" aria-hidden="true"> *</span></label><input id="contactDetail" type="text" required autocomplete="off" data-label="Safe contact detail" placeholder="Enter only the detail safe to use"></div>
       </div>
     </div>
 
