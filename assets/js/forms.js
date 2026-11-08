@@ -44,8 +44,10 @@
         text = text.replace(/\s*\*\s*$/, '');
         if (!text) return;
         var mandatory = f.classList.contains('bn-req');
-        var input = document.createElement('input');
-        input.type = 'text';
+        var long = f.hasAttribute('data-long');
+        var input = document.createElement(long ? 'textarea' : 'input');
+        if (long) input.rows = 3;
+        else input.type = 'text';
         input.className = 'bn-input';
         input.setAttribute('data-section', section);
         input.setAttribute('data-label', prettyLabel(text));
@@ -345,6 +347,7 @@
       input.name = 'attachment_' + (set.title + (person ? ' ' + person : '')).toLowerCase().replace(/[^a-z0-9]+/g, '_');
       input.setAttribute('data-doc', set.title + (person ? ' - ' + person : ''));
       input.setAttribute('data-person', person || '');
+      input.setAttribute('data-wired', '1');
       input.accept = 'image/*,application/pdf';
       input.setAttribute('aria-required', 'true');
 
@@ -425,6 +428,19 @@
       }
     });
 
+    /* pickers written into the page by hand, such as an optional certificate */
+    Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+      if (fi.getAttribute('data-wired')) return;
+      fi.setAttribute('data-wired', '1');
+      var status = fi.parentNode.querySelector('.bn-upload-status');
+      if (!status) return;
+      fi.addEventListener('change', function () {
+        if (!fi.files || !fi.files.length) { status.textContent = ''; return; }
+        var picked = fi.files[0];
+        status.textContent = picked.name + ' selected (' + Math.round(picked.size / 1024) + ' KB)';
+      });
+    });
+
     /* ---------- free text ---------- */
     var cta = page.querySelector('.bn-cta');
     if (cta) {
@@ -460,6 +476,8 @@
 
       function refresh() {
         var all = requiredPickers();
+        if (!all.length) { box.style.display = 'none'; return; }
+        box.style.display = '';
         var missing = [];
         all.forEach(function (fi) {
           if (!fi.files || !fi.files.length) missing.push(fi.getAttribute('data-doc'));
@@ -503,6 +521,7 @@
       var skip = optionalPeopleNames();
       var out = [];
       Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+        if (fi.getAttribute('data-optional') === 'true') return;
         if (skip.indexOf(fi.getAttribute('data-person')) === -1) out.push(fi);
       });
       return out;
@@ -575,6 +594,25 @@
         if (!phoneVal) {
           alert('Please enter your telephone number so the firm can reach you.');
           if (phoneEl) phoneEl.focus();
+          return;
+        }
+
+        /* the asterisks mean something: no send while a required field is empty */
+        var missingFields = [];
+        var firstMissing = null;
+        Array.prototype.forEach.call(page.querySelectorAll('.bn-input[aria-required="true"]'), function (n) {
+          if (n.value.trim()) return;
+          missingFields.push(n.getAttribute('data-label') || 'A required field');
+          if (!firstMissing) firstMissing = n;
+        });
+        if (missingFields.length) {
+          var shownList = missingFields.slice(0, 12).map(function (m) { return '  - ' + m; }).join('\n');
+          if (missingFields.length > 12) shownList += '\n  ...and ' + (missingFields.length - 12) + ' more';
+          alert('Please complete the fields marked with an asterisk before sending:\n\n' + shownList);
+          if (firstMissing) {
+            firstMissing.scrollIntoView({ block: 'center' });
+            firstMissing.focus();
+          }
           return;
         }
 
@@ -658,11 +696,20 @@
         /* Tell the firm exactly which documents did not come with the form.
            The client is not blocked, but nobody has to guess later. */
         var missing = [];
-        Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+        var requiredFiles = requiredPickers();
+        Array.prototype.forEach.call(requiredFiles, function (fi) {
           if (!fi.files || !fi.files.length) missing.push(fi.getAttribute('data-doc'));
         });
+        var optionalMissing = [];
+        Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+          if (fi.getAttribute('data-optional') !== 'true') return;
+          if (!fi.files || !fi.files.length) optionalMissing.push(fi.getAttribute('data-doc'));
+        });
+        if (optionalMissing.length) {
+          add('Optional documents not sent', optionalMissing.join('; '));
+        }
         if (missing.length) {
-          add('Documents NOT attached', missing.length + ' of ' + page.querySelectorAll('.bn-file').length + ' requested. Missing: ' + missing.join('; '));
+          add('Documents NOT attached', missing.length + ' of ' + requiredFiles.length + ' requested. Missing: ' + missing.join('; '));
         } else if (files.length) {
           add('Documents NOT attached', 'None. All ' + files.length + ' requested documents are attached.');
         } else {
