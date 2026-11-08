@@ -526,6 +526,21 @@ body.menu-open{overflow:hidden}
             return DEFAULT_GALLERY.concat(getStore('ace_gallery_v7', [])).filter(g => curGalCat === 'ALL' || g.cat === curGalCat);
         }
 
+        /* Escapes values that come from the database before they enter the page.
+           Without this, a stray quote or angle bracket in a title or image path
+           can break out of the attribute and run script. */
+        function esc(v) {
+            return String(v == null ? '' : v)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+        /* Allows only http(s) or a relative path, so javascript: cannot slip in. */
+        function safeUrl(v) {
+            var u = String(v == null ? '' : v).trim();
+            if (/^(https?:\/|\/|\.\.?\/)/i.test(u)) return esc(u);
+            return '';
+        }
+
         function renderDynamic() {
             const teamEl = document.getElementById('teamGrid');
             if (!teamEl) return;
@@ -533,26 +548,26 @@ body.menu-open{overflow:hidden}
             teamEl.innerHTML = team.map(m => `
                 <article class="team-card">
                     <div class="team-top">
-                        <div class="team-monogram">${m.photo ? `<img src="${m.photo}" alt="${m.name}">` : (m.initials || 'AA')}</div>
+                        <div class="team-monogram">${m.photo ? `<img src="${safeUrl(m.photo)}" alt="${esc(m.name)}">` : esc(m.initials || 'AA')}</div>
                         <div>
-                            <h4>${m.name}</h4>
-                            <small>${m.role}</small>
+                            <h4>${esc(m.name)}</h4>
+                            <small>${esc(m.role)}</small>
                         </div>
                     </div>
-                    <p>${m.bio}</p>
+                    <p>${esc(m.bio)}</p>
                 </article>
             `).join('');
 
             const gal = getFilteredGallery();
             (document.getElementById('galleryGrid')||{}).innerHTML = gal.slice(0, galleryLimit).map((g, i) => `
-                <article class="gallery-card" tabindex="0" role="button" aria-label="View ${g.title}" onclick="openGallery(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery(${i})}">
+                <article class="gallery-card" tabindex="0" role="button" aria-label="View ${esc(g.title)}" onclick="openGallery(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery(${i})}">
                     <div class="gallery-media">
-                        <img src="${g.img}" alt="${g.title}" style="object-position:${g.pos || 'center 20%'};" loading="lazy">
-                        <span class="gallery-tag">${g.cat}</span>
+                        <img src="${safeUrl(g.img)}" alt="${esc(g.title)}" style="object-position:${esc(g.pos || 'center 20%')};" loading="lazy">
+                        <span class="gallery-tag">${esc(g.cat)}</span>
                     </div>
                     <div class="gallery-body">
-                        <h4>${g.title}</h4>
-                        <p>${g.caption}</p>
+                        <h4>${esc(g.title)}</h4>
+                        <p>${esc(g.caption)}</p>
                     </div>
                 </article>
             `).join('');
@@ -579,9 +594,9 @@ body.menu-open{overflow:hidden}
             document.getElementById('mTitle').textContent = g.title;
             document.getElementById('mBody').innerHTML = `
                 <div style="background:#050507;border:1px solid rgba(208,172,110,0.22);margin-bottom:18px;display:flex;justify-content:center;">
-                    <img src="${g.hd || g.img}" alt="${g.title}" style="max-height:62vh;width:auto;object-fit:contain;">
+                    <img src="${safeUrl(g.hd || g.img)}" alt="${esc(g.title)}" style="max-height:62vh;width:auto;object-fit:contain;">
                 </div>
-                <p>${g.caption}</p>
+                <p>${esc(g.caption)}</p>
                 <div class="lb-controls">
                     <button type="button" class="lb-btn" onclick="openGallery(${curLbIndex - 1})">&larr; Previous</button>
                     <button type="button" class="lb-btn" onclick="openGallery(${curLbIndex + 1})">Next &rarr;</button>
