@@ -409,7 +409,7 @@
 
         /* reasonable substance, not a one word submission */
         if (filled < 2 && !noteText && !files.length) {
-          alert('Please add a little more of your details before sending.');
+          alert('Please fill in a little more of your details before sending. If you have already added documents, you can send those on their own.');
           return;
         }
 
@@ -462,6 +462,20 @@
         add('Declaration', consentText);
 
         files.forEach(function (fi) { add(fi.getAttribute('data-doc') + ' attached', fi.files[0].name); });
+
+        /* Tell the firm exactly which documents did not come with the form.
+           The client is not blocked, but nobody has to guess later. */
+        var missing = [];
+        Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
+          if (!fi.files || !fi.files.length) missing.push(fi.getAttribute('data-doc'));
+        });
+        if (missing.length) {
+          add('Documents NOT attached', missing.length + ' of ' + page.querySelectorAll('.bn-file').length + ' requested. Missing: ' + missing.join('; '));
+        } else if (files.length) {
+          add('Documents NOT attached', 'None. All ' + files.length + ' requested documents are attached.');
+        } else {
+          add('Documents NOT attached', 'No documents requested on this form.');
+        }
 
         f.style.position = 'absolute';
         f.style.left = '-9999px';
