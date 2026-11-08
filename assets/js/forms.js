@@ -305,6 +305,11 @@
       var id = 'bnFile' + Math.random().toString(36).slice(2, 9);
       label.setAttribute('for', id);
       label.textContent = 'Attach ' + set.title.toLowerCase() + (person ? ' for ' + person : '');
+      var star = document.createElement('span');
+      star.className = 'bn-star';
+      star.setAttribute('aria-hidden', 'true');
+      star.textContent = ' *';
+      label.appendChild(star);
 
       var input = document.createElement('input');
       input.type = 'file';
@@ -313,6 +318,7 @@
       input.name = 'attachment_' + (set.title + (person ? ' ' + person : '')).toLowerCase().replace(/[^a-z0-9]+/g, '_');
       input.setAttribute('data-doc', set.title + (person ? ' - ' + person : ''));
       input.accept = 'image/*,application/pdf';
+      input.setAttribute('aria-required', 'true');
 
       var hint = document.createElement('p');
       hint.className = 'bn-upload-hint';
@@ -418,7 +424,7 @@
       box.setAttribute('role', 'status');
       box.setAttribute('aria-live', 'polite');
       box.innerHTML = '<p class="bn-doc-check-title"></p><ul class="bn-doc-check-list"></ul>' +
-        '<p class="bn-doc-check-note">You can send without them. The firm will ask for whatever is still needed.</p>';
+        '<p class="bn-doc-check-note">Every document listed here is required before the form can be sent.</p>';
 
       var cta = page.querySelector('.bn-cta');
       if (!cta || !cta.parentNode) return;
@@ -450,7 +456,7 @@
           li.textContent = d;
           list.appendChild(li);
         });
-        note.textContent = 'You can still send your details now. The firm will reply and tell you how to send the rest.';
+        note.textContent = 'These are required. The form cannot be sent until each one is attached.';
       }
 
       Array.prototype.forEach.call(picks, function (fi) {
@@ -549,18 +555,23 @@
           return;
         }
 
-        /* Say plainly what is going out without its documents, and let the
-           client go back if they meant to attach them. */
+        /* The documents are required, so the form does not go without them.
+           The message names exactly what is still missing. */
         var noFile = [];
+        var firstEmpty = null;
         Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
-          if (!fi.files || !fi.files.length) noFile.push(fi.getAttribute('data-doc'));
+          if (fi.files && fi.files.length) return;
+          noFile.push(fi.getAttribute('data-doc'));
+          if (!firstEmpty) firstEmpty = fi;
         });
-        if (noFile.length && !window.confirm(
-          'You are about to send this form without ' + noFile.length + ' of ' +
-          page.querySelectorAll('.bn-file').length + ' documents:\n\n' +
-          noFile.map(function (d) { return '  - ' + d; }).join('\n') +
-          '\n\nYou can send now and the firm will ask for the rest, or cancel and attach them first.\n\nSend anyway?'
-        )) {
+        if (noFile.length) {
+          alert('Please attach the documents still missing before sending:\n\n'
+            + noFile.map(function (d) { return '  - ' + d; }).join('\n')
+            + '\n\nEach one is needed for the firm to lodge the application.');
+          if (firstEmpty) {
+            firstEmpty.scrollIntoView({ block: 'center' });
+            firstEmpty.focus();
+          }
           return;
         }
 
