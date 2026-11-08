@@ -597,23 +597,51 @@ body.menu-open{overflow:hidden}
             const desk   = document.getElementById('fDesk').value;
             const msg    = document.getElementById('fMsg').value.trim();
 
-            const body = [
-                'Good day Acefields Attorneys, Solicitors and Notary Public,',
-                '',
-                'I would like to schedule a consultation via the Firm Portal:',
-                '',
-                'Name: ' + name,
-                'Telephone: ' + phone,
-                'Jurisdiction: ' + office,
-                'Practice Desk: ' + desk,
-                'Summary: ' + msg,
-                '',
-                '— Sent from the Firm Portal enquiry form'
-            ].join('\n');
+            if (!name && !phone && !msg) {
+                alert('Please fill in your details before sending.');
+                return false;
+            }
+            if (!name) {
+                alert('Please enter your name.');
+                document.getElementById('fName').focus();
+                return false;
+            }
+            if (!phone) {
+                alert('Please enter your telephone number so the firm can reach you.');
+                document.getElementById('fPhone').focus();
+                return false;
+            }
+            if (!msg) {
+                alert('Please add a brief summary of your matter.');
+                document.getElementById('fMsg').focus();
+                return false;
+            }
 
-            window.location.href = 'mailto:info@acefieldsattorneys.com.ng'
-                + '?subject=' + encodeURIComponent('Consultation enquiry — ' + desk + (name ? ' — ' + name : ''))
-                + '&body=' + encodeURIComponent(body);
+            const f = document.createElement('form');
+            f.method = 'POST';
+            f.action = 'https://formsubmit.co/info@acefieldsattorneys.com.ng';
+            f.style.display = 'none';
+
+            const add = (k, v) => {
+                const i = document.createElement('input');
+                i.type = 'hidden'; i.name = k; i.value = v;
+                f.appendChild(i);
+            };
+
+            add('_subject', 'Consultation enquiry - ' + desk);
+            add('_template', 'table');
+            add('_captcha', 'false');
+            add('_next', location.origin + '/thank-you/');
+            add('Name', name);
+            add('Telephone', phone);
+            add('email', '');
+            add('Preferred jurisdiction', office);
+            add('Practice desk', desk);
+            add('Summary of matter', msg);
+            add('Source', 'Website enquiry form: ' + location.pathname);
+
+            document.body.appendChild(f);
+            f.submit();
             return false;
         }
 

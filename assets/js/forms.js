@@ -207,34 +207,28 @@
 
     setupObjects();
 
-    /* ---------- document sections get a real upload field ---------- */
-    Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
-      var heading = item.querySelector('h2');
-      var title = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').trim().toLowerCase() : '';
-      var requiresDocument = title.indexOf('passport') > -1 || title.indexOf('signature') > -1 || title.indexOf('document') > -1;
-      if (!requiresDocument) return;
-
-      var docLabel = heading ? heading.innerText.replace(/^\s*\d+\s*/, '').trim() : 'Document';
-
+    /* ---------- document sections get a real upload field per document ---------- */
+    function makeUpload(item, docLabel, suffix) {
       var wrap = document.createElement('div');
       wrap.className = 'bn-upload';
 
       var label = document.createElement('label');
       label.className = 'bn-upload-label';
-      label.setAttribute('for', 'bnFile' + (item.dataset.fid || (item.dataset.fid = Math.random().toString(36).slice(2))));
+      var id = 'bnFile' + Math.random().toString(36).slice(2);
+      label.setAttribute('for', id);
       label.textContent = 'Attach ' + docLabel.toLowerCase();
 
       var input = document.createElement('input');
       input.type = 'file';
-      input.id = label.getAttribute('for');
+      input.id = id;
       input.className = 'bn-file';
-      input.name = docLabel.replace(/\s+/g, '_');
-      input.setAttribute('data-doc', docLabel);
+      input.name = 'attachment_' + (docLabel + (suffix ? ' ' + suffix : '')).toLowerCase().replace(/[^a-z0-9]+/g, '_');
+      input.setAttribute('data-doc', docLabel + (suffix ? ' - ' + suffix : ''));
       input.accept = 'image/*,application/pdf';
 
       var hint = document.createElement('p');
       hint.className = 'bn-upload-hint';
-      hint.textContent = 'Photograph or scan. JPG, PNG or PDF. Attaches to the form when you send.';
+      hint.textContent = 'Photograph or scan. JPG, PNG or PDF. Maximum 10MB in total.';
 
       var status = document.createElement('p');
       status.className = 'bn-upload-status';
@@ -251,6 +245,41 @@
       wrap.appendChild(hint);
       wrap.appendChild(status);
       item.appendChild(wrap);
+    }
+
+    Array.prototype.forEach.call(page.querySelectorAll('.bn-item'), function (item) {
+      var heading = item.querySelector('h2');
+      if (!heading) return;
+      var raw = heading.innerText.replace(/^\s*\d+\s*/, '').trim();
+      var title = raw.toLowerCase();
+
+      /* Passport Photograph and Signature each get their own single upload */
+      if (title.indexOf('passport') > -1) {
+        makeUpload(item, 'Passport photograph', '');
+        return;
+      }
+      if (title.indexOf('signature') > -1) {
+        makeUpload(item, 'Signature', '');
+        return;
+      }
+
+      /* A combined Documents section gets one upload per document it lists */
+      if (title.indexOf('document') > -1) {
+        var text = (item.innerText || '').toLowerCase();
+        if (text.indexOf('national identity') > -1 || text.indexOf('identity card') > -1) {
+          makeUpload(item, 'National identity card', '');
+        }
+        if (text.indexOf('signature') > -1) {
+          makeUpload(item, 'Signatures', 'all signatories');
+        }
+        if (text.indexOf('passport photograph') > -1) {
+          var trustees = /trustee/i.test(document.title);
+          makeUpload(item, 'Passport photographs', trustees ? 'trustees and secretary' : 'directors and secretary');
+        }
+        if (!item.querySelector('.bn-upload')) {
+          makeUpload(item, 'Supporting document', '');
+        }
+      }
     });
 
     /* ---------- free text ---------- */
@@ -307,15 +336,44 @@
         var notes = document.getElementById('bnNotes');
         var noteText = notes ? notes.value.trim() : '';
 
-        if (!filled && !noteText && !document.querySelector('.bn-file')) {
-          alert('Please fill in the details you have, then send again.');
-          return;
-        }
-
         var files = [];
         Array.prototype.forEach.call(page.querySelectorAll('.bn-file'), function (fi) {
           if (fi.files && fi.files.length) files.push(fi);
         });
+
+        var emailEl = document.getElementById('bnEmail');
+        var phoneEl = document.getElementById('bnPhone');
+        var emailVal = emailEl ? emailEl.value.trim() : '';
+        var phoneVal = phoneEl ? phoneEl.value.trim() : '';
+
+        /* nothing entered at all */
+        if (!filled && !noteText && !files.length) {
+          alert('Please fill in the details you have before sending.');
+          return;
+        }
+
+        /* contact details are needed so the firm can reply */
+        if (!emailVal) {
+          alert('Please enter your email address so the firm can reply to you.');
+          if (emailEl) emailEl.focus();
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailVal)) {
+          alert('That email address does not look complete. Please check it and try again.');
+          if (emailEl) emailEl.focus();
+          return;
+        }
+        if (!phoneVal) {
+          alert('Please enter your telephone number so the firm can reach you.');
+          if (phoneEl) phoneEl.focus();
+          return;
+        }
+
+        /* reasonable substance, not a one word submission */
+        if (filled < 2 && !noteText && !files.length) {
+          alert('Please add a little more of your details before sending.');
+          return;
+        }
 
         var totalBytes = files.reduce(function (n, fi) { return n + fi.files[0].size; }, 0);
         if (totalBytes > 10 * 1024 * 1024) {
@@ -343,8 +401,9 @@
         add('_honey', '');
         add('_next', location.origin + '/thank-you/');
         add('Filing', title);
-        add('Client email', (document.getElementById('bnEmail') || {}).value || 'not supplied');
-        add('Client telephone', (document.getElementById('bnPhone') || {}).value || 'not supplied');
+        add('Client email', emailVal);
+        add('Client telephone', phoneVal);
+        add('email', emailVal);
 
         entries.forEach(function (en) {
           add(en.section + ' | ' + en.label, en.value);
@@ -357,12 +416,16 @@
 
         files.forEach(function (fi) { add(fi.getAttribute('data-doc') + ' attached', fi.files[0].name); });
 
+        f.style.position = 'absolute';
+        f.style.left = '-9999px';
         document.body.appendChild(f);
 
-        /* move the real file inputs in so the files travel with the post */
+        /* the real file inputs must sit inside the form for the files to travel */
         files.forEach(function (fi) { f.appendChild(fi); });
 
-        f.submit();
+        try { f.submit(); } catch (err) {
+          alert('The form could not send. Please check your connection and try again.');
+        }
       });
     }
 
