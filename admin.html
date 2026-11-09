@@ -33,6 +33,29 @@
   label { display: block; font-size: 11.5px; color: var(--gold-hi); font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
   .btn { background: linear-gradient(135deg, var(--crimson), #B91C1C); color: #FFF; border: none; padding: 12px 18px; border-radius: 7px; font-weight: 800; cursor: pointer; font-size: 13.5px; }
   .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .badge-new { display: inline-block; min-width: 17px; padding: 0 5px; margin-left: 4px; border-radius: 9px; background: var(--crimson); color: #fff; font-size: 10.5px; font-weight: 700; line-height: 17px; text-align: center; }
+  .sub-card { border: 1px solid var(--border); border-radius: 8px; background: var(--card); margin-bottom: 10px; overflow: hidden; }
+  .sub-head { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; padding: 12px 14px; cursor: pointer; }
+  .sub-head:hover { background: rgba(208,172,110,0.05); }
+  .sub-title { font-size: 13.5px; font-weight: 700; color: var(--gold-hi); }
+  .sub-meta { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+  .sub-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--crimson); flex: 0 0 auto; margin-top: 6px; }
+  .sub-dot.done { background: rgba(148,163,184,0.35); }
+  .sub-body { display: none; padding: 0 14px 14px; border-top: 1px solid rgba(208,172,110,0.14); }
+  .sub-body.open { display: block; }
+  .sub-body table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .sub-body td { padding: 5px 6px; border-bottom: 1px solid rgba(148,163,184,0.12); vertical-align: top; word-break: break-word; }
+  .sub-body td:first-child { color: var(--muted); width: 42%; }
+  .sub-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .mini { border: 1px solid var(--border); background: transparent; color: var(--gold-hi); font-size: 11.5px; font-weight: 700; padding: 6px 11px; border-radius: 5px; cursor: pointer; }
+  .mini:hover { background: rgba(208,172,110,0.12); }
+  .mini.danger { border-color: rgba(234,50,53,0.5); color: var(--crimson); }
+  .acct-box { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: var(--card); margin-bottom: 14px; }
+  .acct-box h4 { color: var(--gold-hi); font-size: 14px; margin-bottom: 4px; }
+  .acct-box p.hint { font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
+  .pw-msg { font-size: 12px; margin-top: 10px; }
+  .ok { color: #4ade80; }
+  .err { color: var(--crimson); }
   .t-btn { background: var(--card); color: var(--muted); border: 1px solid var(--border); padding: 9px 15px; border-radius: 99px; font-size: 12.5px; font-weight: 700; cursor: pointer; }
   .t-btn.active { background: var(--gold); color: #090A0E; }
   .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 20px; display: none; }
@@ -60,7 +83,7 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
       </div>
     </div>
     <span id="whoAmI" style="font-size:12px;color:var(--muted);"></span>
-    <span style="font-size:10.5px;color:var(--muted);opacity:.7;">build 2026-11-05c</span>
+    <span style="font-size:10.5px;color:var(--muted);opacity:.7;">build 2026-11-09dash</span>
     <a href="/" class="btn-back">← View Live Firm Website</a>
     <button class="btn-back" style="background:transparent;cursor:pointer;" onclick="signOut()">Sign out</button>
   </div>
@@ -80,9 +103,10 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
       <button class="t-btn" onclick="showTab('newsTab', this)"> Legal News &amp; Blog</button>
       <button class="t-btn" onclick="showTab('teamTab', this)"> Team Profiles</button>
       <button class="t-btn" onclick="showTab('revTab', this)"> Testimonials</button>
+      <button class="t-btn" onclick="showTab('subTab', this); loadSubmissions()"> Submissions <span id="subBadge" class="badge-new" style="display:none;">0</span></button>
+      <button class="t-btn" onclick="showTab('acctTab', this)"> Account &amp; Security</button>
     </div>
 
-    <p style="padding:14px;border:1px solid #d0ac6e;margin:12px 0"></p>
     <div id="galTab" class="panel active">
       <h3 style="margin-bottom:12px;color:var(--gold-hi);">Upload Event / Firm Picture</h3>
       <label>Category</label>
@@ -140,6 +164,51 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
       <button class="btn" onclick="addReview()">+ Add Testimonial</button>
       <div id="revList" style="margin-top:16px;"></div>
     </div>
+
+    <div id="subTab" class="panel">
+      <h3 style="margin-bottom:6px;color:var(--gold-hi);">Form Submissions</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.55;">
+        Every enquiry and registration sent from the website is saved here before it is emailed, so nothing is lost if an email is delayed.
+        Attachments are still delivered by email only. Only a signed-in chambers account can read this page.
+      </p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+        <button class="mini" id="subFilterAll" onclick="setSubFilter('all', this)">All</button>
+        <button class="mini" id="subFilterNew" onclick="setSubFilter('new', this)">Unhandled</button>
+        <button class="mini" onclick="loadSubmissions()">Refresh</button>
+        <button class="mini" onclick="exportSubmissions()">Export CSV</button>
+      </div>
+      <div id="subList"><div style="font-size:12px;color:var(--muted);padding:6px 0;">Loading...</div></div>
+    </div>
+
+    <div id="acctTab" class="panel">
+      <h3 style="margin-bottom:12px;color:var(--gold-hi);">Account &amp; Security</h3>
+
+      <div class="acct-box">
+        <h4>Signed-in account</h4>
+        <p class="hint" id="acctEmail">Loading...</p>
+        <p class="hint" style="margin-bottom:0;">Public sign-up is switched off. This is the only account that can open this console.</p>
+      </div>
+
+      <div class="acct-box">
+        <h4>Change password</h4>
+        <p class="hint">Enter the current password first, then the new one. Nothing else on the website needs changing.</p>
+        <label style="font-size:12px;color:var(--muted);">Current password</label>
+        <input id="pwCurrent" type="password" autocomplete="current-password" style="width:100%;margin-bottom:10px;">
+        <label style="font-size:12px;color:var(--muted);">New password</label>
+        <input id="pwNew" type="password" autocomplete="new-password" style="width:100%;margin-bottom:10px;">
+        <label style="font-size:12px;color:var(--muted);">Repeat new password</label>
+        <input id="pwRepeat" type="password" autocomplete="new-password" style="width:100%;margin-bottom:12px;">
+        <button class="btn" onclick="changePassword()" id="pwBtn">Update password</button>
+        <p class="pw-msg" id="pwMsg"></p>
+      </div>
+
+      <div class="acct-box">
+        <h4>Session</h4>
+        <p class="hint">This console signs itself out after 30 minutes without activity. Use the button below to end every session everywhere.</p>
+        <button class="mini danger" onclick="signOutEverywhere()">Sign out on all devices</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -233,6 +302,7 @@ function enterApp() {
   const who = document.getElementById('whoAmI');
   if (who) who.textContent = 'Signed in as ' + ((SESSION.user || {}).email || 'chambers');
   refreshLists();
+  loadSubmissions(true);
 }
 
 function showTab(id, btn) {
@@ -381,9 +451,268 @@ async function delItem(table, id) {
   } catch (e) { alert('Could not delete. ' + e.message); }
 }
 
+/* ===== submissions and account ===== */
+var SUBS = [];
+var SUB_FILTER = 'all';
+
+/* ---------- submissions ---------- */
+async function loadSubmissions(silentBadge) {
+  var el = document.getElementById('subList');
+  if (el && !silentBadge) el.innerHTML = '<div style="font-size:12px;color:var(--muted);padding:6px 0;">Loading...</div>';
+  try {
+    var r = await api('/rest/v1/submissions?select=*&order=created_at.desc&limit=300');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    SUBS = await r.json();
+    renderSubmissions();
+    updateBadge();
+  } catch (e) {
+    if (el) el.innerHTML = '<div style="font-size:12px;color:var(--crimson);padding:6px 0;">Could not load submissions. ' + escapeHtml(e.message) + '</div>';
+  }
+}
+
+function updateBadge() {
+  var badge = document.getElementById('subBadge');
+  if (!badge) return;
+  var n = SUBS.filter(function (x) { return !x.handled; }).length;
+  badge.textContent = n;
+  badge.style.display = n ? 'inline-block' : 'none';
+}
+
+function setSubFilter(which, btn) {
+  SUB_FILTER = which;
+  document.querySelectorAll('#subTab .mini').forEach(function (b) { b.style.background = ''; });
+  if (btn) btn.style.background = 'rgba(208,172,110,0.18)';
+  renderSubmissions();
+}
+
+function whenLocal(iso) {
+  try {
+    var d = new Date(iso);
+    return d.toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  } catch (e) { return iso || ''; }
+}
+
+function renderSubmissions() {
+  var el = document.getElementById('subList');
+  if (!el) return;
+  var rows = SUBS.filter(function (x) { return SUB_FILTER === 'all' ? true : !x.handled; });
+  if (!rows.length) {
+    el.innerHTML = '<div style="font-size:12.5px;color:var(--muted);padding:10px 0;">'
+      + (SUB_FILTER === 'new' ? 'Nothing waiting. Every submission has been handled.' : 'No submissions yet.') + '</div>';
+    return;
+  }
+  el.innerHTML = rows.map(function (x, i) {
+    var id = x.id;
+    var files = Array.isArray(x.attachments) ? x.attachments.length : 0;
+    var fields = x.fields || {};
+    var rowsHtml = Object.keys(fields).map(function (k) {
+      return '<tr><td>' + escapeHtml(k) + '</td><td>' + escapeHtml(String(fields[k] == null ? '' : fields[k])) + '</td></tr>';
+    }).join('');
+    return '<div class="sub-card">'
+      + '<div class="sub-head" onclick="toggleSub(\'' + id + '\')">'
+      +   '<span class="sub-dot' + (x.handled ? ' done' : '') + '"></span>'
+      +   '<div style="flex:1;">'
+      +     '<div class="sub-title">' + escapeHtml(x.form || 'Submission') + '</div>'
+      +     '<div class="sub-meta">' + escapeHtml(whenLocal(x.created_at)) + ' &middot; ' + escapeHtml(x.page || '')
+      +       (files ? ' &middot; ' + files + ' file' + (files === 1 ? '' : 's') + ' by email' : '') + '</div>'
+      +   '</div>'
+      + '</div>'
+      + '<div class="sub-body" id="sub-' + id + '">'
+      +   '<table>' + (rowsHtml || '<tr><td colspan="2" style="color:var(--muted);">No fields recorded.</td></tr>') + '</table>'
+      +   '<div class="sub-actions">'
+      +     '<button class="mini" onclick="toggleHandled(\'' + id + '\', ' + (x.handled ? 'false' : 'true') + ')">'
+      +       (x.handled ? 'Mark as unhandled' : 'Mark as handled') + '</button>'
+      +     '<button class="mini danger" onclick="deleteSubmission(\'' + id + '\')">Delete</button>'
+      +   '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function toggleSub(id) {
+  var b = document.getElementById('sub-' + id);
+  if (b) b.classList.toggle('open');
+}
+
+async function toggleHandled(id, value) {
+  try {
+    var r = await api('/rest/v1/submissions?id=eq.' + id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ handled: value, handled_at: value ? new Date().toISOString() : null })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    await loadSubmissions(true);
+  } catch (e) { alert('Could not update. ' + e.message); }
+}
+
+async function deleteSubmission(id) {
+  if (!confirm('Delete this submission? This cannot be undone.')) return;
+  try {
+    var r = await api('/rest/v1/submissions?id=eq.' + id, { method: 'DELETE' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    await loadSubmissions(true);
+  } catch (e) { alert('Could not delete. ' + e.message); }
+}
+
+function exportSubmissions() {
+  if (!SUBS.length) { alert('There is nothing to export yet.'); return; }
+  function cell(v) {
+    var t = String(v == null ? '' : v).replace(/"/g, '""');
+    return '"' + t + '"';
+  }
+  var head = ['Received', 'Form', 'Page', 'Handled'];
+  var lines = [];
+  SUBS.forEach(function (x) {
+    var fields = x.fields || {};
+    Object.keys(fields).forEach(function (k) {
+      if (head.indexOf(k) === -1) head.push(k);
+    });
+  });
+  lines.push(head.map(cell).join(','));
+  SUBS.forEach(function (x) {
+    var fields = x.fields || {};
+    var row = [whenLocal(x.created_at), x.form || '', x.page || '', x.handled ? 'Yes' : 'No'];
+    head.slice(4).forEach(function (k) { row.push(fields[k] == null ? '' : fields[k]); });
+    lines.push(row.map(cell).join(','));
+  });
+  var blob = new Blob([lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'acefields-submissions-' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+}
+
+/* ---------- account ---------- */
+function fillAccount() {
+  var el = document.getElementById('acctEmail');
+  if (el) el.textContent = (SESSION && SESSION.user && SESSION.user.email) || 'Signed in';
+}
+
+async function changePassword() {
+  var msg = document.getElementById('pwMsg');
+  var btn = document.getElementById('pwBtn');
+  var cur = document.getElementById('pwCurrent').value;
+  var next = document.getElementById('pwNew').value;
+  var again = document.getElementById('pwRepeat').value;
+  var email = (SESSION && SESSION.user && SESSION.user.email) || '';
+
+  msg.className = 'pw-msg';
+  msg.textContent = '';
+
+  if (!cur || !next || !again) { msg.className = 'pw-msg err'; msg.textContent = 'Fill in all three boxes.'; return; }
+  if (next.length < 10) { msg.className = 'pw-msg err'; msg.textContent = 'Use at least 10 characters for the new password.'; return; }
+  if (next !== again) { msg.className = 'pw-msg err'; msg.textContent = 'The two new passwords do not match.'; return; }
+  if (next === cur) { msg.className = 'pw-msg err'; msg.textContent = 'The new password is the same as the old one.'; return; }
+
+  btn.disabled = true; btn.textContent = 'Updating...';
+  msg.style.color = 'var(--muted)'; msg.textContent = 'Checking the current password...';
+
+  try {
+    /* prove the current password before changing anything */
+    var check = await fetch(SUPA.url + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: { 'apikey': SUPA.key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: cur })
+    });
+    if (!check.ok) {
+      throw new Error('The current password is not correct.');
+    }
+    var fresh = await check.json();
+    if (fresh && fresh.access_token) saveSession(fresh);
+
+    var r = await fetch(SUPA.url + '/auth/v1/user', {
+      method: 'PUT',
+      headers: {
+        'apikey': SUPA.key,
+        'Authorization': 'Bearer ' + SESSION.access_token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ password: next })
+    });
+    if (!r.ok) {
+      var d = await r.json().catch(function () { return {}; });
+      throw new Error(d.msg || d.message || ('HTTP ' + r.status));
+    }
+    msg.className = 'pw-msg ok';
+    msg.textContent = 'Password updated. Use the new password next time you sign in.';
+    document.getElementById('pwCurrent').value = '';
+    document.getElementById('pwNew').value = '';
+    document.getElementById('pwRepeat').value = '';
+  } catch (e) {
+    msg.className = 'pw-msg err';
+    msg.textContent = e.message;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Update password';
+  }
+}
+
+async function signOutEverywhere() {
+  if (!confirm('Sign out on every device? You will need to sign in again here.')) return;
+  try {
+    await fetch(SUPA.url + '/auth/v1/logout?scope=global', {
+      method: 'POST',
+      headers: { 'apikey': SUPA.key, 'Authorization': 'Bearer ' + SESSION.access_token }
+    });
+  } catch (e) { /* sign out locally regardless */ }
+  signOut();
+}
+
+/* ---------- session hardening ---------- */
+var IDLE_LIMIT = 30 * 60 * 1000;
+var lastActivity = Date.now();
+var refreshTimer = null;
+
+function noteActivity() { lastActivity = Date.now(); }
+
+function tokenSecondsLeft() {
+  try {
+    var payload = JSON.parse(atob(SESSION.access_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return payload.exp - Math.floor(Date.now() / 1000);
+  } catch (e) { return 0; }
+}
+
+async function refreshToken() {
+  try {
+    var r = await fetch(SUPA.url + '/auth/v1/token?grant_type=refresh_token', {
+      method: 'POST',
+      headers: { 'apikey': SUPA.key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: SESSION.refresh_token })
+    });
+    if (!r.ok) throw new Error('refresh failed');
+    var d = await r.json();
+    if (d && d.access_token) saveSession(d);
+  } catch (e) {
+    /* the refresh token has gone; make the user sign in again */
+    signOut();
+  }
+}
+
+function startSecurityTimers() {
+  if (refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = setInterval(function () {
+    if (!SESSION) return;
+    if (Date.now() - lastActivity > IDLE_LIMIT) {
+      alert('Signed out after 30 minutes without activity.');
+      signOut();
+      return;
+    }
+    if (tokenSecondsLeft() < 240) refreshToken();
+  }, 60000);
+  var acct = document.getElementById('acctTab');
+  if (acct) fillAccount();
+}
+
+
 /* auto sign in on reload if the session is still valid */
 document.addEventListener('DOMContentLoaded', function () {
-  if (restoreSession()) enterApp();
+  if (restoreSession()) { enterApp(); startSecurityTimers(); }
+  ['click', 'keydown', 'touchstart'].forEach(function (ev) {
+    document.addEventListener(ev, noteActivity, { passive: true });
+  });
 });
 </script>
 </body>
