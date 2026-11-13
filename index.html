@@ -1338,6 +1338,37 @@ p, blockquote, li, .p-desc, .section-subtitle, .faq-a p, .pg-dl p, .rev-card blo
             if (curLbIndex >= 0 && e.key === 'ArrowRight') openGallery(curLbIndex + 1);
         });
 
+        // Preselect the practice desk when arriving from a "Book a session" link
+        function applyDeskParam() {
+            const params = new URLSearchParams(window.location.search);
+            const wanted = params.get('desk');
+            if (!wanted) return;
+            const sel = document.getElementById('fDesk');
+            if (!sel) return;
+            const norm = t => t.toLowerCase().replace(/[^a-z]/g, '');
+            const target = norm(wanted);
+            let found = -1;
+            for (let i = 0; i < sel.options.length; i++) {
+                if (norm(sel.options[i].text) === target) { found = i; break; }
+            }
+            if (found < 0) {
+                for (let i = 0; i < sel.options.length; i++) {
+                    if (norm(sel.options[i].text).includes(target) || target.includes(norm(sel.options[i].text))) { found = i; break; }
+                }
+            }
+            if (found >= 0) sel.selectedIndex = found;
+            const contact = document.getElementById('contact');
+            if (contact) {
+                setTimeout(() => {
+                    try { if (contact.scrollIntoView) contact.scrollIntoView({ behavior: 'smooth' }); } catch (err) {}
+                    const n = document.getElementById('fName');
+                    if (n) setTimeout(() => { try { n.focus({ preventScroll: true }); } catch (err) {} }, 700);
+                }, 120);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', applyDeskParam);
+        window.addEventListener('load', applyDeskParam);
+
         function selectPractice(deskName) {
             const sel = document.getElementById('fDesk');
             const key = deskName.split(' ')[0];
